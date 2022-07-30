@@ -1,0 +1,13 @@
+{
+    "name": "Changelog",
+    "alias": "changelog",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Modules\\Changelog\\Providers\\ChangelogServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

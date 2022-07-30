@@ -1,0 +1,11 @@
+{
+    "Login": true,
+    "Dashboard": true,
+    "Register": true,
+    "Profile": true,
+    "Logout": true,
+    "Faq": true,
+    "Network": true,
+    "Notifications": true,
+    "Changelog": true
+}

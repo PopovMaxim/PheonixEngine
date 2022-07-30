@@ -1,0 +1,13 @@
+{
+    "name": "Logout",
+    "alias": "logout",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Modules\\Logout\\Providers\\LogoutServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

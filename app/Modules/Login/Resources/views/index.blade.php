@@ -12,7 +12,7 @@
                         <div class="block-content block-content-full px-lg-5 py-md-5 py-lg-6">
                             <div class="mb-2 text-center">
                                 <a class="link-fx fw-bold fs-1" href="/">
-                                    <span class="text-dark">Dash</span><span class="text-primary">mix</span>
+                                    {{ env('APP_NAME') }}
                                 </a>
                                 <p class="text-uppercase fw-bold fs-sm text-muted">Вход в личный кабинет</p>
                             </div>

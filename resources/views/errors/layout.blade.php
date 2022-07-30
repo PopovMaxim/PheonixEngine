@@ -31,7 +31,7 @@
                     <div class="hero-static col-md-8 d-flex flex-column bg-body-extra-light">
                         <div class="flex-grow-0 p-5">
                             <a class="link-fx fw-bold fs-2" href="{{ url('/') }}">
-                                <span class="text-dark">No</span><span class="text-primary">va</span>
+                                {{ env('APP_NAME') }}
                             </a>
                         </div>
 

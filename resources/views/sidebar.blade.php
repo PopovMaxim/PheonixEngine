@@ -6,13 +6,11 @@
                     N<span class="opacity-75">v</span>
                 </span>
                 <span class="smini-hidden">
-                    No<span class="opacity-75">va</span>
+                    {{ env('APP_NAME') }}
                 </span>
             </a>
             <div>
-                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="class-toggle"
-                    data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
+                <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
                     <i class="far fa-moon" id="dark-mode-toggler"></i>
                 </button>
             </div>
@@ -71,7 +69,7 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link @if(request()->is('network/promo')) active @endif" href="{{ route('network.promo') }}">
+                            <a class="nav-main-link @if(request()->is('network/promo')) active @endif" {{--href="{{ route('network.promo') }}"--}}>
                                 <span class="nav-main-link-name">Рекламные материалы</span>
                             </a>
                         </li>

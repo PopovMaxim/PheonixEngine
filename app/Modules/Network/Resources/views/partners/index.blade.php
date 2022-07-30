@@ -6,17 +6,21 @@
     <script>
         var clipboard = new ClipboardJS('.copy');
 
-        clipboard.on('success', function(e) {
+        clipboard.on('success', function(e, a) {
             console.info('Action:', e.action);
             console.info('Text:', e.text);
             console.info('Trigger:', e.trigger);
 
-            e.clearSelection();
-        });
+            tooltip = new bootstrap.Tooltip($(e.trigger), {
+                placement: 'top',
+                title: 'Ссылка скопирована!',
+            })
 
-        clipboard.on('error', function(e) {
-            console.error('Action:', e.action);
-            console.error('Trigger:', e.trigger);
+            setTimeout(() => {
+                tooltip.dispose()
+            }, 1000)
+
+            e.clearSelection();
         });
     </script>
 @endpush
@@ -35,7 +39,7 @@
         @livewire('team-growth-chart')
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
                         <h3 class="block-title">Ссылки на приглашение партнёров</h3>
@@ -47,7 +51,7 @@
                                     <p class="text-dark fs-5 fw-light mb-0">
                                         Ссылка на регистрацию
                                     </p>
-                                    <p class="text-dark-75 mb-0">
+                                    <p class="text-dark-75 fs-sm mb-0">
                                         {{ request()->user()->referral_link }}
                                     </p>
                                 </div>
@@ -62,7 +66,7 @@
                                     <p class="text-dark fs-5 fw-light mb-0">
                                         Принудительная регистрация в левую ногу
                                     </p>
-                                    <p class="text-dark-75 mb-0">
+                                    <p class="text-dark-75 fs-sm mb-0">
                                         {{ request()->user()->referral_link }}/left
                                     </p>
                                 </div>
@@ -77,7 +81,7 @@
                                     <p class="text-dark fs-5 fw-light mb-0">
                                         Принудительная регистрация в правую ногу
                                     </p>
-                                    <p class="text-dark-75 mb-0">
+                                    <p class="text-dark-75 fs-sm mb-0">
                                         {{ request()->user()->referral_link }}/right
                                     </p>
                                 </div>
@@ -89,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 @livewire('update-partner-register-side')
             </div>
         </div>

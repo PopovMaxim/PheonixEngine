@@ -31,6 +31,7 @@
                     <a class="nav-main-link @if(request()->is('robots')) active @endif" {{--href="{{ url('robots') }}"--}}>
                         <i class="nav-main-link-icon fa fa-robot"></i>
                         <span class="nav-main-link-name">Роботы</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
 
@@ -38,12 +39,14 @@
                     <a class="nav-main-link @if(request()->is('wallet')) active @endif" {{--href="{{ url('wallet') }}"--}}>
                         <i class="nav-main-link-icon fa fa-wallet"></i>
                         <span class="nav-main-link-name">Кошелёк</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('transactions')) active @endif" {{--href="{{ url('transactions') }}"--}}>
                         <i class="nav-main-link-icon fa fa-coins"></i>
                         <span class="nav-main-link-name">Транзакции</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
 
@@ -80,6 +83,7 @@
                     <a class="nav-main-link @if(request()->is('calendar')) active @endif" {{--href="{{ url('calendar') }}"--}}>
                         <i class="nav-main-link-icon fa fa-calendar"></i>
                         <span class="nav-main-link-name">События</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
 
@@ -87,12 +91,14 @@
                     <a class="nav-main-link @if(request()->is('support')) active @endif" {{--href="{{ url('support') }}"--}}>
                         <i class="nav-main-link-icon fa fa-headset"></i>
                         <span class="nav-main-link-name">Поддержка</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('faq')) active @endif" {{--href="{{ url('faq') }}"--}}>
                         <i class="nav-main-link-icon fa fa-circle-question"></i>
                         <span class="nav-main-link-name">FAQ</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
             </ul>

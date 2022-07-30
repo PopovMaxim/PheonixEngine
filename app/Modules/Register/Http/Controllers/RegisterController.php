@@ -86,7 +86,7 @@ class RegisterController extends Controller
             if ($create && Auth::attempt(['email' => $email, 'password' => $password])) {
                 $request->session()->regenerate();
      
-                return redirect()->intended('dashboard');
+                return redirect()->route('dashboard');
             }
 
             return back()->withErrors([

@@ -5,9 +5,12 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateProfile extends Component
 {
+    public $city = 'Норильск';
+    public $country = 'russia';
     public $lastname;
     public $firstname;
     public $patronymic;
@@ -15,11 +18,43 @@ class UpdateProfile extends Component
     public $new_password;
     public $new_password_confirmation;
 
+    private $cities;
+
+    protected $listeners = [
+        'selectedCity',
+    ];
+
+    public function hydrate()
+    {
+        $this->emit('select_city');
+    }
+
+    public function selectedCity($item)
+    {
+        $this->city = $item;
+    }
+
     public function boot(Request $request)
     {
         $this->lastname = $request->user()->lastname;
         $this->firstname = $request->user()->firstname;
         $this->patronymic = $request->user()->patronymic;
+        $this->city = $request->user()->city;
+        
+        if (!is_null($request->user()->country)) {
+            $this->country = $request->user()->country;
+        }
+
+        $this->cities = json_decode(Storage::get('countries/russia.json'), true);
+
+        $grouped_by_region = [];
+
+        foreach ($this->cities as $city)
+        {
+            $grouped_by_region[$city['region']][] = $city['city'];
+        }
+
+        $this->cities = $grouped_by_region;
     }
 
     public function submit(Request $request)
@@ -64,6 +99,16 @@ class UpdateProfile extends Component
             $params['password'] = Hash::make($this->new_password);
         }
 
+        if (!empty(trim($this->city)))
+        {
+            $params['city'] = $this->city;
+        }
+
+        if (!empty(trim($this->country)))
+        {
+            $params['country'] = $this->country;
+        }
+
         $request->user()->update($params);
 
         if (isset($params['password'])) {
@@ -79,6 +124,9 @@ class UpdateProfile extends Component
 
     public function render()
     {
-        return view('livewire.update-profile');
+        return view('livewire.update-profile')
+            ->with([
+                'cities' => $this->cities
+            ]);
     }
 }

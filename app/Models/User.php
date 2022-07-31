@@ -22,6 +22,8 @@ class User extends Authenticatable
         'hash',
         'rank',
         'email',
+        'city',
+        'country',
         'balance',
         'password',
         'nickname',

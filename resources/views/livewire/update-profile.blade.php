@@ -1,6 +1,6 @@
 <div class="block block-rounded">
     <div class="block-content">
-        <form method="POST" enctype="multipart/form-data" wire:submit.prevent="submit" autocomplete="off">
+        <form method="POST" wire:submit.prevent="submit" autocomplete="off">
             <h2 class="content-heading pt-0">
                 <i class="fa fa-fw fa-user-circle text-muted me-1"></i> Ваш профиль
             </h2>
@@ -39,6 +39,25 @@
                         @error('patronymic')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label" for="country">Страна</label>
+                        <select class="form-select" id="country" wire:model="country">
+                            <option value="russia">Россия</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label" for="city">Город</label>
+                        <select class="form-select js-select2" id="city" wire:model="city" data-placeholder="Выберите город...">
+                            <option></option>
+                            @foreach ($cities as $key => $value)
+                                <optgroup label="{{ $key }}">
+                                    @foreach ($value as $city)
+                                        <option value="{{ $city }}" >{{ $city }}</option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -100,3 +119,26 @@
         </form>
     </div>
 </div>
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            function initCitySelector() {
+                $('.js-select2').select2({
+                    theme: 'bootstrap-5'
+                });
+            }
+
+            initCitySelector();
+
+            $('#city').on('change', function (e) {
+                livewire.emit('selectedCity', e.target.value)
+            });
+
+            window.livewire.on('select_city', () => {
+                initCitySelector();
+            });
+
+        });
+    </script>
+@endpush

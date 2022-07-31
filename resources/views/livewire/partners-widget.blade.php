@@ -30,7 +30,7 @@
                         <td class="fw-normal">{{ $partner['nickname'] }}</td>
                         <td class="text-center">{{ $partner['current_rank'] }}</td>
                         <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                        <td class="text-center">0.00</td>
+                        <td class="text-center">{{ $partner['total_value'] }}</td>
                         <td class="d-none d-md-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                     </tr>
                 @empty

@@ -62,7 +62,7 @@
                             <td>{{ $partner['nickname'] }} <div class="fs-xs text-muted">Спонсор: Я</div></td>
                             <td class="text-center">{{ $partner['current_rank'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                            <td class="text-center">0.00</td>
+                            <td class="text-center">{{ $partner['total_value'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @empty
@@ -102,7 +102,7 @@
                             <td>{{ $partner['nickname'] }} <div class="fs-xs text-muted">Спонсор: {{ $partner['sponsor']['nickname'] }}</div></td>
                             <td class="text-center">{{ $partner['current_rank'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                            <td class="text-center">0.00</td>
+                            <td class="text-center">{{ $partner['total_value'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @empty
@@ -142,7 +142,7 @@
                             <td>{{ $partner['nickname'] }} <div class="fs-xs text-muted">Спонсор: {{ $partner['sponsor']['nickname'] }}</div></td>
                             <td class="text-center">{{ $partner['current_rank'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                            <td class="text-center">0.00</td>
+                            <td class="text-center">{{ $partner['total_value'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @empty

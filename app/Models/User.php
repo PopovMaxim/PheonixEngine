@@ -93,17 +93,17 @@ class User extends Authenticatable
         return number_format($this->balance / 100, 2) . ' ₽';
     }
 
+    public function getTotalValueAttribute()
+    {
+        return number_format($this->node['total_value'] / 100, 2);
+    }
+
     /*
     * Sponsor
     */
     public function sponsor()
     {
         return $this->belongsTo(get_class($this), 'sponsor_id', 'id');
-    }
-
-    public function sponsor_node()
-    {
-        return $this->belongsTo('App\Models\BinaryTree', 'id', 'user_id');
     }
 
     public function getSponsorLegAttribute()
@@ -154,7 +154,7 @@ class User extends Authenticatable
     */
     public function node()
     {
-        return $this->belongsTo('App\Models\BinaryTree', 'user_id', 'id');
+        return $this->belongsTo('App\Models\BinaryTree', 'id', 'user_id');
     }
 
     // Нужно перенести в отдельную модель бинарного дерева

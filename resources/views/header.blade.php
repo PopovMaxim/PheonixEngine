@@ -67,9 +67,9 @@
                     <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
                         <img class="img-avatar img-avatar48 img-avatar-thumb"
                             src="{{ asset('assets/media/avatars/avatar10.jpg') }}" alt="">
-                        {{--<div class="pt-2">
-                            <a class="text-white fw-semibold" href="be_pages_generic_profile.html">Henry Harrison</a>
-                        </div>--}}
+                        <div class="pt-2">
+                            <span class="text-white fw-semibold">{{ request()->user()->nickname }}</span>
+                        </div>
                     </div>
                     <div class="p-2">
                         <a class="dropdown-item" href="{{ route('profile.settings') }}">

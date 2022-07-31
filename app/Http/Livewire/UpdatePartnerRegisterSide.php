@@ -10,7 +10,7 @@ class UpdatePartnerRegisterSide extends Component
 {
     public $side;
 
-    public function mount(Request $request) {
+    public function boot(Request $request) {
         $this->side = $request->user()->partners_register_side;
 
         if (is_null($request->user()->partners_register_side)) {

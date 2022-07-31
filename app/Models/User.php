@@ -25,6 +25,9 @@ class User extends Authenticatable
         'balance',
         'password',
         'nickname',
+        'lastname',
+        'firstname',
+        'patronymic',
         'sponsor_id',
         'partners_register_side',
     ];

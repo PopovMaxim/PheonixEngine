@@ -114,8 +114,6 @@
             </a>
         @endif
 
-        @if ($partners->total())
-            @livewire('partners-widget')
-        @endif
+        @livewire('partners-widget')
     </div>
 @endsection

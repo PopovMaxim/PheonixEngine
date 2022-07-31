@@ -18,11 +18,11 @@
                     <th class="text-center" style="width: 15%;">Ранг</th>
                     <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Партнёры</th>
                     <th class="text-center" style="width: 20%;">Объём</th>
-                    <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Дата активации</th>
+                    <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Активация</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($partners as $partner)
+                @forelse ($partners as $partner)
                     <tr>
                         <td class="d-none d-sm-table-cell text-center">
                             <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="">
@@ -33,7 +33,11 @@
                         <td class="text-center">0.00</td>
                         <td class="d-none d-md-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Сейчас у Вас нет ни одного партнёра...</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         {{ $partners->links() }}

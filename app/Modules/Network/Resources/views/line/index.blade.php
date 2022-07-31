@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($level_1['list'] as $partner)
+                    @forelse ($level_1['list'] as $partner)
                         <tr>
                             <td class="d-none d-sm-table-cell text-center">
                                 <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="Аватар участника {{ $partner['nickname'] }}">
@@ -65,7 +65,11 @@
                             <td class="text-center">0.00</td>
                             <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">Сейчас у Вас нет ни одного партнёра...</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{ $level_1['list']->links() }}
@@ -90,7 +94,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($level_2['list'] as $partner)
+                    @forelse ($level_2['list'] as $partner)
                         <tr>
                             <td class="d-none d-sm-table-cell text-center">
                                 <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="Аватар участника {{ $partner['nickname'] }}">
@@ -101,7 +105,11 @@
                             <td class="text-center">0.00</td>
                             <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">Сейчас у Вас нет ни одного партнёра...</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{ $level_2['list']->links() }}
@@ -126,7 +134,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($level_3['list'] as $partner)
+                    @forelse ($level_3['list'] as $partner)
                         <tr>
                             <td class="d-none d-sm-table-cell text-center">
                                 <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="Аватар участника {{ $partner['nickname'] }}">
@@ -137,7 +145,11 @@
                             <td class="text-center">0.00</td>
                             <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">Сейчас у Вас нет ни одного партнёра...</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{ $level_3['list']->links() }}

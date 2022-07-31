@@ -35,8 +35,8 @@ class UpdateProfile extends Component
                     }
                 }
             ],
-            'new_password' => 'required_with:current_password|min:6|confirmed',
-            'new_password_confirmation' => 'required_with:new_password,current_password',
+            'new_password' => 'nullable|required_with:current_password|min:6|confirmed',
+            'new_password_confirmation' => 'nullable|required_with:new_password,current_password',
         ], [
             'lastname.required' => 'Поле «Фамилия» обязательно для заполнения.',
             'firstname.required' => 'Поле «Имя» обязательно для заполнения.',

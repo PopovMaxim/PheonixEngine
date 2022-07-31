@@ -6,11 +6,7 @@
     <script>
         var clipboard = new ClipboardJS('.copy');
 
-        clipboard.on('success', function(e, a) {
-            console.info('Action:', e.action);
-            console.info('Text:', e.text);
-            console.info('Trigger:', e.trigger);
-
+        clipboard.on('success', function(e) {
             tooltip = new bootstrap.Tooltip($(e.trigger), {
                 placement: 'top',
                 title: 'Ссылка скопирована!',
@@ -46,47 +42,38 @@
                     </div>
                     <div class="block-content block-content-full">
                         <a class="block block-rounded bg-light mb-2 copy" href="javascript:void(0)" data-clipboard-text="{{ request()->user()->referral_link }}">
-                            <div class="block-content block-content-sm block-content-full d-flex align-items-center justify-content-between">
-                                <div class="me-3">
+                            <div class="block-content block-content-sm block-content-full d-flex align-items-center p-3" style="min-height: 85px;">
+                                <div>
                                     <p class="text-dark fs-5 fw-light mb-0">
                                         Ссылка на регистрацию
                                     </p>
-                                    <p class="text-dark-75 fs-sm mb-0">
-                                        {{ request()->user()->referral_link }}
+                                    <p class="text-dark-75 fs-sm mb-0 d-none d-md-block">
+                                        Партнёр будет зарегистрирован в выбранную ногу согласно настройкам.
                                     </p>
-                                </div>
-                                <div class="item">
-                                    <i class="fas fa-2x fa-copy text-primary"></i>
                                 </div>
                             </div>
                         </a>
                         <a class="block block-rounded bg-light mb-2 copy" href="javascript:void(0)" data-clipboard-text="{{ request()->user()->referral_link }}/left">
-                            <div class="block-content block-content-sm block-content-full d-flex align-items-center justify-content-between">
-                                <div class="me-3">
+                            <div class="block-content block-content-sm block-content-full d-flex align-items-center justify-content-between p-3" style="min-height: 85px;">
+                                <div>
                                     <p class="text-dark fs-5 fw-light mb-0">
-                                        Принудительная регистрация в левую ногу
+                                        Регистрация в левую ногу
                                     </p>
-                                    <p class="text-dark-75 fs-sm mb-0">
-                                        {{ request()->user()->referral_link }}/left
+                                    <p class="text-dark-75 fs-sm mb-0 d-none d-md-block">
+                                        Партнёр будет принудительно зарегистрирован в левую ногу.
                                     </p>
-                                </div>
-                                <div class="item">
-                                    <i class="fas fa-2x fa-copy text-primary"></i>
                                 </div>
                             </div>
                         </a>
-                        <a class="block block-rounded bg-light mb-2 copy" href="javascript:void(0)" data-clipboard-text="{{ request()->user()->referral_link }}/right">
-                            <div class="block-content block-content-sm block-content-full d-flex align-items-center justify-content-between">
-                                <div class="me-3">
+                        <a class="block block-rounded bg-light mb-0 copy" href="javascript:void(0)" data-clipboard-text="{{ request()->user()->referral_link }}/right">
+                            <div class="block-content block-content-sm block-content-full d-flex align-items-center justify-content-between p-3" style="min-height: 85px;">
+                                <div>
                                     <p class="text-dark fs-5 fw-light mb-0">
-                                        Принудительная регистрация в правую ногу
+                                        Регистрация в правую ногу
                                     </p>
-                                    <p class="text-dark-75 fs-sm mb-0">
-                                        {{ request()->user()->referral_link }}/right
+                                    <p class="text-dark-75 fs-sm mb-0 d-none d-md-block">
+                                        Партнёр будет принудительно зарегистрирован в правую ногу.
                                     </p>
-                                </div>
-                                <div class="item">
-                                    <i class="fas fa-2x fa-copy text-primary"></i>
                                 </div>
                             </div>
                         </a>

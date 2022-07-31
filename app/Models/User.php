@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'hash',
+        'rank',
         'email',
         'balance',
         'password',
@@ -63,6 +64,20 @@ class User extends Authenticatable
             $last_domain = str_replace(substr($last['0'], '1'), str_repeat('*', strlen($last['0'])-1), $last['0']);
             return $first.'@'.$last_domain.'.'.$last['1'];
         }
+    }
+
+    /*
+    * Rank
+    */
+    public function getCurrentRankAttribute()
+    {
+        return match($this->rank) {
+            null => 'Нет',
+            'silver' => 'Silver',
+            'gold' => 'Gold',
+            'Platinum' => 'Platinum',
+            'Diamond' => 'Diamond'
+        };
     }
 
     /*

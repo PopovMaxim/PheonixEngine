@@ -7,17 +7,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-check form-block mb-2">
-                        <input type="radio" class="form-check-input" id="partner-register-side-left" name="side" value="left" wire:model="side" wire:change="submit">
-                        <label class="form-check-label" for="partner-register-side-left">
-                            <span class="d-block fw-normal p-1">
-                                <span class="d-block fw-semibold mb-1">Левая нога</span>
-                                <span class="d-block fs-sm fw-medium text-muted">Партнёр будет зарегистрирован в левую ногу</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-check form-block mb-2">
                         <input type="radio" class="form-check-input" id="partner-register-side-sponsor" name="side" value="" wire:model="side" wire:change="submit">
                         <label class="form-check-label" for="partner-register-side-sponsor">
                             <span class="d-block fw-normal p-1">
@@ -28,7 +17,18 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="form-check form-block">
+                    <div class="form-check form-block mb-2">
+                        <input type="radio" class="form-check-input" id="partner-register-side-left" name="side" value="left" wire:model="side" wire:change="submit">
+                        <label class="form-check-label" for="partner-register-side-left">
+                            <span class="d-block fw-normal p-1">
+                                <span class="d-block fw-semibold mb-1">Левая нога</span>
+                                <span class="d-block fs-sm fw-medium text-muted">Партнёр будет зарегистрирован в левую ногу</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-check form-block mb-0">
                         <input type="radio" class="form-check-input" id="partner-register-side-right" name="side" value="right" wire:model="side" wire:change="submit">
                         <label class="form-check-label" for="partner-register-side-right">
                             <span class="d-block fw-normal p-1">

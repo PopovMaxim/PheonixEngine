@@ -40,30 +40,30 @@
             <h3 class="block-title">Уровень 1</h3>
         </div>
         <div class="block-content">
-            <table class="table table-bordered table-striped table-vcenter">
+            <table class="table table-bordered table-striped table-vcenter fs-sm">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width: 64px;">
+                        <th class="d-none d-sm-table-cell text-center" style="width: 32px;">
                             <i class="far fa-user"></i>
                         </th>
                         <th>Никнейм</th>
-                        <th class="text-center" style="width: 20%;">Спонсор</th>
-                        <th class="text-center" style="width: 5%;">Партнёры</th>
-                        <th class="d-none d-sm-table-cell text-center" style="width: 20%;">Дата регистрации</th>
-                        <th class="d-none d-sm-table-cell text-center" style="width: 20%;">Дата активации</th>
+                        <th class="text-center" style="width: 15%;">Ранг</th>
+                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Партнёры</th>
+                        <th class="text-center" style="width: 20%;">Объём</th>
+                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Дата активации</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($level_1['list'] as $partner)
                         <tr>
-                            <td class="text-center">
-                                <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="">
+                            <td class="d-none d-sm-table-cell text-center">
+                                <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="Аватар участника {{ $partner['nickname'] }}">
                             </td>
-                            <td class="fw-semibold">{{ $partner['nickname'] ?? $partner['obfuscated_email'] }}</td>
-                            <td class="fw-semibold text-center">Я</td>
+                            <td>{{ $partner['nickname'] }} <div class="fs-xs text-muted">Спонсор: Я</div></td>
+                            <td class="text-center">{{ $partner['current_rank'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                            <td class="d-none d-sm-table-cell text-center">{{ $partner['created_at']->format('d-m-Y') }}</td>
-                            <td class="d-none d-md-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
+                            <td class="text-center">0.00</td>
+                            <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -76,30 +76,30 @@
             <h3 class="block-title">Уровень 2</h3>
         </div>
         <div class="block-content">
-            <table class="table table-bordered table-striped table-vcenter">
+            <table class="table table-bordered table-striped table-vcenter fs-sm">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width: 64px;">
+                        <th class="d-none d-sm-table-cell text-center" style="width: 32px;">
                             <i class="far fa-user"></i>
                         </th>
                         <th>Никнейм</th>
-                        <th class="text-center" style="width: 20%;">Спонсор</th>
-                        <th class="text-center" style="width: 5%;">Партнёры</th>
-                        <th class="d-none d-sm-table-cell text-center" style="width: 20%;">Дата регистрации</th>
-                        <th class="d-none d-sm-table-cell text-center" style="width: 20%;">Дата активации</th>
+                        <th class="text-center" style="width: 15%;">Ранг</th>
+                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Партнёры</th>
+                        <th class="text-center" style="width: 20%;">Объём</th>
+                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Дата активации</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($level_2['list'] as $partner)
                         <tr>
-                            <td class="text-center">
-                                <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="">
+                            <td class="d-none d-sm-table-cell text-center">
+                                <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="Аватар участника {{ $partner['nickname'] }}">
                             </td>
-                            <td class="fw-semibold">{{ $partner['nickname'] ?? $partner['obfuscated_email'] }}</td>
-                            <td class="fw-semibold text-center">{{ $partner['sponsor']['nickname'] ?? $partner['sponsor']['obfuscated_email'] }}</td>
+                            <td>{{ $partner['nickname'] }} <div class="fs-xs text-muted">Спонсор: {{ $partner['sponsor']['nickname'] }}</div></td>
+                            <td class="text-center">{{ $partner['current_rank'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                            <td class="d-none d-sm-table-cell text-center">{{ $partner['created_at']->format('d-m-Y') }}</td>
-                            <td class="d-none d-md-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
+                            <td class="text-center">0.00</td>
+                            <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -112,30 +112,30 @@
             <h3 class="block-title">Уровень 3</h3>
         </div>
         <div class="block-content">
-            <table class="table table-bordered table-striped table-vcenter">
+            <table class="table table-bordered table-striped table-vcenter fs-sm">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width: 64px;">
+                        <th class="d-none d-sm-table-cell text-center" style="width: 32px;">
                             <i class="far fa-user"></i>
                         </th>
                         <th>Никнейм</th>
-                        <th class="text-center" style="width: 20%;">Спонсор</th>
-                        <th class="text-center" style="width: 5%;">Партнёры</th>
-                        <th class="d-none d-sm-table-cell text-center" style="width: 20%;">Дата регистрации</th>
-                        <th class="d-none d-sm-table-cell text-center" style="width: 20%;">Дата активации</th>
+                        <th class="text-center" style="width: 15%;">Ранг</th>
+                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Партнёры</th>
+                        <th class="text-center" style="width: 20%;">Объём</th>
+                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Дата активации</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($level_3['list'] as $partner)
                         <tr>
-                            <td class="text-center">
-                                <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="">
+                            <td class="d-none d-sm-table-cell text-center">
+                                <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="Аватар участника {{ $partner['nickname'] }}">
                             </td>
-                            <td class="fw-semibold">{{ $partner['nickname'] ?? $partner['obfuscated_email'] }}</td>
-                            <td class="fw-semibold text-center">{{ $partner['sponsor']['nickname'] ?? $partner['sponsor']['obfuscated_email'] }}</td>
+                            <td>{{ $partner['nickname'] }} <div class="fs-xs text-muted">Спонсор: {{ $partner['sponsor']['nickname'] }}</div></td>
+                            <td class="text-center">{{ $partner['current_rank'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                            <td class="d-none d-sm-table-cell text-center">{{ $partner['created_at']->format('d-m-Y') }}</td>
-                            <td class="d-none d-md-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
+                            <td class="text-center">0.00</td>
+                            <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @endforeach
                 </tbody>

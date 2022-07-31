@@ -8,29 +8,29 @@
         </div>
     </div>
     <div class="block-content">
-        <table class="table table-bordered table-striped table-vcenter">
-            <thead>
+        <table class="table table-bordered table-striped table-vcenter fs-sm">
+            <thead class="">
                 <tr>
-                    <th class="text-center" style="width: 64px;">
+                    <th class="d-none d-sm-table-cell text-center" style="width: 32px;">
                         <i class="far fa-user"></i>
                     </th>
                     <th>Никнейм</th>
-                    <th class="text-center">Ранг</th>
-                    <th class="text-center">Партнёры</th>
-                    <th class="text-center">Объём</th>
-                    <th class="d-none d-sm-table-cell text-center">Активация</th>
+                    <th class="text-center" style="width: 15%;">Ранг</th>
+                    <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Партнёры</th>
+                    <th class="text-center" style="width: 20%;">Объём</th>
+                    <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Дата активации</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($partners as $partner)
                     <tr>
-                        <td class="text-center">
+                        <td class="d-none d-sm-table-cell text-center">
                             <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="">
                         </td>
-                        <td class="fw-semibold">{{ $partner['nickname'] }}</td>
-                        <td class="d-none d-sm-table-cell text-center">Нет</td>
+                        <td class="fw-normal">{{ $partner['nickname'] }}</td>
+                        <td class="text-center">{{ $partner['current_rank'] }}</td>
                         <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                        <td class="d-none d-sm-table-cell text-center">0.00</td>
+                        <td class="text-center">0.00</td>
                         <td class="d-none d-md-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                     </tr>
                 @endforeach

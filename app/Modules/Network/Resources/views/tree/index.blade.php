@@ -4,7 +4,7 @@
     <script src="{{ asset('assets/js/plugins/gojs/go.js') }}" type="text/javascript"></script>
     <script>
         (function () {
-            var diagramHeight = $('#main-container').height() - $('#page-header').height();
+            var diagramHeight = $('#main-container').height();
 
             $('#tree').height(diagramHeight)
 
@@ -14,7 +14,7 @@
                 myDiagram = $(go.Diagram, "tree", {
                     maxSelectionCount: 0,
                     scale: 1,
-                    contentAlignment: go.Spot.Center,
+                    contentAlignment: go.Spot.TopCenter,
                     layout: $(go.TreeLayout, {
                         angle: 90,
                     })
@@ -29,10 +29,15 @@
                     //return "images/HS" + pic;
                 }
 
+                myDiagram.addDiagramListener("InitialLayoutCompleted", function(e) {
+                    e.diagram.findTreeRoots().each(function(r) { r.expandTree(3); });
+                })
+
                 myDiagram.nodeTemplate =
                 $(go.Node, "Spot",
                     {
                         selectionObjectName: "BODY",
+                        isTreeExpanded: false
                     },
                     new go.Binding("text", "nickname"),
                     new go.Binding("layerName", "isSelected", sel => sel ? "Foreground" : "").ofObject(),
@@ -129,7 +134,21 @@
                                 ),
                                 
                             ) // End Table Panel
-                        ) // End Horizontal Panel
+                        ),
+                        $("TreeExpanderButton",
+                        {
+                            "ButtonIcon.stroke": "transparent",
+                            "ButtonIcon.strokeWidth": "100",
+                            "ButtonBorder.fill": "transparent",
+                            "ButtonBorder.stroke": "transparent",
+                            "_buttonFillOver": "transparent",
+                            "_buttonFillPressed": "transparent",
+                            "_buttonBorderPressed": "transparent",
+                            "_buttonStrokeOver": "transparent"
+                        },
+                        { alignment: go.Spot.BottomRight, alignmentFocus: go.Spot.Top },
+                        { visible: true }
+                    ) // End Horizontal Panel
                     ), // End Auto Panel
                 );
 

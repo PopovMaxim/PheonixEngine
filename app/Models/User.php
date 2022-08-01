@@ -98,17 +98,20 @@ class User extends Authenticatable
     */
     private function calcBalance()
     {
-        $transactions = $this->transactions->get();
+        $transactions = $this->transactions?->get();
 
         $balance = 0;
 
-        foreach ($transactions as $transaction)
+        if ($transactions)
         {
-            if ($transaction['status'] == 'completed') {
-                if ($transaction['direction'] == 'inner') {
-                    $balance += $transaction['amount'];
-                } else {
-                    $balance -= $transaction['amount'];
+            foreach ($transactions as $transaction)
+            {
+                if ($transaction['status'] == 'completed') {
+                    if ($transaction['direction'] == 'inner') {
+                        $balance += $transaction['amount'];
+                    } else {
+                        $balance -= $transaction['amount'];
+                    }
                 }
             }
         }

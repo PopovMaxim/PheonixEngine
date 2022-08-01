@@ -158,6 +158,59 @@
 @endpush
 
 @section('content')
+    <div class="bg-body-extra-light text-center">
+        <div class="content content-boxed content-full py-5 py-md-7">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-xl-6">
+                    <h1 class="h2 mb-2">
+                        Бинарное дерево
+                    </h1>
+                    <p class="fs-lg fw-normal text-muted">
+                        Структура Вашей партнёрской сети
+                    </p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-lg-8 col-xl-6">
+                    <div class="p-2 rounded bg-body-light shadow-sm">
+                        <form class="d-flex align-items-center" action="be_pages_jobs_dashboard.html" method="POST" onclick="return false;">
+                            <div class="flex-grow-1">
+                                <label class="visually-hidden" for="example-job-search">Найти партнёра...</label>
+                                <input type="text" class="form-control form-control-lg form-control-alt" id="example-job-search" name="example-job-search" placeholder="Найти партнёра...">
+                            </div>
+                            <div class="flex-grow-0 ms-2">
+                                <button type="submit" class="btn btn-lg btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center mt-5">
+                <div class="px-2 px-sm-5">
+                    <p class="fs-3 text-dark mb-0">0</p>
+                    <p class="text-muted mb-0">
+                        Объём левой ноги
+                    </p>
+                </div>
+                <div class="px-2 px-sm-5 border-start">
+                    <p class="fs-3 text-dark mb-0">0</p>
+                    <p class="text-muted mb-0">
+                        Объём правой ноги
+                    </p>
+                </div>
+                <div class="px-2 px-sm-5 border-start">
+                    <p class="fs-3 text-dark mb-0">0</p>
+                    <p class="text-muted mb-0">
+                        Объём всей сети
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid pt-2">
         <div id="tree" style="width:100%;"></div>
     </div>

@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="content content-full">
+    <div class="content content-boxed">
         <div class="block block-rounded">
             <ul class="nav nav-tabs nav-tabs-block">
                 <li class="nav-item">
@@ -51,10 +51,13 @@
                 </div>
             </div>
         @empty
-            <div class="alert alert-warning shadow" role="alert">
-                <h3 class="alert-heading fs-4 my-2">Внимание</h3>
-                <p class="mb-0">На данный момент здесь нет никакой информации. Приходите позже...</p>
+            <div class="block block-rounded">
+                <div class="block-content text-center">
+                    <p>На данный момент здесь нет никакой информации...</p>
+                </div>
             </div>
         @endforelse
+
+        {{ $notifications->links() }}
     </div>
 @endsection

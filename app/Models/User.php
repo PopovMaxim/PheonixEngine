@@ -86,18 +86,49 @@ class User extends Authenticatable
     }
 
     /*
+    * Transactions
+    */
+    public function transactions()
+    {
+        return $this->belongsTo('App\Modules\Transactions\Entities\Transaction', 'id', 'user_id');
+    }
+
+    /*
     * Balance
     */
+    private function calcBalance()
+    {
+        $transactions = $this->transactions->get();
+
+        $balance = 0;
+
+        foreach ($transactions as $transaction)
+        {
+            if ($transaction['status'] == 'completed') {
+                if ($transaction['direction'] == 'inner') {
+                    $balance += $transaction['amount'];
+                } else {
+                    $balance -= $transaction['amount'];
+                }
+            }
+        }
+
+        return $balance;
+    }
+
     public function getRawBalanceAttribute()
     {
-        return $this->balance;
+        return $this->calcBalance();
     }
 
     public function getFormattedBalanceAttribute()
     {
-        return number_format($this->balance / 100, 2) . ' ₽';
+        return number_format($this->calcBalance() / 100, 2) . ' ₽';
     }
 
+    /*
+    * Mlm data
+    */
     public function getTotalValueAttribute()
     {
         return number_format($this->node['total_value'] / 100, 2);

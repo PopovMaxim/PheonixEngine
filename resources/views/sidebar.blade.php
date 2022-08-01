@@ -43,10 +43,9 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('transactions')) active @endif" {{--href="{{ url('transactions') }}"--}}>
+                    <a class="nav-main-link @if(request()->is('transactions')) active @endif" href="{{ route('transactions') }}">
                         <i class="nav-main-link-icon fa fa-coins"></i>
                         <span class="nav-main-link-name">Транзакции</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
 
@@ -77,14 +76,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('calendar')) active @endif" {{--href="{{ url('calendar') }}"--}}>
-                        <i class="nav-main-link-icon fa fa-calendar"></i>
-                        <span class="nav-main-link-name">События</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
-                    </a>
                 </li>
 
                 <li class="nav-main-item">

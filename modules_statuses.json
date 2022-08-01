@@ -7,5 +7,6 @@
     "Faq": true,
     "Network": true,
     "Notifications": true,
-    "Changelog": true
+    "Changelog": true,
+    "Transactions": true
 }

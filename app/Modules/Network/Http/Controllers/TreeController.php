@@ -14,9 +14,11 @@ class TreeController extends Controller
      */
     public function index(Request $request)
     {
+        $binary = $this->makeBinaryTree($request);
+
         return view('network::tree.index')
             ->with([
-                'binary_tree' => $this->makeBinaryTree($request)
+                'binary' => $binary
             ]);
     }
 
@@ -39,7 +41,8 @@ class TreeController extends Controller
                     's.left as left',
                     's.right as right',
                     's.path as path',
-                    's.side as side'
+                    's.side as side',
+                    's.total_value as total_value'
                 ])
                 ->leftJoin('users as u', 'u.id', '=', 's.user_id')
                 ->leftJoin('users as u2', 'u2.id', '=', 'u.sponsor_id')
@@ -79,6 +82,10 @@ class TreeController extends Controller
 
             $raw_array = [];
 
+            $total_value = 0;
+            $total_left_leg_value = 0;
+            $total_right_leg_value = 0;
+
             foreach ($res as $row) {
                 if (!$row['parent'] || $row['user_id'] == $user['id']) continue;
                 
@@ -90,6 +97,8 @@ class TreeController extends Controller
                     $raw_array[$row['parent']]['right']['parent'] = $row['parent'];
                     $raw_array[$row['parent']]['right']['nickname'] = $row['nickname'];
                     $raw_array[$row['parent']]['right']['sponsor_nickname'] = $row['sponsor_nickname'];
+
+                    $total_right_leg_value += $row['total_value'];
                 } else {
                     $raw_array[$row['parent']]['left']['id'] = $row['id'];
                     $raw_array[$row['parent']]['left']['user_id'] = $row['user_id'];
@@ -98,8 +107,16 @@ class TreeController extends Controller
                     $raw_array[$row['parent']]['left']['sponsor_nickname'] = $row['sponsor_nickname'];
 
                     $raw_array[$row['parent']]['right']['parent'] = $row['parent'];
+
+                    $total_left_leg_value += $row['total_value'];
                 }
+
+                $total_value += $row['total_value'] ?? 0;
             }
+
+            $total_value = number_format($total_value / 100, 2);
+            $total_left_leg_value = number_format($total_left_leg_value / 100, 2);
+            $total_right_leg_value = number_format($total_right_leg_value / 100, 2);
 
             $nickname = $user['nickname'];
             $sponsor_nickname = $user['sponsor']['nickname'] ?? 'Нет';
@@ -124,7 +141,12 @@ class TreeController extends Controller
             $node_data .= rtrim($_r, ',');
             $node_data .= ']}';
 
-            return $node_data;
+            return [
+                'tree' => $node_data,
+                'total_value' => $total_value,
+                'total_left_leg_value' => $total_left_leg_value,
+                'total_right_leg_value' => $total_right_leg_value,
+            ];
         } else {
             return json_encode([]);
         }

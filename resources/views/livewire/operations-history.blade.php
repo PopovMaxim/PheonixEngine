@@ -1,139 +1,38 @@
 <div class="block block-rounded block-mode-loading-refresh h-100 mb-0">
     <div class="block-header block-header-default">
         <h3 class="block-title">История операций</h3>
-        <div class="block-options">
-            <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle" data-action-mode="demo">
-                <i class="si si-refresh"></i>
-            </button>
-        </div>
     </div>
-    <div class="block-content">
-        <table class="table table-striped table-hover table-borderless table-vcenter fs-sm">
-            <thead>
-                <tr class="text-uppercase">
-                    <th class="fw-bold">Операция</th>
-                    <th class="d-none d-sm-table-cell fw-bold">Дата</th>
-                    <th class="fw-bold">Статус</th>
-                    <th class="d-none d-sm-table-cell fw-bold text-end" style="width: 120px;">Сумма</th>
-                    <th class="fw-bold text-center" style="width: 60px;"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <span class="fw-semibold">Начисление</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                        <span class="fs-sm text-muted">20.02.2022 в 11:32</span>
-                    </td>
-                    <td>
-                        <span class="fw-semibold text-success">Выполнено</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                        1000,00 ₽
-                    </td>
-                    <td class="text-center">
-                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="left"title="Открыть страницу партнёра">
-                            <i class="fa fa-fw fa-ellipsis"></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="fw-semibold">Начисление</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                        <span class="fs-sm text-muted">20.02.2022 в 11:32</span>
-                    </td>
-                    <td>
-                        <span class="fw-semibold text-success">Выполнено</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                        1000,00 ₽
-                    </td>
-                    <td class="text-center">
-                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="left"title="Открыть страницу партнёра">
-                            <i class="fa fa-fw fa-ellipsis"></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="fw-semibold">Начисление</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                        <span class="fs-sm text-muted">20.02.2022 в 11:32</span>
-                    </td>
-                    <td>
-                        <span class="fw-semibold text-success">Выполнено</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                        1000,00 ₽
-                    </td>
-                    <td class="text-center">
-                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="left"title="Открыть страницу партнёра">
-                            <i class="fa fa-fw fa-ellipsis"></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="fw-semibold">Начисление</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                        <span class="fs-sm text-muted">20.02.2022 в 11:32</span>
-                    </td>
-                    <td>
-                        <span class="fw-semibold text-success">Выполнено</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                        1000,00 ₽
-                    </td>
-                    <td class="text-center">
-                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="left"title="Открыть страницу партнёра">
-                            <i class="fa fa-fw fa-ellipsis"></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="fw-semibold">Начисление</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                        <span class="fs-sm text-muted">20.02.2022 в 11:32</span>
-                    </td>
-                    <td>
-                        <span class="fw-semibold text-success">Выполнено</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                        1000,00 ₽
-                    </td>
-                    <td class="text-center">
-                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="left"title="Открыть страницу партнёра">
-                            <i class="fa fa-fw fa-ellipsis"></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="fw-semibold">Начисление</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                        <span class="fs-sm text-muted">20.02.2022 в 11:32</span>
-                    </td>
-                    <td>
-                        <span class="fw-semibold text-success">Выполнено</span>
-                    </td>
-                    <td class="d-none d-sm-table-cell text-end">
-                        1000,00 ₽
-                    </td>
-                    <td class="text-center">
-                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="left"title="Открыть страницу партнёра">
-                            <i class="fa fa-fw fa-ellipsis"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="block-content d-flex justify-content-between flex-column" style="min-height: 370px;">
+        <div>
+            <table class="table table-striped table-bordered table-hover table-vcenter fs-sm">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Операция</th>
+                        <th class="text-center" style="width: 20%;">Статус</th>
+                        <th class="text-center" style="width: 20%;">Сумма</th>
+                        <th class="text-center" style="width: 20%;">Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($transactions as $transaction)
+                        <tr style="min-height: 60px;">
+                            <td>{{ $transaction['translated_type'] }}</td>
+                            <td class="text-center">{!! $transaction['html_status'] !!}</td>
+                            <td class="text-center text-{{ $transaction['direction'] == 'inner' ? 'success' : 'danger' }} fw-bold" style="width: 20%;">{{ $transaction['formatted_amount'] }}</td>
+                            <td class="text-center">
+                                <span class="fs-sm text-muted">{{ $transaction['updated_at']->format('d.m.y в H:i:s') }}</span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">Ни одной транзакции не найдено...</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center">
+            {{ $transactions->links() }}
+        </div>
     </div>
 </div>

@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Modules\Profile\Entities\Activity;
 use Livewire\Component;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class UpdatePartnerRegisterSide extends Component
 {
     public $side;
 
-    public function boot(Request $request) {
+    public function mount(Request $request) {
         $this->side = $request->user()->partners_register_side;
 
         if (is_null($request->user()->partners_register_side)) {
@@ -27,6 +27,14 @@ class UpdatePartnerRegisterSide extends Component
         $request->user()->update([
             'partners_register_side' => $this->side
         ]);
+
+        if ($this->side == '') {
+            $side = 'sponsor';
+        } else {
+            $side = $this->side;
+        }
+
+        Activity::storeAction('update_partners_register_side_' . $side, $request);
     }
 
     public function updating($name, $value)

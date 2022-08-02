@@ -58,20 +58,6 @@
         </div>
     </div>
 
-    <div class="block block-rounded block-transparent bg-gd-sea h-100" href="javascript:void(0)">
-        <div class="block-content block-content-full d-flex align-items-center justify-content-between">
-            <div>
-                <p class="fs-lg fw-semibold mb-0 text-white">
-                    Партнёрская ссылка
-                </p>
-                <p class="text-white-75 mb-0">{{ request()->user()->referral_link }}</p>
-            </div>
-            <div class="ms-3 item">
-                <i class="fa fa-2x fa-user-plus text-white-50"></i>
-            </div>
-        </div>
-    </div>
-
     <div class="row items-push">
         <div class="col-xl-6">
             @livewire('partners-widget')

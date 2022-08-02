@@ -73,7 +73,10 @@
                     </div>
                     <div class="p-2">
                         <a class="dropdown-item" href="{{ route('profile.settings') }}">
-                            <i class="far fa-fw fa-building me-1"></i> Настройки
+                            <i class="fas fa-fw fa-cog me-1"></i> Настройки
+                        </a>
+                        <a class="dropdown-item" href="{{ route('profile.activity-log') }}">
+                            <i class="fas fa-fw fa-user-clock me-1"></i> История активности
                         </a>
                         <div role="separator" class="dropdown-divider"></div>
                         <form method="post" action="{{ route('logout') }}">

@@ -3,17 +3,13 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class PartnersWidget extends Component
 {
-    public $ready_to_load = false;
-
-    protected $listeners = ['refresh_partners_list' => '$refresh'];
-
-    public function loadPartners()
-    {
-        $this->ready_to_load = true;
-    }
+    use WithPagination;
+    
+    protected $paginationTheme = 'bootstrap';
 
     public function render($limit = 5)
     {

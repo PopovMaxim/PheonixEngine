@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Modules\Profile\Entities\Activity;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -119,6 +120,10 @@ class UpdateProfile extends Component
             $this->new_password_confirmation = null;
 
             session()->flash('password_update', 'Пароль от личного кабинета успешно изменён.');
+            
+            Activity::storeAction('update_password', $request);
+        } else {
+            Activity::storeAction('update_profile_settings', $request);
         }
     }
 

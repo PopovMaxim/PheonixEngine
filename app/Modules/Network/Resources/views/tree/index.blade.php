@@ -30,14 +30,14 @@
                 }
 
                 myDiagram.addDiagramListener("InitialLayoutCompleted", function(e) {
-                    e.diagram.findTreeRoots().each(function(r) { r.expandTree(3); });
+                    //e.diagram.findTreeRoots().each(function(r) { r.expandTree(3); });
                 })
 
                 myDiagram.nodeTemplate =
                 $(go.Node, "Spot",
                     {
                         selectionObjectName: "BODY",
-                        isTreeExpanded: false
+                        isTreeExpanded: true
                     },
                     new go.Binding("text", "nickname"),
                     new go.Binding("layerName", "isSelected", sel => sel ? "Foreground" : "").ofObject(),
@@ -51,7 +51,7 @@
                             stroke: '#ddd',
                             strokeWidth: 2,
                             portId: ""
-                        }),
+                        }, new go.Binding("fill", "isHighlighted", h => h ? "gold" : "#ffffff").ofObject()),
                         $(go.Panel, "Horizontal",
                             $(go.Picture,
                             {
@@ -168,8 +168,33 @@
             }
 
             function load() {
-                myDiagram.model = go.Model.fromJson('{!! $binary_tree !!}');
+                myDiagram.model = go.Model.fromJson('{!! $binary['tree'] !!}');
             }
+
+            function searchDiagram() {
+                var input = document.getElementById("search");
+                if (!input) return;
+                myDiagram.focus();
+
+                myDiagram.startTransaction("highlight search");
+
+                if (input.value) {
+                    // search four different data properties for the string, any of which may match for success
+                    // create a case insensitive RegExp from what the user typed
+                    var safe = input.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    var regex = new RegExp(safe, "i");
+                    var results = myDiagram.findNodesByExample({ nickname: regex });
+                    myDiagram.highlightCollection(results);
+                    // try to center the diagram at the first node that was found
+                    if (results.count > 0) myDiagram.centerRect(results.first().actualBounds);
+                } else {  // empty string only clears highlighteds collection
+                    myDiagram.clearHighlighteds();
+                }
+
+                myDiagram.commitTransaction("highlight search");
+            }
+
+            $('#searchButton').on('click', () => searchDiagram())
 
             window.addEventListener('DOMContentLoaded', init);
         })();
@@ -178,7 +203,7 @@
 
 @section('content')
     <div class="bg-body-extra-light text-center">
-        <div class="content content-boxed content-full py-5 py-md-7">
+        <div class="content content-boxed content-full py-5">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-xl-6">
                     <h1 class="h2 mb-2">
@@ -193,36 +218,36 @@
             <div class="row justify-content-center">
                 <div class="col-sm-10 col-lg-8 col-xl-6">
                     <div class="p-2 rounded bg-body-light shadow-sm">
-                        <form class="d-flex align-items-center" action="be_pages_jobs_dashboard.html" method="POST" onclick="return false;">
+                        <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <label class="visually-hidden" for="example-job-search">Найти партнёра...</label>
-                                <input type="text" class="form-control form-control-lg form-control-alt" id="example-job-search" name="example-job-search" placeholder="Найти партнёра...">
+                                <label class="visually-hidden" for="search">Найти партнёра...</label>
+                                <input type="text" class="form-control form-control-lg form-control-alt" id="search" name="search" placeholder="Найти партнёра...">
                             </div>
                             <div class="flex-grow-0 ms-2">
-                                <button type="submit" class="btn btn-lg btn-primary">
+                                <button id="searchButton" class="btn btn-lg btn-primary">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="d-flex justify-content-center align-items-center mt-5">
                 <div class="px-2 px-sm-5">
-                    <p class="fs-3 text-dark mb-0">0</p>
+                    <p class="fs-3 text-dark mb-0">{{ $binary['total_left_leg_value'] }}</p>
                     <p class="text-muted mb-0">
                         Объём левой ноги
                     </p>
                 </div>
                 <div class="px-2 px-sm-5 border-start">
-                    <p class="fs-3 text-dark mb-0">0</p>
+                    <p class="fs-3 text-dark mb-0">{{ $binary['total_right_leg_value'] }}</p>
                     <p class="text-muted mb-0">
                         Объём правой ноги
                     </p>
                 </div>
                 <div class="px-2 px-sm-5 border-start">
-                    <p class="fs-3 text-dark mb-0">0</p>
+                    <p class="fs-3 text-dark mb-0">{{ $binary['total_value'] }}</p>
                     <p class="text-muted mb-0">
                         Объём всей сети
                     </p>

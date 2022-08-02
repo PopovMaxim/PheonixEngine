@@ -3,11 +3,26 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Illuminate\Http\Request;
+use Livewire\WithPagination;
 
 class OperationsHistory extends Component
 {
-    public function render()
+    use WithPagination;
+    
+    protected $paginationTheme = 'bootstrap';
+
+    public function render(Request $request)
     {
-        return view('livewire.operations-history');
+        $transactions = $request
+            ->user()
+            ->transactions()
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        return view('livewire.operations-history')
+            ->with([
+                'transactions' => $transactions
+            ]);
     }
 }

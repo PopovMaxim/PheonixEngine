@@ -18,7 +18,7 @@
     <div class="content content-full content-boxed">
         <div class="block block-rounded mb-0">
             <div class="block-content">
-                <div>
+                <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover table-vcenter fs-sm">
                         <thead>
                             <tr>

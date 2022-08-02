@@ -3,7 +3,7 @@
         <h3 class="block-title">История операций</h3>
     </div>
     <div class="block-content d-flex justify-content-between flex-column" style="min-height: 370px;">
-        <div>
+        <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover table-vcenter fs-sm">
                 <thead>
                     <tr>

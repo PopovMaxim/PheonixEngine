@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Modules\Notifications\Entities\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,35 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/notifications', function (Request $request) {
-    return $request->user();
+Route::middleware('api')->prefix('v1')->group(function () {
+    Route::post('notifications', function (Request $request) {
+        $order = 'desc';
+
+        if ($request->has('reverse') && $request->input('reverse'))
+        {
+            $order = 'asc';
+        }
+
+        $read_state = $request->input('read_state');
+
+        $notifications = Notification::query()
+            ->select(['id', 'notifiable_id as user_id', 'data', 'read_at', 'created_at'])
+            ->where('notifiable_id', $request->input('user_id'))
+            ->where('notifiable_type', 'App\Models\User')
+            ->orderBy('created_at', $order)
+            ->when($read_state, function ($query, $read_state)
+            {
+                if ($read_state)
+                {
+                    $query->whereNotNull('read_at');
+                }
+                else if (!$read_state)
+                {
+                    $query->whereNull('read_at');
+                }
+            })
+            ->get();
+
+        return $notifications;
+    });
 });

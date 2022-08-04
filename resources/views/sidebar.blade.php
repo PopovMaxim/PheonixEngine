@@ -13,6 +13,9 @@
                 <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
                     <i class="far fa-moon" id="dark-mode-toggler"></i>
                 </button>
+                <button type="button" class="btn btn-sm btn-alt-secondary d-lg-none" data-toggle="layout" data-action="sidebar_close">
+                    <i class="fa fa-times-circle"></i>
+                </button>
             </div>
         </div>
     </div>

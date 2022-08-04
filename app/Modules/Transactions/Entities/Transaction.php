@@ -23,7 +23,7 @@ class Transaction extends Model
         'transfer' => 'Перевод',
     ];
 
-    protected $fillable = [];
+    protected $guarded = [];
 
     public $table = 'transactions';
     

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Modules\Transactions\Entities\Transaction;
+use App\Modules\Transactions\Transformers\Transaction as TransactionCollection;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/transactions', function (Request $request) {
-    return $request->user();
+Route::middleware('api')->prefix('v1')->group(function () {
+    Route::post('transactions', function (Request $request) {
+        $order = 'desc';
+
+        if ($request->has('reverse') && $request->input('reverse'))
+        {
+            $order = 'asc';
+        }
+
+        $status = $request->input('status');
+
+        $transactions = Transaction::query()
+            ->where('user_id', $request->input('user_id'))
+            ->orderBy('created_at', $order)
+            ->get();
+
+        return TransactionCollection::collection($transactions);
+    });
 });

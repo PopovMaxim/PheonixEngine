@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\BinaryTree;
+use App\Modules\Profile\Entities\Activity;
+use Illuminate\Notifications\Action;
 
 class User extends Authenticatable
 {
@@ -273,6 +275,30 @@ class User extends Authenticatable
                     ]);
                 
             }
+        }
+    }
+
+    public function updateRegisterSide($side, $request, $user_id = null, $ip = null)
+    {
+        if (empty($side) || $side == 'sponsor') {
+            $side = null;
+        }
+        
+        self::update([
+            'partners_register_side' => $side
+        ]);
+
+        if ($side == '' || is_null($side)) {
+            $side = 'sponsor';
+        }
+
+        if (is_null($request))
+        {
+            Activity::storeActionByUserId('update_partners_register_side_' . $side, $user_id, $ip);
+        }
+        else
+        {
+            Activity::storeAction('update_partners_register_side_' . $side, $request);
         }
     }
 }

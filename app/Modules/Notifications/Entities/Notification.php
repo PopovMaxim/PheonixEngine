@@ -2,15 +2,22 @@
 
 namespace App\Modules\Notifications\Entities;
 
+use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Notification extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuid;
 
     protected $fillable = [];
     
+    public $table = 'notifications';
+
+    protected $casts = [
+        'data' => 'json'
+    ];
+
     protected static function newFactory()
     {
         return \App\Modules\Notifications\Database\factories\NotificationFactory::new();

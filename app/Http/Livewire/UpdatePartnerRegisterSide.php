@@ -20,21 +20,7 @@ class UpdatePartnerRegisterSide extends Component
 
     public function submit(Request $request)
     {
-        if (empty($this->side)) {
-            $this->side = null;
-        }
-
-        $request->user()->update([
-            'partners_register_side' => $this->side
-        ]);
-
-        if ($this->side == '') {
-            $side = 'sponsor';
-        } else {
-            $side = $this->side;
-        }
-
-        Activity::storeAction('update_partners_register_side_' . $side, $request);
+        $request->user()->updateRegisterSide($this->side, $request);
     }
 
     public function updating($name, $value)

@@ -18,6 +18,7 @@ class Transaction extends Model
     ];
 
     public $types = [
+        'buy' => 'Покупка',
         'refill' => 'Пополнение',
         'withdrawal' => 'Выплата',
         'transfer' => 'Перевод',

@@ -7,12 +7,7 @@
         </div>
 
         <div class="space-x-1">
-            <div class="d-inline-block">
-                <div class="btn btn-alt-secondary">
-                    <i class="fa fa-fw fa-coins fs-sm"></i>
-                    <span class="fs-sm">{{ request()->user()->formatted_balance }}</span>
-                </div>
-            </div>
+            @livewire('topbar-balance')
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

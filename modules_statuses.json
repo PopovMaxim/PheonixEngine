@@ -8,5 +8,7 @@
     "Network": true,
     "Notifications": true,
     "Changelog": true,
-    "Transactions": true
+    "Transactions": true,
+    "Robots": true,
+    "Tariffs": true
 }

@@ -69,6 +69,9 @@ class Activity extends Model
     private function trans($action)
     {
         return match($action) {
+            'subscription_tariff_1' => 'Подписка на тариф Start',
+            'subscription_tariff_2' => 'Подписка на тариф Medium',
+            'subscription_tariff_3' => 'Подписка на тариф Business',
             'auth' => 'Авторизация',
             'transfer' => 'Выполнен перевод средств другому участнику',
             'buy_expert' => 'Покупка торгового советника',

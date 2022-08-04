@@ -31,7 +31,14 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('robots')) active @endif" {{--href="{{ url('robots') }}"--}}>
+                    <a class="nav-main-link @if(request()->is('tariffs')) active @endif" href="{{ url('tariffs') }}">
+                        <i class="nav-main-link-icon fa fa-cubes"></i>
+                        <span class="nav-main-link-name">Тарифы</span>
+                    </a>
+                </li>
+
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('robots')) active @endif" href="{{ url('robots') }}">
                         <i class="nav-main-link-icon fa fa-robot"></i>
                         <span class="nav-main-link-name">Роботы</span>
                         <span class="nav-main-link-badge badge bg-secondary">Скоро</span>

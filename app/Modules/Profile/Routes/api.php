@@ -67,3 +67,9 @@ Route::middleware('api')->prefix('v1')->group(function () {
         return [];
     });
 });
+
+Route::middleware('api')->prefix('v1')->group(function () {
+    Route::post('test', function (Request $request) {
+        return $request->all();
+    });
+});

@@ -26,16 +26,13 @@
                 <tr class="bg-body-light">
                     <td></td>
                     <td class="py-4">
-                        <div class="h1 fw-bold mb-2">7,500 ₽</div>
-                        <div class="h6 text-muted mb-0">на 1 год</div>
+                        <div class="h1 fw-bold mb-0">7,500 ₽</div>
                     </td>
                     <td class="py-4">
-                        <div class="h1 fw-bold mb-2">12,500 ₽</div>
-                        <div class="h6 text-muted mb-0">на 2 года</div>
+                        <div class="h1 fw-bold mb-0">12,500 ₽</div>
                     </td>
                     <td class="py-4">
-                        <div class="h1 fw-bold text-primary mb-2">27,500 ₽</div>
-                        <div class="h6 text-muted mb-0">на 5 лет</div>
+                        <div class="h1 fw-bold text-primary mb-0">27,500 ₽</div>
                     </td>
                 </tr>
                 <tr>
@@ -83,7 +80,7 @@
             </tbody>
         </table>
     </div>
-    
+
     @if ($this->modalVisible)
         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="confirmModal">
             <div class="modal-dialog modal-dialog-centered" role="document">

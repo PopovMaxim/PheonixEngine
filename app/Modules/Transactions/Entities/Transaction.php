@@ -19,9 +19,14 @@ class Transaction extends Model
 
     public $types = [
         'buy' => 'Покупка',
+        'line_bonus' => 'Линейный маркетинг',
         'refill' => 'Пополнение',
         'withdrawal' => 'Выплата',
         'transfer' => 'Перевод',
+    ];
+
+    protected $casts = [
+        'details' => 'json'
     ];
 
     protected $guarded = [];

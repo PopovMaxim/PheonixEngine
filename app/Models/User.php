@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\BinaryTree;
 use App\Modules\Profile\Entities\Activity;
+use App\Modules\Transactions\Entities\Transaction;
 use Illuminate\Notifications\Action;
 
 class User extends Authenticatable
@@ -100,7 +101,9 @@ class User extends Authenticatable
     */
     private function calcBalance()
     {
-        $transactions = $this->transactions?->get();
+        $transactions = $this->transactions()
+            ->where('user_id', $this->id)
+            ->get();
 
         $balance = 0;
 
@@ -299,6 +302,71 @@ class User extends Authenticatable
         else
         {
             Activity::storeAction('update_partners_register_side_' . $side, $request);
+        }
+    }
+
+    public function calcLineMarketing($amount = 0)
+    {
+        $percents = [
+            0 => 20,
+            1 => 10,
+            2 => 5,
+            3 => 4,
+            4 => 3,
+            5 => 2,
+            6 => 2,
+            7 => 2,
+            8 => 1,
+            9 => 1
+        ];
+
+        $level_depth = 10;
+
+        $sponsor_id = $this->sponsor_id;
+
+        $users = self::query()
+            ->orderBy('id', 'desc')
+            ->get()
+            ->pluck('sponsor_id', 'id')
+            ->toArray();
+
+        $recur = function ($sponsor_id, $levels = [], $current_level = 0) use (&$recur, $users, $level_depth) {
+            foreach ($users as $key => $value) {
+                if ($key == $sponsor_id)
+                {
+                    $levels[$current_level] = $key;
+
+                    $current_level++;
+
+                    return $recur($value, $levels, $current_level);
+                }
+
+                if ($current_level == $level_depth) {
+                    return $levels;
+                }
+            }
+
+            return $levels;
+        };
+
+        $levels = $recur($sponsor_id);
+
+        $i = 1;
+
+        foreach ($levels as $key => $value)
+        {
+            Transaction::create([
+                'type' => 'line_bonus',
+                'status' => 'completed',
+                'amount' => $amount * $percents[$key] / 100,
+                'user_id' => $value,
+                'direction' => 'inner',
+                'details' => [
+                    'level' => $i
+                ]
+            ]);
+
+            $i++;
         }
     }
 }

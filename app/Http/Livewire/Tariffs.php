@@ -82,6 +82,9 @@ class Tariffs extends Component
             'total_value' => $request->user()->node['total_value'] + $tariff_price
         ]);
 
+        // Accural line marketing bonuses
+        $request->user()->calcLineMarketing($tariff_price);
+
         return session()->flash('status', [
             'type' => 'success',
             'message' => "Вы успешно подписались на тариф <b>{$tariff_title}</b>. Управление подпиской доступно в разделе - «Роботы»."

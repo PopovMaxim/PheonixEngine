@@ -69,7 +69,24 @@ Route::middleware('api')->prefix('v1')->group(function () {
 });
 
 Route::middleware('api')->prefix('v1')->group(function () {
-    Route::post('test', function (Request $request) {
-        return $request->all();
+    Route::post('profile/current-register-side', function (Request $request) {
+        $user = User::find($request->input('user_id'));
+
+        if ($user) {
+            $side = $user['partners_register_side'];
+
+            if (is_null($side))
+            {
+                return [
+                    'side' => 'sponsor'
+                ];
+            }
+            
+            return [
+                'side' => $side
+            ];
+        }
+
+        return [];
     });
 });

@@ -15,47 +15,56 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::prefix('v1/telegram')->group(function () {
+    Route::post('connect/{hash?}/{telegram_id?}', function (Request $request, $hash = null, $telegram_id = null) {
+        if (is_null($hash))
+        {
+            return [
+                'status' => 'error',
+                'message' => 'Не указан hash пользователя.',
+            ];
+        }
+        
+        if (is_null($telegram_id))
+        {
+            return [
+                'status' => 'error',
+                'message' => 'Не указан telegram_id пользователя.',
+            ];
+        }
 
-Route::post('/v1/telegram/connect/{hash?}/{telegram_id?}', function (Request $request, $hash = null, $telegram_id = null) {
-    if (is_null($hash))
-    {
-        return [
-            'status' => 'error',
-            'message' => 'Не указан hash пользователя.',
-        ];
-    }
-    
-    if (is_null($telegram_id))
-    {
-        return [
-            'status' => 'error',
-            'message' => 'Не указан telegram_id пользователя.',
-        ];
-    }
+        $user = User::query()
+            ->where('hash', $hash)
+            ->first();
 
-    $user = User::query()
-        ->where('hash', $hash)
-        ->first();
+        if (is_null($user))
+        {
+            return [
+                'status' => 'error',
+                'message' => "Пользователь с переданным значением hash не распознан.",
+            ];
+        }
 
-    if (is_null($user))
-    {
-        return [
-            'status' => 'error',
-            'message' => "Пользователь с переданным значением hash не распознан.",
-        ];
-    }
+        $save = $user->update([
+            'telegram_id' => $telegram_id
+        ]);
 
-    $save = $user->update([
-        'telegram_id' => $telegram_id
-    ]);
+        if ($save)
+        {
+            Activity::storeActionByUserId('telegram_connected', $user['id'], $request->ip());
 
-    if ($save)
-    {
-        Activity::storeActionByUserId('telegram_connected', $user['id'], $request->ip());
+            return [
+                'status' => 'success',
+                'message' => "Профиль Telegram успешно подключен.",
+            ];
+        }
+    });
 
-        return [
-            'status' => 'success',
-            'message' => "Профиль Telegram успешно подключен.",
-        ];
-    }
+    Route::get('list', function () {
+        return User::query()
+            ->select('telegram_id')
+            ->distinct('telegram_id')
+            ->get()
+            ->pluck('telegram_id');
+    });
 });

@@ -35,6 +35,13 @@ class UpdateProfile extends Component
         $this->city = $item;
     }
 
+    public function telegramDisable(Request $request)
+    {
+        $request->user()->update([
+            'telegram_id' => null
+        ]);
+    }
+
     public function boot(Request $request)
     {
         $this->lastname = $request->user()->lastname;

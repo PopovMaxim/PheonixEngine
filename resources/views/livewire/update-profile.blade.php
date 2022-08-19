@@ -127,7 +127,7 @@
                     @else
                         <div class="row mb-4">
                             <div class="col-sm-10 col-md-8 col-xl-6">
-                                <div class="btn w-100 btn-alt-primary bg-white d-flex align-items-center justify-content-between" href="#">
+                                <div class="btn w-100 btn-alt-primary bg-white d-flex align-items-center justify-content-between" href="{{ route('profile.social.telegram.disconnect') }}">
                                     <span>
                                         <i class="fab fa-fw fa-telegram me-1"></i> Telegram подключен
                                     </span>
@@ -135,9 +135,12 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 col-xl-6 mt-1 d-md-flex align-items-md-center fs-sm">
-                                <a class="btn btn-sm btn-alt-danger rounded-pill" href="#">
-                                    <i class="fa fa-fw fa-pencil-alt opacity-50 me-1"></i> Отсоединить
-                                </a>
+                                <form method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-alt-danger rounded-pill" wire:click="telegramDisable">
+                                        <i class="fa fa-fw fa-pencil-alt opacity-50 me-1"></i> Отсоединить
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endif

@@ -127,7 +127,7 @@
                     @else
                         <div class="row mb-4">
                             <div class="col-sm-10 col-md-8 col-xl-6">
-                                <div class="btn w-100 btn-alt-primary bg-white d-flex align-items-center justify-content-between" href="{{ route('profile.social.telegram.disconnect') }}">
+                                <div class="btn w-100 btn-alt-primary bg-white d-flex align-items-center justify-content-between">
                                     <span>
                                         <i class="fab fa-fw fa-telegram me-1"></i> Telegram подключен
                                     </span>

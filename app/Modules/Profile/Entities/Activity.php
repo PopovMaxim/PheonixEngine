@@ -69,6 +69,7 @@ class Activity extends Model
     private function trans($action)
     {
         return match($action) {
+            'telegram_connected' => 'Подключен профиль Telegram',
             'subscription_tariff_1' => 'Подписка на тариф Start',
             'subscription_tariff_2' => 'Подписка на тариф Medium',
             'subscription_tariff_3' => 'Подписка на тариф Business',

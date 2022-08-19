@@ -105,6 +105,45 @@
                     </div>
                 </div>
             </div>
+
+            <h2 class="content-heading pt-0">
+                <i class="fa fa-fw fa-share-alt text-muted me-1"></i> Связи
+            </h2>
+            <div class="row push">
+                <div class="col-lg-4">
+                    <p class="text-muted">
+                        Вы можете подключить свою учетную запись к сторонним сетям, чтобы получить дополнительные функции.
+                    </p>
+                </div>
+                <div class="col-lg-8 col-xl-7">
+                    @if (!request()->user()->telegram_id)
+                        <div class="row mb-4">
+                            <div class="col-sm-10 col-md-8 col-xl-6">
+                                <a class="btn w-100 btn-alt-primary text-start" target="_blank" href="{{ url('https://t.me/PheonixTechBot?start=' . request()->user()->hash) }}">
+                                    <i class="fab fa-fw fa-telegram opacity-50 me-1"></i> Подключить к Telegram
+                                </a>
+                            </div>
+                        </div>
+                    @else
+                        <div class="row mb-4">
+                            <div class="col-sm-10 col-md-8 col-xl-6">
+                                <div class="btn w-100 btn-alt-primary bg-white d-flex align-items-center justify-content-between" href="#">
+                                    <span>
+                                        <i class="fab fa-fw fa-telegram me-1"></i> Telegram подключен
+                                    </span>
+                                    <i class="fa fa-fw fa-check me-1"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-4 col-xl-6 mt-1 d-md-flex align-items-md-center fs-sm">
+                                <a class="btn btn-sm btn-alt-danger rounded-pill" href="#">
+                                    <i class="fa fa-fw fa-pencil-alt opacity-50 me-1"></i> Отсоединить
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             <!-- Submit -->
             <div class="row push">
                 <div class="col-lg-8 col-xl-5 offset-lg-4">

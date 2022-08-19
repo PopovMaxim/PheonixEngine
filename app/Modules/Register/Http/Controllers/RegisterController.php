@@ -77,11 +77,11 @@ class RegisterController extends Controller
                 'sponsor_id' => $sponsor_query['id'],
             ]);
             
-            $create->addToBinaryTree($leg);
+            //$create->addToBinaryTree($leg);
 
             $create->notify(new \App\Notifications\Register);
             $create->notify(new \App\Notifications\SettingsUpdate);
-            $create->notify(new \App\Notifications\AddToBinary);
+            //$create->notify(new \App\Notifications\AddToBinary);
 
             if ($create && Auth::attempt(['email' => $email, 'password' => $password])) {
                 $request->session()->regenerate();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Modules\Tariffs\Entities\Tariff;
 use App\Modules\Profile\Entities\Activity;
 use Livewire\Component;
 use Illuminate\Http\Request;
@@ -12,26 +13,10 @@ class Tariffs extends Component
 
     public $modalVisible = false;
 
-    public $tariffs = [
-        1 => [
-            'title' => 'Start',
-            'price' => 750000,
-            'binary' => true,
-            'line_marketing' => 1,
-        ],
-        2 => [
-            'title' => 'Medium',
-            'price' => 1250000,
-            'binary' => true,
-            'line_marketing' => 5,
-        ],
-        3 => [
-            'title' => 'Business',
-            'price' => 2750000,
-            'binary' => true,
-            'line_marketing' => 10,
-        ],
-    ];
+    public function __construct()
+    {
+        $this->tariffs = Tariff::$tariffs;
+    }
 
     public function openModal($tariff)
     {
@@ -52,6 +37,7 @@ class Tariffs extends Component
             ]);
         }
 
+        $tariff_period = $this->tariffs[$tariff]['period'];
         $tariff_price = $this->tariffs[$tariff]['price'];
         $tariff_title = $this->tariffs[$tariff]['title'];
 
@@ -64,10 +50,14 @@ class Tariffs extends Component
         }
 
         $request->user()->transactions->create([
-            'type' => 'buy',
+            'type' => 'subscribe',
             'status' => 'completed',
             'amount' => $tariff_price,
             'user_id' => $request->user()->id,
+            'details' => [
+                'tariff' => $tariff,
+                'expired_at' => now()->parse($tariff_period)
+            ],
             'direction' => 'outer',
         ]);
 
@@ -78,9 +68,9 @@ class Tariffs extends Component
         $this->modalVisible = false;
 
         // Update binary total value
-        $request->user()->node->update([
+        /*$request->user()->node->update([
             'total_value' => $request->user()->node['total_value'] + $tariff_price
-        ]);
+        ]);*/
 
         // Accural line marketing bonuses
         $request->user()->calcLineMarketing($tariff_price);

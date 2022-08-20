@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Modules\Tariffs\Entities\Tariff;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -140,7 +141,7 @@ class User extends Authenticatable
     */
     public function getTotalValueAttribute()
     {
-        return number_format($this->node['total_value'] / 100, 2);
+        return number_format($this->node?->total_value / 100, 2);
     }
 
     /*
@@ -356,18 +357,63 @@ class User extends Authenticatable
 
         foreach ($levels as $key => $value)
         {
-            Transaction::create([
-                'type' => 'line_bonus',
-                'status' => 'completed',
-                'amount' => $amount * $percents[$key] / 100,
-                'user_id' => $value,
-                'direction' => 'inner',
-                'details' => [
-                    'level' => $i
-                ]
-            ]);
+            $user = User::find($value);
+            $subscribe = $user->getCurrentSubscribe();
+
+            if (count($subscribe) && $subscribe['line_marketing'] > $key)
+            {
+                Transaction::create([
+                    'type' => 'line_bonus',
+                    'status' => 'completed',
+                    'amount' => $amount * $percents[$key] / 100,
+                    'user_id' => $value,
+                    'direction' => 'inner',
+                    'details' => [
+                        'level' => $i
+                    ]
+                ]);
+            }
 
             $i++;
         }
+    }
+
+    public function getCurrentSubscribe()
+    {
+        $subscribes = $this->transactions()->whereType('subscribe')->get();
+
+        if (!count($subscribes))
+        {
+            return [];
+        }
+
+        $tariffs = Tariff::$tariffs;
+
+        $list = [];
+        $priority = [];
+
+        foreach ($subscribes as $subscribe)
+        {
+            $tariff = $tariffs[$subscribe['details']['tariff']];
+            $expired_at = now()->parse($subscribe['details']['expired_at']);
+
+            if ($expired_at->timestamp <= now()->timestamp)
+            {
+                continue;
+            }
+
+            $list[$subscribe['id']] = $subscribe;
+            $priority[$subscribe['id']] = $tariff['priority'];
+        }
+
+        if (!count($list))
+        {
+            return [];
+        }
+
+        $priority_id = array_keys($priority, min($priority));
+        $current_subscribe = $list[$priority_id[0]];
+
+        return $tariffs[$current_subscribe['details']['tariff']];
     }
 }

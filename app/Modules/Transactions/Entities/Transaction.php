@@ -18,7 +18,7 @@ class Transaction extends Model
     ];
 
     public $types = [
-        'buy' => 'Покупка',
+        'subscribe' => 'Подписка',
         'line_bonus' => 'Линейный маркетинг',
         'refill' => 'Пополнение',
         'withdrawal' => 'Выплата',

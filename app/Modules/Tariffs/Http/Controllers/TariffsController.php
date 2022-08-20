@@ -14,6 +14,8 @@ class TariffsController extends Controller
      */
     public function index()
     {
+        request()->user()->getCurrentSubscribe();
+
         return view('tariffs::index');
     }
 

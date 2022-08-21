@@ -40,8 +40,7 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('robots')) active @endif" href="{{ url('robots') }}">
                         <i class="nav-main-link-icon fa fa-robot"></i>
-                        <span class="nav-main-link-name">Роботы</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
+                        <span class="nav-main-link-name">Подписки</span>
                     </a>
                 </li>
 
@@ -75,11 +74,11 @@
                                 <span class="nav-main-link-name">Линейный маркетинг</span>
                             </a>
                         </li>
-                        <li class="nav-main-item">
+                        {{--<li class="nav-main-item">
                             <a class="nav-main-link @if(request()->is('network/tree')) active @endif" href="{{ route('network.tree') }}">
                                 <span class="nav-main-link-name">Бинарное дерево</span>
                             </a>
-                        </li>
+                        </li>--}}
                         <li class="nav-main-item">
                             <a class="nav-main-link @if(request()->is('network/promo')) active @endif" {{--href="{{ route('network.promo') }}"--}}>
                                 <span class="nav-main-link-name">Рекламные материалы</span>

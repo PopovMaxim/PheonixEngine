@@ -61,6 +61,13 @@ class Tariffs extends Component
             'direction' => 'outer',
         ]);
 
+        if (is_null($request->user()->activated_at))
+        {
+            $request->user()->update([
+                'activated_at' => now()
+            ]);
+        }
+
         $this->emitTo('topbar-balance', '$refresh');
 
         Activity::storeAction('subscription_tariff_' . $tariff, $request);

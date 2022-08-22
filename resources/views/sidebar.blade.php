@@ -39,7 +39,7 @@
                 </li>
 
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('robots')) active @endif" href="{{ route('subscribes') }}">
+                    <a class="nav-main-link @if(request()->is('subscribes')) active @endif" href="{{ route('subscribes') }}">
                         <i class="nav-main-link-icon fa fa-robot"></i>
                         <span class="nav-main-link-name">Подписки</span>
                     </a>

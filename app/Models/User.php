@@ -36,6 +36,7 @@ class User extends Authenticatable
         'patronymic',
         'sponsor_id',
         'telegram_id',
+        'activated_at',
         'partners_register_side',
     ];
 

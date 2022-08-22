@@ -31,6 +31,8 @@ class LineController extends Controller
             ->whereNotNull('activated_at')
             ->count();
 
+        $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+
         switch ($level_depth)
         {
             case 2;
@@ -68,6 +70,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
 
             case 4:
@@ -97,6 +101,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
             
             case 5:
@@ -133,6 +139,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
             
             case 6:
@@ -176,6 +184,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
             
             case 7:
@@ -226,6 +236,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
             
             case 8:
@@ -283,6 +295,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
             
             case 9:
@@ -347,6 +361,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
             
             case 10:
@@ -418,6 +434,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+                    
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
             break;
         }
 
@@ -426,6 +444,7 @@ class LineController extends Controller
                 'partners' => $partners->paginate(10),
                 'total_partners' => $total_partners,
                 'total_activated_partners' => $total_activated_partners,
+                'partners_activation_percentage' => $partners_activation_percentage,
                 'level' => $level_depth,
                 'chart' => $this->getChartData($partners->get())
             ]);
@@ -489,5 +508,20 @@ class LineController extends Controller
                 'max' => max(array_values($registration_result))
             ],
         ]);
+    }
+
+    private function getPartnersActivationPercentage($total_partners, $partners_instance)
+    {
+        if (!$total_partners) {
+            return sprintf("%.2f", 0);
+        }
+
+        $activated_partners = $partners_instance
+            ->whereNotNull('activated_at')
+            ->count();
+
+        $diff = $activated_partners / $total_partners;
+
+        return sprintf("%.2f", $diff * 100);
     }
 }

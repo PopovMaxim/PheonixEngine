@@ -370,7 +370,8 @@ class User extends Authenticatable
                     'user_id' => $value,
                     'direction' => 'inner',
                     'details' => [
-                        'level' => $i
+                        'level' => $i,
+                        'user_id' => request()->user()->id
                     ]
                 ]);
             }

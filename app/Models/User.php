@@ -106,7 +106,7 @@ class User extends Authenticatable
     {
         $transactions = $this->transactions()
             ->where('user_id', $this->id)
-            ->whereIn('type', ['line_marketing'])
+            ->whereIn('type', ['line_bonus'])
             ->get()
             ->sum('amount');
 

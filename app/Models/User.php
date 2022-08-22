@@ -430,6 +430,14 @@ class User extends Authenticatable
         $priority_id = array_keys($priority, min($priority));
         $current_subscribe = $list[$priority_id[0]];
 
+
         return $tariffs[$current_subscribe['details']['tariff']];
+    }
+
+    public function getCurrentSubscribeTitleAttribute()
+    {
+        $subscribe = $this->getCurrentSubscribe();
+
+        return $subscribe['title'] ?? 'Нет';
     }
 }

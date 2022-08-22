@@ -89,9 +89,9 @@
                             <i class="far fa-user"></i>
                         </th>
                         <th>Никнейм</th>
-                        <th class="text-center" style="width: 15%;">Ранг</th>
+                        <th class="text-center" style="width: 15%;">Тариф</th>
                         <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Партнёры</th>
-                        <th class="text-center" style="width: 20%;">Объём</th>
+                        {{--<th class="text-center" style="width: 20%;">Объём</th>--}}
                         <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Дата активации</th>
                     </tr>
                 </thead>
@@ -102,9 +102,9 @@
                                 <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="Аватар участника {{ $partner['nickname'] }}">
                             </td>
                             <td>{{ $partner['nickname'] }} <div class="fs-xs text-muted">Спонсор: {{ $partner['sponsor']['nickname'] }}</div></td>
-                            <td class="text-center">{{ $partner['current_rank'] }}</td>
+                            <td class="text-center">{{ $partner['current_subscribe_title'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
-                            <td class="text-center">{{ $partner['total_value'] }}</td>
+                            {{--<td class="text-center">{{ $partner['total_value'] }}</td>--}}
                             <td class="d-none d-sm-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @empty

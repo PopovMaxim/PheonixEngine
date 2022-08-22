@@ -81,6 +81,7 @@ class RegisterController extends Controller
 
             $create->notify(new \App\Notifications\Register);
             $create->notify(new \App\Notifications\SettingsUpdate);
+            $sponsor_query->notify(new \App\Notifications\RegisterPartner($nickname));
             //$create->notify(new \App\Notifications\AddToBinary);
 
             if ($create && Auth::attempt(['email' => $email, 'password' => $password])) {

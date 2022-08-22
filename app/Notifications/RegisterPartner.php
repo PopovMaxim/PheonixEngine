@@ -11,14 +11,16 @@ class RegisterPartner extends Notification
 {
     use Queueable;
 
+    public $nickname;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($nickname)
     {
-        //
+        $this->nickname = $nickname;
     }
 
     /**
@@ -56,7 +58,7 @@ class RegisterPartner extends Notification
     {
         return [
             'type' => 'register.partner',
-            'text' => 'У вас новый партнёр - Nickelback!'
+            'text' => "У вас новый партнёр - {$this->nickname}!"
         ];
     }
 }

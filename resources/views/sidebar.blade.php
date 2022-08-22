@@ -30,20 +30,22 @@
                         <span class="nav-main-link-name">Панель управления</span>
                     </a>
                 </li>
+                <li class="nav-main-heading">Продукты</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('tariffs')) active @endif" href="{{ url('tariffs') }}">
+                    <a class="nav-main-link @if(request()->is('tariffs')) active @endif" href="{{ route('tariffs') }}">
                         <i class="nav-main-link-icon fa fa-cubes"></i>
                         <span class="nav-main-link-name">Тарифы</span>
                     </a>
                 </li>
 
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('robots')) active @endif" href="{{ url('robots') }}">
+                    <a class="nav-main-link @if(request()->is('robots')) active @endif" href="{{ route('subscribes') }}">
                         <i class="nav-main-link-icon fa fa-robot"></i>
                         <span class="nav-main-link-name">Подписки</span>
                     </a>
                 </li>
 
+                <li class="nav-main-heading">Финансы</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('wallet')) active @endif" {{--href="{{ url('wallet') }}"--}}>
                         <i class="nav-main-link-icon fa fa-wallet"></i>
@@ -58,7 +60,26 @@
                     </a>
                 </li>
 
-                <li class="nav-main-item @if(request()->is('network*')) open @endif">
+                <li class="nav-main-heading">Партнёрская сеть</li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('network/partners')) active @endif" href="{{ route('network.partners') }}">
+                        <i class="nav-main-link-icon fa fa-users"></i>
+                        <span class="nav-main-link-name">Мои партнёры</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('network/line')) active @endif" href="{{ route('network.line') }}">
+                        <i class="nav-main-link-icon fa fa-network-wired"></i>
+                        <span class="nav-main-link-name">Линейный маркетинг</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('network/promo')) active @endif" href="#">
+                        <i class="nav-main-link-icon fa fa-mail-bulk"></i>
+                        <span class="nav-main-link-name">Рекламные материалы</span>
+                    </a>
+                </li>
+                {{--<li class="nav-main-item @if(request()->is('network*')) open @endif">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
                         <i class="nav-main-link-icon fa fa-network-wired"></i>
                         <span class="nav-main-link-name">Партнёрская сеть</span>
@@ -74,24 +95,23 @@
                                 <span class="nav-main-link-name">Линейный маркетинг</span>
                             </a>
                         </li>
-                        {{--<li class="nav-main-item">
+                        <li class="nav-main-item">
                             <a class="nav-main-link @if(request()->is('network/tree')) active @endif" href="{{ route('network.tree') }}">
                                 <span class="nav-main-link-name">Бинарное дерево</span>
                             </a>
-                        </li>--}}
+                        </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link @if(request()->is('network/promo')) active @endif" {{--href="{{ route('network.promo') }}"--}}>
+                            <a class="nav-main-link @if(request()->is('network/promo')) active @endif" href="{{ route('network.promo') }}">
                                 <span class="nav-main-link-name">Рекламные материалы</span>
                             </a>
                         </li>
                     </ul>
-                </li>
-
+                </li>--}}
+                <li class="nav-main-heading">Помощь</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('support')) active @endif" {{--href="{{ url('support') }}"--}}>
+                    <a class="nav-main-link @if(request()->is('support')) active @endif" href="{{ route('support') }}">
                         <i class="nav-main-link-icon fa fa-headset"></i>
-                        <span class="nav-main-link-name">Поддержка</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
+                        <span class="nav-main-link-name">Тех. Поддержка</span>
                     </a>
                 </li>
                 <li class="nav-main-item">

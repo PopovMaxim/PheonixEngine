@@ -10,5 +10,6 @@
     "Changelog": true,
     "Transactions": true,
     "Robots": true,
-    "Tariffs": true
+    "Tariffs": true,
+    "Support": true
 }

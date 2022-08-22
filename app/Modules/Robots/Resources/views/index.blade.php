@@ -42,6 +42,11 @@
             </div>
         </div>
     @empty
+        <div class="block block-rounded">
+            <div class="block-content text-center">
+                <p>На данный момент у Вас нет активных подписок...</p>
+            </div>
+        </div>
     @endforelse
 </div>
 @endsection

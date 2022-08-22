@@ -35,13 +35,17 @@ class LineController extends Controller
         {
             case 2;
                 $level_1_partners_ids = clone $partners
-                ->get()
-                ->pluck('id');
+                    ->get()
+                    ->pluck('id');
 
                 $partners = User::query()
                     ->whereIn('sponsor_id', $level_1_partners_ids);
 
                 $total_partners = $partners->count();
+
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
 
             case 3:
@@ -60,6 +64,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_2_partners_ids);
 
                 $total_partners = $partners->count();
+                
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
 
             case 4:
@@ -85,6 +93,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_3_partners_ids);
 
                 $total_partners = $partners->count();
+                
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
             
             case 5:
@@ -117,6 +129,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_4_partners_ids);
 
                 $total_partners = $partners->count();
+                
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
             
             case 6:
@@ -156,6 +172,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_5_partners_ids);
 
                 $total_partners = $partners->count();
+                
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
             
             case 7:
@@ -202,6 +222,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_6_partners_ids);
 
                 $total_partners = $partners->count();
+                
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
             
             case 8:
@@ -255,6 +279,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_7_partners_ids);
 
                 $total_partners = $partners->count();
+                
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
             
             case 9:
@@ -315,6 +343,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_8_partners_ids);
 
                 $total_partners = $partners->count();
+                
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
             
             case 10:
@@ -382,6 +414,10 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_9_partners_ids);
 
                 $total_partners = $partners->count();
+
+                $total_activated_partners = $partners
+                    ->whereNotNull('activated_at')
+                    ->count();
             break;
         }
 

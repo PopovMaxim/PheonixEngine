@@ -40,7 +40,7 @@
                     <div class="item rounded-3 bg-body mx-auto my-3">
                         <i class="fa fa-chart-line fa-lg text-primary"></i>
                     </div>
-                    <div class="fs-1 fw-bold">0,00 ₽</div>
+                    <div class="fs-1 fw-bold">{{ request()->user()->total_earned }} ₽</div>
                     <div class="text-muted mb-3">Всего начислено</div>
                 </div>
             </div>

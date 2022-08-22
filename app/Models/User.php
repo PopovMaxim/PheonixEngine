@@ -100,6 +100,20 @@ class User extends Authenticatable
     }
 
     /*
+    * Total Earned
+    */
+    public function getTotalEarnedAttribute()
+    {
+        $transactions = $this->transactions()
+            ->where('user_id', $this->id)
+            ->whereIn('type', ['line_marketing'])
+            ->get()
+            ->sum('amount');
+
+        return number_format($transactions / 100, 2);
+    }
+
+    /*
     * Balance
     */
     private function calcBalance()

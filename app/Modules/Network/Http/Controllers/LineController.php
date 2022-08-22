@@ -31,7 +31,8 @@ class LineController extends Controller
             ->whereNotNull('activated_at')
             ->count();
 
-        $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+        $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
+
 
         switch ($level_depth)
         {
@@ -71,7 +72,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
 
             case 4:
@@ -102,7 +103,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
             
             case 5:
@@ -140,7 +141,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
             
             case 6:
@@ -185,7 +186,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
             
             case 7:
@@ -237,7 +238,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
             
             case 8:
@@ -296,7 +297,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
             
             case 9:
@@ -362,7 +363,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
             
             case 10:
@@ -435,7 +436,7 @@ class LineController extends Controller
                     ->whereNotNull('activated_at')
                     ->count();
                     
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, $partners);
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
         }
 

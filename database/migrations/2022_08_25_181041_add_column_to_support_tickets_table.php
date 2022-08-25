@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('support_messages', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->uuid('ticket_id');
-            $table->text('message');
-            $table->timestamps();
+        Schema::table('support_tickets', function (Blueprint $table) {
+            $table->string('status')->default('new');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('support_messages');
+        Schema::table('support_tickets', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 };

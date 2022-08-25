@@ -6,7 +6,7 @@
                     N<span class="opacity-75">v</span>
                 </span>
                 <span class="smini-hidden">
-                    {{ env('APP_NAME') }}
+                    <img src="{{ asset('assets/media/logos/logo-short.png') }}" class="img-fluid" style="max-width: 80%" />
                 </span>
             </a>
             <div>
@@ -109,7 +109,7 @@
                 </li>--}}
                 <li class="nav-main-heading">Помощь</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('support')) active @endif" href="{{ route('support') }}">
+                    <a class="nav-main-link @if(request()->is('support*')) active @endif" href="{{ route('support') }}">
                         <i class="nav-main-link-icon fa fa-headset"></i>
                         <span class="nav-main-link-name">Тех. Поддержка</span>
                     </a>

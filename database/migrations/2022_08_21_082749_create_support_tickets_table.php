@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('support_tickets', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->integer('user_id');
+            $table->integer('subject_id');
+            $table->text('text');
             $table->timestamps();
         });
     }

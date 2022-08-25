@@ -2,24 +2,99 @@
 
 namespace App\Modules\Support\Http\Controllers;
 
+use App\Models\SupportSubjects;
+use App\Models\SupportTickets;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class SupportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('support::index');
+        $tickets = SupportTickets::query()
+            ->where('user_id', $request->user()->id)
+            ->whereNot('status', 'closed')
+            ->paginate(10);
+
+        return view('support::index')
+            ->with([
+                'tickets' => $tickets
+            ]);
     }
 
-    public function create()
+    public function closed(Request $request)
     {
-        return view('support::create');
+        $tickets = SupportTickets::query()
+            ->where('user_id', $request->user()->id)
+            ->where('status', 'closed')
+            ->paginate(10);
+
+        return view('support::index')
+            ->with([
+                'tickets' => $tickets
+            ]);
     }
 
-    public function show($id)
+    public function close(Request $request, $id)
     {
-        return view('support::show');
+        $ticket = SupportTickets::query()
+            ->where([
+                'user_id' => $request->user()->id,
+                'id' => $id
+            ])
+            ->update([
+                'status' => 'closed'
+            ]);
+
+        return back();
+    }
+
+    public function create(Request $request)
+    {
+        $subjects = SupportSubjects::query()
+            ->get();
+
+        if ($request->isMethod('post'))
+        {
+            $request->validate([
+                'subject_id' => 'required',
+                'text' => 'required|min:10,max:500'
+            ], [
+                'subject_id.required' => 'Выберите категорию вопроса',
+                'text.required' => 'Введите описание вопроса',
+                'text.min' => 'Минимальная длина вопроса: 10 символов',
+                'text.max' => 'Максимальная длина вопроса: 500 символов'
+            ]);
+
+            $ticket = SupportTickets::create([
+                'user_id' => $request->user()->id,
+                'subject_id' => $request->input('subject_id'),
+                'text' => $request->input('text'),
+            ]);
+
+            return redirect()
+                ->route('support.show', ['id' => $ticket['id']]);
+        }
+
+        return view('support::create')
+            ->with([
+                'subjects' => $subjects
+            ]);
+    }
+
+    public function show(Request $request, $id)
+    {
+        $ticket = SupportTickets::query()
+            ->where([
+                //'user_id' => $request->user()->id,
+                'id' => $id
+            ])
+            ->firstOrFail();
+
+        return view('support::show')
+            ->with([
+                'ticket' => $ticket
+            ]);
     }
 }

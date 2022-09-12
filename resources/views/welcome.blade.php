@@ -169,7 +169,7 @@
                                         </h2>
                                         <div>
                                             <a class="btn btn-primary px-3 py-2 m-1" href="javascript:void(0)">
-                                                <i class="fa fa-fw fa-link opacity-50 me-1"></i> Узнать подробнее
+                                                Узнать подробнее
                                             </a>
                                         </div>
                                     </div>

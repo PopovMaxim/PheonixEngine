@@ -1,0 +1,13 @@
+{
+    "name": "PasswordReset",
+    "alias": "passwordreset",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Modules\\PasswordReset\\Providers\\PasswordResetServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

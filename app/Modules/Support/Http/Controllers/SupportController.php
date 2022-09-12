@@ -87,7 +87,7 @@ class SupportController extends Controller
     {
         $ticket = SupportTickets::query()
             ->where([
-                //'user_id' => $request->user()->id,
+                'user_id' => $request->user()->id,
                 'id' => $id
             ])
             ->firstOrFail();

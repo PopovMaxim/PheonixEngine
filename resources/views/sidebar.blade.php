@@ -24,7 +24,7 @@
         <div class="content-side">
             <ul class="nav-main">
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('dashboard')) active @endif"
+                    <a class="nav-main-link @if(request()->is('/')) active @endif"
                         href="{{ route('dashboard') }}">
                         <i class="nav-main-link-icon fa fa-dashboard"></i>
                         <span class="nav-main-link-name">Панель управления</span>
@@ -68,8 +68,8 @@
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('transactions')) active @endif" href="{{ route('transactions') }}">
-                        <i class="nav-main-link-icon fa fa-coins"></i>
-                        <span class="nav-main-link-name">Транзакции</span>
+                        <i class="nav-main-link-icon fa fa-history"></i>
+                        <span class="nav-main-link-name">История</span>
                     </a>
                 </li>
 

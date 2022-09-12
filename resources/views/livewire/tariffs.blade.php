@@ -17,22 +17,26 @@
             <thead>
                 <tr class="table-dark text-uppercase fs-sm">
                     <th class="py-4" style="width: 180px;"></th>
-                    <th class="py-4">Start</th>
-                    <th class="py-4">Medium</th>
-                    <th class="py-4 bg-primary">Business</th>
+                    <th class="py-4">Старт</th>
+                    <th class="py-4">Стандарт</th>
+                    <th class="py-4 bg-info">Бизнес</th>
+                    <th class="py-4 bg-primary">Профессионал</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="bg-body-light">
                     <td></td>
                     <td class="py-4">
-                        <div class="h1 fw-bold mb-0">7,500 ₽</div>
+                        <div class="h1 fw-bold mb-0">7,990 ₽</div>
                     </td>
                     <td class="py-4">
-                        <div class="h1 fw-bold mb-0">12,500 ₽</div>
+                        <div class="h1 fw-bold mb-0">12,990 ₽</div>
                     </td>
                     <td class="py-4">
-                        <div class="h1 fw-bold text-primary mb-0">27,500 ₽</div>
+                        <div class="h1 fw-bold text-info mb-0">27,990 ₽</div>
+                    </td>
+                    <td class="py-4">
+                        <div class="h1 fw-bold text-primary mb-0">27,990 ₽</div>
                     </td>
                 </tr>
                 <tr>
@@ -40,9 +44,11 @@
                     <td>1 год</td>
                     <td>2 года</td>
                     <td>5 лет</td>
+                    <td>1 год</td>
                 </tr>
                 <tr>
                     <td class="fs-sm text-end">Количество роботов</td>
+                    <td>1 шт.</td>
                     <td>1 шт.</td>
                     <td>1 шт.</td>
                     <td>1 шт.</td>
@@ -52,15 +58,32 @@
                     <td>1 ур.</td>
                     <td>5 ур.</td>
                     <td>10 ур.</td>
+                    <td>10 ур.</td>
                 </tr>
                 <tr>
-                    <td class="fs-sm text-end">Бинарный маркетинг</td>
+                    <td class="fs-sm text-end">Лидерский пул</td>
+                    <td>1%</td>
+                    <td>2%</td>
+                    <td>3%</td>
+                    <td>3%</td>
+                </tr>
+                <tr>
+                    <td class="fs-sm text-end">Лидерский бонус</td>
+                    <td><i class="fas fa-times-circle text-danger"></i></td>
+                    <td><i class="fas fa-times-circle text-danger"></i></td>
+                    <td><i class="fas fa-circle-check text-success"></i></td>
+                    <td><i class="fas fa-circle-check text-success"></i></td>
+                </tr>
+                <tr>
+                    <td class="fs-sm text-end">Быстрый бонус</td>
+                    <td><i class="fas fa-times-circle text-danger"></i></td>
                     <td><i class="fas fa-circle-check text-success"></i></td>
                     <td><i class="fas fa-circle-check text-success"></i></td>
                     <td><i class="fas fa-circle-check text-success"></i></td>
                 </tr>
                 <tr>
                     <td class="fs-sm text-end">Тех. Поддержка</td>
+                    <td><i class="fas fa-circle-check text-success"></i></td>
                     <td><i class="fas fa-circle-check text-success"></i></td>
                     <td><i class="fas fa-circle-check text-success"></i></td>
                     <td><i class="fas fa-circle-check text-success"></i></td>
@@ -74,7 +97,10 @@
                         <button type="button" class="btn rounded-0 btn-sm btn-hero btn-secondary px-4" wire:click="openModal(2)">Оформить</button>
                     </td>
                     <td>
-                        <button type="button" class="btn rounded-0 btn-sm btn-hero btn-primary px-4" wire:click="openModal(3)">Оформить</button>
+                        <button type="button" class="btn rounded-0 btn-sm btn-hero btn-info px-4" wire:click="openModal(3)">Оформить</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn rounded-0 btn-sm btn-hero btn-primary px-4" wire:click="openModal(4)">Оформить</button>
                     </td>
                 </tr>
             </tbody>

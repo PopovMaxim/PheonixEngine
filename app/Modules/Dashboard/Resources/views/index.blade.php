@@ -36,7 +36,10 @@
 
         if (distance < 0) {
             clearInterval(x);
-            document.getElementById("timer").innerHTML = "EXPIRED";
+            document.getElementById("days").innerHTML = 0;
+            document.getElementById("hours").innerHTML = '00';
+            document.getElementById("minutes").innerHTML = '00';
+            document.getElementById("seconds").innerHTML = '00';
         }
     }, 1000);
 </script>

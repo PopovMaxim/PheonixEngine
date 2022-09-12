@@ -35,11 +35,14 @@
         <span class="nav-main-link-name">ЛИЧНЫЙ КАБИНЕТ</span>
     </a>
 </li>
+<li class="nav-main-item">
+    <a class="nav-main-link" href="#" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
+        <i class="far fa-moon" id="dark-mode-toggler"></i>
+    </a>
+</li>
 @endsection
-
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -82,7 +85,6 @@
 
     </style>
 </head>
-
 <body>
     <div id="page-container"
         class="sidebar-dark side-scroll page-header-static page-header-dark page-header-glass main-content-boxed">
@@ -273,7 +275,7 @@
                                     </h4>
                                     <p class="mb-0 text-muted">
                                         Условия нашей подписки подойдут всем, вне зависимости то того кто вы -
-                                        профессионал или новичок.
+                                        профессионал или новичок
                                     </p>
                                 </div>
                                 <div class="col-sm-6 col-md-4 mb-5">
@@ -284,7 +286,7 @@
                                         Бонусная система
                                     </h4>
                                     <p class="mb-0 text-muted">
-                                        Всем клиентам доступная бонусная система вознаграждений за использование наших
+                                        Всем клиентам доступна бонусная система вознаграждений за использование наших
                                         продуктов
                                     </p>
                                 </div>
@@ -321,16 +323,16 @@
                                         <tr class="bg-body-light">
                                             <td></td>
                                             <td class="py-4">
-                                                <div class="h1 fw-bold mb-0">7,500 ₽</div>
+                                                <div class="h1 fw-bold mb-0">7,990 ₽</div>
                                             </td>
                                             <td class="py-4">
-                                                <div class="h1 fw-bold mb-0">12,500 ₽</div>
+                                                <div class="h1 fw-bold mb-0">12,990 ₽</div>
                                             </td>
                                             <td class="py-4">
-                                                <div class="h1 fw-bold text-primary mb-0">27,500 ₽</div>
+                                                <div class="h1 fw-bold text-primary mb-0">27,990 ₽</div>
                                             </td>
                                             <td class="py-4">
-                                                <div class="h1 fw-bold text-primary mb-0">27,500 ₽</div>
+                                                <div class="h1 fw-bold text-primary mb-0">27,990 ₽</div>
                                             </td>
                                         </tr>
                                         <tr>

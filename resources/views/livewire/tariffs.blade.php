@@ -19,7 +19,7 @@
                     <th class="py-4" style="width: 180px;"></th>
                     <th class="py-4">Старт</th>
                     <th class="py-4">Стандарт</th>
-                    <th class="py-4 bg-info">Бизнес</th>
+                    <th class="py-4 bg-primary">Бизнес</th>
                     <th class="py-4 bg-primary">Профессионал</th>
                 </tr>
             </thead>
@@ -33,7 +33,7 @@
                         <div class="h1 fw-bold mb-0">12,990 ₽</div>
                     </td>
                     <td class="py-4">
-                        <div class="h1 fw-bold text-info mb-0">27,990 ₽</div>
+                        <div class="h1 fw-bold text-primary mb-0">27,990 ₽</div>
                     </td>
                     <td class="py-4">
                         <div class="h1 fw-bold text-primary mb-0">27,990 ₽</div>
@@ -97,7 +97,7 @@
                         <button type="button" class="btn rounded-0 btn-sm btn-hero btn-secondary px-4" wire:click="openModal(2)">Оформить</button>
                     </td>
                     <td>
-                        <button type="button" class="btn rounded-0 btn-sm btn-hero btn-info px-4" wire:click="openModal(3)">Оформить</button>
+                        <button type="button" class="btn rounded-0 btn-sm btn-hero btn-primary px-4" wire:click="openModal(3)">Оформить</button>
                     </td>
                     <td>
                         <button type="button" class="btn rounded-0 btn-sm btn-hero btn-primary px-4" wire:click="openModal(4)">Оформить</button>

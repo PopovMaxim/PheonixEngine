@@ -1,18 +1,15 @@
 <nav id="sidebar" aria-label="Main Navigation">
     <div class="bg-header-dark">
         <div class="content-header bg-white-5">
-            <a class="fw-semibold text-white tracking-wide" href="/">
+            <a class="fw-semibold text-white tracking-wide" href="{{ route('dashboard') }}">
                 <span class="smini-visible">
                     P<span class="opacity-75">h</span>
                 </span>
                 <span class="smini-hidden">
-                    <img src="{{ asset('assets/media/logos/logo-short.png') }}" class="img-fluid" style="max-width: 80%" />
+                    <img src="{{ asset('assets/media/logos/logo-short-white.png') }}" class="img-fluid" style="width: 200px;" />
                 </span>
             </a>
             <div>
-                <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
-                    <i class="far fa-moon" id="dark-mode-toggler"></i>
-                </button>
                 <button type="button" class="btn btn-sm btn-alt-secondary d-lg-none" data-toggle="layout" data-action="sidebar_close">
                     <i class="fa fa-times-circle"></i>
                 </button>

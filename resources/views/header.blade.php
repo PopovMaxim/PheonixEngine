@@ -83,6 +83,11 @@
                     </div>
                 </div>
             </div>
+            <div class="d-inline-block">
+                <button type="button" class="btn btn-alt-secondary" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
+                    <i class="far fa-moon" id="dark-mode-toggler"></i>
+                </button>
+            </div>
         </div>
     </div>
 </header>

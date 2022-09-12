@@ -11,7 +11,6 @@
     </div>
 </div>
 <div class="content content-boxed">
-
     @forelse ($transactions as $transaction)
         <a class="block block-rounded block-link-shadow border-start border-{{ $transaction['direction'] == 'inner' ? 'success' : 'danger' }} border-3" href="{{ route('transactions.read', ['id' => $transaction['id']]) }}">
             <div class="block-content block-content-full d-flex align-items-center justify-content-between">

@@ -11,5 +11,9 @@
     "Transactions": true,
     "Robots": true,
     "Tariffs": true,
-    "Support": true
+    "Support": true,
+    "Transfer": true,
+    "Refill": true,
+    "Withdraw": true,
+    "Admin": true
 }

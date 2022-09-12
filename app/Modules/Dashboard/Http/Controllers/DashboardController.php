@@ -8,9 +8,9 @@ use Illuminate\Routing\Controller;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $partners = request()
+        $partners = $request
             ->user()
             ->partners
             ->limit(5)
@@ -18,7 +18,41 @@ class DashboardController extends Controller
 
         return view('dashboard::index')
             ->with([
-                'partners' => $partners
+                'partners' => $partners,
+                'quick_bonus' => $this->quickBonus($request)
             ]);
+    }
+
+    private function quickBonus(Request $request)
+    {
+        $now = now();
+        $quick_bonus_start = $request->user()->created_at;
+        $quick_bonus_end = $request->user()->created_at->addDays(30);
+        $quick_bonus_days_left = $quick_bonus_end->diffInDays($now);
+
+        $my_sales = $request->user()->transactions()
+            ->whereType('line_bonus')
+            ->whereBetween('created_at', [$quick_bonus_start, $quick_bonus_end])
+            ->get();
+
+        $current_amount = 0;
+
+        foreach ($my_sales as $sale)
+        {
+            $current_amount += $sale['details']['price'];
+        }
+
+        $min_amount = 10000000;
+
+        $current_percent = ($current_amount / $min_amount) * 100;
+
+        return [
+            'now' => $now,
+            'quick_bonus_end' => $quick_bonus_end,
+            'days_left' => $quick_bonus_days_left,
+            'min_amount' => number_format($min_amount / 100, 2),
+            'current_amount' => number_format($current_amount / 100, 2),
+            'current_percent' => $current_percent
+        ];
     }
 }

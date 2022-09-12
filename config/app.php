@@ -17,6 +17,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'internal-currency' => env('INTERNAL_CURRENCY_ABBR', 'PH'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -82,7 +84,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------

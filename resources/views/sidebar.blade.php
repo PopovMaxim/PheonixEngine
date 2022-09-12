@@ -3,7 +3,7 @@
         <div class="content-header bg-white-5">
             <a class="fw-semibold text-white tracking-wide" href="/">
                 <span class="smini-visible">
-                    N<span class="opacity-75">v</span>
+                    P<span class="opacity-75">h</span>
                 </span>
                 <span class="smini-hidden">
                     <img src="{{ asset('assets/media/logos/logo-short.png') }}" class="img-fluid" style="max-width: 80%" />
@@ -40,7 +40,7 @@
 
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('subscribes')) active @endif" href="{{ route('subscribes') }}">
-                        <i class="nav-main-link-icon fa fa-robot"></i>
+                        <i class="nav-main-link-icon fa fa-star"></i>
                         <span class="nav-main-link-name">Подписки</span>
                     </a>
                 </li>
@@ -48,9 +48,22 @@
                 <li class="nav-main-heading">Финансы</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('wallet')) active @endif" {{--href="{{ url('wallet') }}"--}}>
-                        <i class="nav-main-link-icon fa fa-wallet"></i>
-                        <span class="nav-main-link-name">Кошелёк</span>
+                        <i class="nav-main-link-icon fa fa-arrow-down"></i>
+                        <span class="nav-main-link-name">Пополнение</span>
                         <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('wallet')) active @endif" {{--href="{{ url('wallet') }}"--}}>
+                        <i class="nav-main-link-icon fa fa-arrow-up"></i>
+                        <span class="nav-main-link-name">Вывод</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('transfer')) active @endif" href="{{ route('transfer') }}">
+                        <i class="nav-main-link-icon fa fa-exchange"></i>
+                        <span class="nav-main-link-name">Перевод</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
@@ -74,39 +87,11 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('network/promo')) active @endif" href="#">
-                        <i class="nav-main-link-icon fa fa-mail-bulk"></i>
-                        <span class="nav-main-link-name">Рекламные материалы</span>
+                    <a class="nav-main-link @if(request()->is('network/leader-pull')) active @endif" href="{{ route('network.leader-pull') }}">
+                        <i class="nav-main-link-icon fa fa-crown"></i>
+                        <span class="nav-main-link-name">Лидерский пулл</span>
                     </a>
                 </li>
-                {{--<li class="nav-main-item @if(request()->is('network*')) open @endif">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
-                        <i class="nav-main-link-icon fa fa-network-wired"></i>
-                        <span class="nav-main-link-name">Партнёрская сеть</span>
-                    </a>
-                    <ul class="nav-main-submenu">
-                        <li class="nav-main-item">
-                            <a class="nav-main-link @if(request()->is('network/partners')) active @endif" href="{{ route('network.partners') }}">
-                                <span class="nav-main-link-name">Мои партнёры</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link @if(request()->is('network/line')) active @endif" href="{{ route('network.line') }}">
-                                <span class="nav-main-link-name">Линейный маркетинг</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link @if(request()->is('network/tree')) active @endif" href="{{ route('network.tree') }}">
-                                <span class="nav-main-link-name">Бинарное дерево</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link @if(request()->is('network/promo')) active @endif" href="{{ route('network.promo') }}">
-                                <span class="nav-main-link-name">Рекламные материалы</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>--}}
                 <li class="nav-main-heading">Помощь</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('support*')) active @endif" href="{{ route('support') }}">

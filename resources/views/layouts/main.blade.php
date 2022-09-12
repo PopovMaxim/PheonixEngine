@@ -34,10 +34,9 @@
         @include('header')
         
         <main id="main-container">
-            
+            @include('admin.navbar')
             @yield('hero')
             @include('content')
-
         </main>
 
         @include('footer')

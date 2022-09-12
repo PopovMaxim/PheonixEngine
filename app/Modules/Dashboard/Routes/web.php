@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'DashboardController@index')->middleware('auth')->name('dashboard');
+Route::get('dashboard', 'DashboardController@index')->middleware('auth')->name('dashboard');

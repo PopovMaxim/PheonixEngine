@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-lg-4 py-3">
                     <div class="fs-1 fw-light text-dark mb-0">
-                        {{ request()->user()->partners_activation_percentage }} %
+                        {{ $partners_activation_percentage }} %
                     </div>
                     <div class="fs-sm fw-bold text-muted text-uppercase">
                         Процент активаций
@@ -82,7 +82,7 @@
                 <canvas id="chart" height="400"></canvas>
             </div>
 
-            <table class="table table-bordered table-striped table-vcenter fs-sm">
+            <table class="table table-bordered table-striped table-vcenter fs-sm mt-3">
                 <thead>
                     <tr>
                         <th class="d-none d-sm-table-cell text-center" style="width: 32px;">

@@ -23,6 +23,7 @@ class Transaction extends Model
         'refill' => 'Пополнение',
         'withdrawal' => 'Выплата',
         'transfer' => 'Перевод',
+        'leader_pull' => 'Лидерский пулл'
     ];
 
     protected $casts = [
@@ -38,12 +39,17 @@ class Transaction extends Model
         return \App\Modules\Transactions\Database\factories\TransactionFactory::new();
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+    }
+
     public function getFormattedAmountAttribute()
     {
         $amount = number_format($this->amount / 100, 2);
 
         $prefix = '+';
-        $postfix = '₽';
+        $postfix = config('app.internal-currency');
 
         if ($this->direction == 'outer')
         {

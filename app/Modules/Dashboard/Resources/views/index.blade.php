@@ -1,5 +1,48 @@
 @extends('dashboard::layouts.master')
 
+@push('js')
+<script src="{{ asset('assets/js/plugins/easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
+<script>
+    var countDownDate = new Date("{{ $quick_bonus['quick_bonus_end'] }}").getTime();
+
+    var x = setInterval(function() {
+
+        var now = new Date().getTime();
+
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (hours < 10) {
+            hours = '0' + hours;
+        }
+
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        } 
+
+        if (seconds < 10) {
+            seconds = '0' + seconds;
+        } 
+        
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+<script>Dashmix.helpersOnLoad(['jq-easy-pie-chart']);</script>
+@endpush
+
 @section('content')
 <div class="bg-transparent">
     <div class="content content-full content-top">
@@ -40,7 +83,7 @@
                     <div class="item rounded-3 bg-body mx-auto my-3">
                         <i class="fa fa-chart-line fa-lg text-primary"></i>
                     </div>
-                    <div class="fs-1 fw-bold">{{ request()->user()->total_earned }} ₽</div>
+                    <div class="fs-1 fw-bold">{{ request()->user()->total_earned }} {{ config('app.internal-currency') }}</div>
                     <div class="text-muted mb-3">Всего начислено</div>
                 </div>
             </div>
@@ -53,6 +96,59 @@
                     </div>
                     <div class="fs-1 fw-bold">{{ request()->user()->formatted_balance }}</div>
                     <div class="text-muted mb-3">Текущий баланс</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-header block-header-default">
+            <h3 class="block-title text-center">Быстрый бонус</h3>
+        </div>
+        <div class="block-content">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h4>Правила и условия акции</h4>
+                    <p>
+                        Чтобы получить бонус в 10,000.00, Вам необходимо набрать объём<br/>
+                        личных продаж на 100,000.00 в течении 30 дней с момента регистрации.
+                    </p>
+                    <p class="text-center">До окончания действия акции осталось:</p>
+                    <div class="d-flex justify-content-center text-center mb-3">
+                        <div class="me-5">
+                            <div id="days" class="display-5">*</div>
+                            <div class="text-muted">ДНИ</div>
+                        </div>
+                        <div class="me-5">
+                            <div id="hours" class="display-5">*</div>
+                            <div class="text-muted">ЧАСЫ</div>
+                        </div>
+                        <div class="me-5">
+                            <div id="minutes" class="display-5">*</div>
+                            <div class="text-muted">МИНУТЫ</div>
+                        </div>
+                        <div>
+                            <div id="seconds" class="display-5">*</div>
+                            <div class="text-muted">СЕКУНДЫ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <h4>Ваш прогресс</h4>
+
+                        <div class="js-pie-chart pie-chart" data-percent="{{ $quick_bonus['current_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#0665d0" data-track-color="#e9e9e9">
+                            <span>{{ $quick_bonus['current_percent'] }}%</span>
+                        </div>
+
+                        <div class="block-content">
+                            <p class="text-uppercase fs-sm fw-bold">
+                                {{ $quick_bonus['current_amount'] }} / {{ $quick_bonus['min_amount'] }} {{ config('app.internal-currency') }}
+                            </p>
+                        </div>
+                    </div>
+
+                    
                 </div>
             </div>
         </div>

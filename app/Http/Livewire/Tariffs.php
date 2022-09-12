@@ -49,7 +49,7 @@ class Tariffs extends Component
             ]);
         }
 
-        $request->user()->transactions->create([
+        $tx = $request->user()->transactions->create([
             'type' => 'subscribe',
             'status' => 'completed',
             'amount' => $tariff_price,
@@ -80,7 +80,7 @@ class Tariffs extends Component
         ]);*/
 
         // Accural line marketing bonuses
-        $request->user()->calcLineMarketing($tariff_price);
+        $request->user()->calcLineMarketing($tariff, $tariff_price, $tx['id']);
 
         return session()->flash('status', [
             'type' => 'success',

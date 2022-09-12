@@ -37,6 +37,7 @@ class User extends Authenticatable
         'sponsor_id',
         'telegram_id',
         'activated_at',
+        'account_number',
         'partners_register_side',
     ];
 
@@ -65,7 +66,7 @@ class User extends Authenticatable
         return env('APP_URL') . '/register/' . $this->hash;
     }
 
-    function getObfuscatedEmailAttribute()
+    public function getObfuscatedEmailAttribute()
     {
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL))
         {
@@ -75,6 +76,18 @@ class User extends Authenticatable
             $last_domain = str_replace(substr($last['0'], '1'), str_repeat('*', strlen($last['0'])-1), $last['0']);
             return $first.'@'.$last_domain.'.'.$last['1'];
         }
+    }
+
+    public function getFullNameAttribute()
+    {
+        $result = "{$this->lastname} {$this->firstname} {$this->patronymic}";
+
+        if (empty(trim($result)))
+        {
+            return "Не указано";
+        }
+
+        return $result;
     }
 
     /*
@@ -148,7 +161,7 @@ class User extends Authenticatable
 
     public function getFormattedBalanceAttribute()
     {
-        return number_format($this->calcBalance() / 100, 2) . ' ₽';
+        return number_format($this->calcBalance() / 100, 2) . ' ' . config('app.internal-currency');
     }
 
     /*
@@ -322,7 +335,7 @@ class User extends Authenticatable
         }
     }
 
-    public function calcLineMarketing($amount = 0)
+    public function calcLineMarketing($tariff_id, $price, $tx_id)
     {
         $percents = [
             0 => 20,
@@ -336,6 +349,8 @@ class User extends Authenticatable
             8 => 1,
             9 => 1
         ];
+
+        $tariff = Tariff::$tariffs[$tariff_id];
 
         $level_depth = 10;
 
@@ -380,11 +395,14 @@ class User extends Authenticatable
                 Transaction::create([
                     'type' => 'line_bonus',
                     'status' => 'completed',
-                    'amount' => $amount * $percents[$key] / 100,
+                    'amount' => $tariff['price'] * $percents[$key] / 100,
                     'user_id' => $value,
                     'direction' => 'inner',
                     'details' => [
                         'level' => $i,
+                        'tx_id' => $tx_id,
+                        'price' => $price,
+                        'tariff' => $tariff_id,
                         'user_id' => request()->user()->id
                     ]
                 ]);
@@ -392,6 +410,133 @@ class User extends Authenticatable
 
             $i++;
         }
+    }
+
+    public function getCurrentLeaderPullSum()
+    {
+        $now = now();
+
+        $month_start = $this->created_at->startOfMonth();
+        $month_end = $this->created_at->endOfMonth();
+
+        $my_partners = $this->partners
+            ->get();
+
+        $current_amount = 0;
+
+        foreach ($my_partners as $partner)
+        {
+            $current_amount += $partner->transactions()
+                ->whereType('subscribe')
+                ->whereBetween('created_at', [$month_start, $month_end])
+                ->sum('amount');
+        }
+
+        return $current_amount;
+    }
+
+    public function getLeaderPull()
+    {
+        $pull = [
+            [
+                'pull' => 1,
+                'percent' => 0.01,
+                'level_1_sum' => $this->getCurrentLeaderPullSum(),
+                'level_2_sum' => 0,
+                'level_1_percent' => 0.00,
+                'level_2_percent' => 0.00,
+                'status' => 'processed',
+                'color' => 'muted'
+            ],
+            [
+                'pull' => 2,
+                'percent' => 0.02,
+                'count' => 0,
+                'percent' => 0.00,
+                'status' => 'processed',
+                'color' => 'muted'
+            ],
+            [
+                'pull' => 3,
+                'percent' => 0.03,
+                'count' => 0,
+                'percent' => 0.00,
+                'status' => 'processed',
+                'color' => 'muted'
+            ]
+        ];
+
+        $level_2_partners = [];
+        
+        foreach ($this->partners->get() as $partner)
+        {
+            $level_2_partners[] = $partner;
+    
+            $pull[0]['level_2_sum'] += $partner->getCurrentLeaderPullSum();
+        }
+
+        $pull[0]['level_1_percent'] =  number_format(($pull[0]['level_1_sum'] / 10000000) * 100, 2);
+        $pull[0]['level_2_percent'] =  number_format((($pull[0]['level_1_sum'] + $pull[0]['level_2_sum']) / 30000000) * 100, 2);
+
+        if ($pull[0]['level_1_percent'] >= 100 && $pull[0]['level_2_percent'] >= 100)
+        {
+            $pull[0]['status'] = 'completed';
+            $pull[0]['color'] = 'success';
+        }
+
+        foreach ($this->partners->get() as $partner)
+        {
+            //$partner_pull = $partner->getLeaderPull();
+
+            if ($pull[0]['status'] == 'completed')
+            {
+                $pull[1]['count']++;
+            }
+        }
+
+        foreach ($level_2_partners as $partner)
+        {
+            ///$partner_pull = $partner->getLeaderPull();
+
+            if ($pull[1]['count'] >= 3)
+            {
+                $pull[2]['count']++;
+            }
+        }
+
+        $pull[1]['percent'] = number_format($pull[1]['count'] / 3 * 100, 2);
+        $pull[2]['percent'] = number_format($pull[2]['count'] / 3 * 100, 2);
+
+        if ($pull[0]['level_1_percent'] >= 100 && $pull[1]['count'] >= 3)
+        {
+            $pull[1]['status'] = 'completed';
+            $pull[1]['color'] = 'success';
+        }
+
+        if ($pull[0]['level_1_percent'] >= 100 && $pull[2]['count'] >= 3)
+        {
+            $pull[2]['status'] = 'completed';
+            $pull[2]['color'] = 'success';
+        }
+
+        return $pull;
+    }
+
+    public function getCurrentLeaderPull()
+    {
+        $current_pull = null;
+
+        foreach ($this->getLeaderPull() as $pull)
+        {
+            if ($pull['status'] != 'completed')
+            {
+                continue;
+            }
+
+            $current_pull = $pull;
+        }
+
+        return $current_pull;
     }
 
     public function getCurrentSubscribe()
@@ -439,5 +584,24 @@ class User extends Authenticatable
         $subscribe = $this->getCurrentSubscribe();
 
         return $subscribe['title'] ?? 'Нет';
+    }
+
+    public static function generateAccountNumber($prefix = 'PH')
+    {
+        $generate = function ($number) use (&$generate, $prefix)
+        {
+            $search = \DB::table('users')
+                ->whereAccountNumber($number)
+                ->count();
+
+            if ($search)
+            {
+                return $generate($prefix . '-' . rand(111, 999) . '-' . rand(111, 999));
+            }
+
+            return $number;
+        };
+
+        return $generate($prefix . '-' . rand(111, 999) . '-' . rand(111, 999));
     }
 }

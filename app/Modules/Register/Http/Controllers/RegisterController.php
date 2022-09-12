@@ -75,6 +75,7 @@ class RegisterController extends Controller
                 'hash' => md5($email . now()->timestamp),
                 'password' => Hash::make($password),
                 'sponsor_id' => $sponsor_query['id'],
+                'account_number' => User::generateAccountNumber()
             ]);
             
             //$create->addToBinaryTree($leg);

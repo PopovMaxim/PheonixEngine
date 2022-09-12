@@ -33,7 +33,6 @@ class LineController extends Controller
 
         $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
 
-
         switch ($level_depth)
         {
             case 2;
@@ -49,6 +48,8 @@ class LineController extends Controller
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();
+
+                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
             break;
 
             case 3:
@@ -67,7 +68,7 @@ class LineController extends Controller
                     ->whereIn('sponsor_id', $level_2_partners_ids);
 
                 $total_partners = $partners->count();
-                
+
                 $total_activated_partners = $partners
                     ->whereNotNull('activated_at')
                     ->count();

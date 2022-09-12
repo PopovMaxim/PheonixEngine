@@ -238,10 +238,10 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-5 justify-content-center">
-                                    <i class="fa fa-3x fa-layer-group text-primary"></i>
+                                    <i class="fa fa-3x fa-chart-line text-primary"></i>
                                     <div class="ms-md-3">
-                                        <h3 class="mb-0">Удобный интерфейс</h3>
-                                        <p class="mb-0">Мы продумали всё до мелочей, чтобы у Вас остался только положительный пользовательский опыт</p>
+                                        <h3 class="mb-0">Уникальные алгоритмы</h3>
+                                        <p class="mb-0">Наши эксперты реализовали уникальные и сильные алгоритмы торговли, демонстрирующие впечатляющие результаты</p>
                                     </div>
                                 </div>
                             </div>

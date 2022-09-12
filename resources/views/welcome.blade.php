@@ -19,7 +19,7 @@
 </li>
 <li class="nav-main-item">
     <a class="nav-main-link" href="#tariffs">
-        <i class="nav-main-link-icon fab fa-paypal"></i>
+        <i class="nav-main-link-icon fas fa-cubes"></i>
         <span class="nav-main-link-name text-light">ТАРИФЫ</span>
     </a>
 </li>
@@ -119,7 +119,7 @@
             </div>
         </nav>
 
-        <header id="page-header" class="py-3">
+        <header id="page-header" class="py-3 animated bounceInDown">
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <a class="fs-lg fw-semibold text-dark" href="{{ url('/') }}">
@@ -156,7 +156,7 @@
                 <div class="hero bg-primary-dark-op">
                     <div class="hero-inner">
                         <div class="content content-full">
-                            <div class="row">
+                            <div class="row  animated fadeIn">
                                 <div class="col-lg-5 text-center text-lg-start d-lg-flex align-items-lg-center">
                                     <div>
                                         <h1 class="display-6 fw-bold text-light mb-3">
@@ -199,7 +199,7 @@
                                 О компании
                             </h2>
                             <h4 class="text-muted mb-0 text-center">
-                                Компания ФТ занимается разработкой программного обеспечения для
+                                Компания Pheonix Tech занимается разработкой программного обеспечения для
                                 торговых<br />терминалов,
                                 реализуя сложные идеи в IT-решения, доступные каждому
                             </h4>
@@ -223,22 +223,31 @@
 
                         <div class="d-flex justify-content-between align-items-center mb-5">
                             <div class="me-5">
-                                <div class="d-flex flex-row align-items-center mb-5">
+                                <div class="d-flex flex-row align-items-center mb-5 justify-content-center">
                                     <i class="fa fa-3x fa-tachometer-alt text-primary"></i>
-                                    <div class="ms-3">
+                                    <div class="ms-md-3">
                                         <h3 class="mb-0">Скорость</h3>
                                         <p class="mb-0">Высокая скорость обработки сигналов и совершения сделок на их основе</p>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-row align-items-center mb-5">
+                                <div class="d-flex flex-row align-items-center mb-5 justify-content-center">
                                     <i class="fa fa-3x fa-layer-group text-primary"></i>
-                                    <div class="ms-3">
+                                    <div class="ms-md-3">
+                                        <h3 class="mb-0">Удобный интерфейс</h3>
+                                        <p class="mb-0">Мы продумали всё до мелочей, чтобы у Вас остался только положительный пользовательский опыт</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-5 justify-content-center">
+                                    <i class="fa fa-3x fa-layer-group text-primary"></i>
+                                    <div class="ms-md-3">
                                         <h3 class="mb-0">Удобный интерфейс</h3>
                                         <p class="mb-0">Мы продумали всё до мелочей, чтобы у Вас остался только положительный пользовательский опыт</p>
                                     </div>
                                 </div>
                             </div>
-                            <img src="{{ asset('assets/media/welcome/macbook.png') }}" class="img-fluid w-75" />
+                            <div class="d-none d-lg-block">
+                                <img src="{{ asset('assets/media/welcome/macbook.png') }}" class="img-fluid" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -489,6 +498,9 @@
                                 </a>
                             </li>
                         </ul>
+                    </div>
+                    <div class="col-md-4 text-center d-none d-lg-block">
+                        <img src="{{ asset('assets/media/logos/logo-long-black.png') }}" class="img-fluid w-75" /><br/>
                     </div>
                     <div class="col-md-4">
                         <h3 class="fw-semibold">Контакты</h3>

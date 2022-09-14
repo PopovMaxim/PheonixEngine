@@ -19,4 +19,12 @@ Route::middleware('auth')->prefix('admin')->group(function() {
     Route::prefix('transactions')->group(function() {
         Route::get('/', 'TransactionsController@index')->name('admin.transactions');
     });
+
+    Route::prefix('subscribes')->group(function() {
+        Route::get('/', 'SubscribesController@index')->name('admin.subscribes');
+    });
+
+    Route::prefix('tariffs')->group(function() {
+        Route::get('/', 'TariffsController@index')->name('admin.tariffs');
+    });
 });

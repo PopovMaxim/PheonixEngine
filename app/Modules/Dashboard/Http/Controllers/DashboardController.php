@@ -28,7 +28,6 @@ class DashboardController extends Controller
         $now = now();
         $quick_bonus_start = $request->user()->created_at;
         $quick_bonus_end = $request->user()->created_at->addDays(30);
-        $quick_bonus_days_left = $quick_bonus_end->diffInDays($now);
 
         $my_sales = $request->user()->transactions()
             ->whereType('line_bonus')
@@ -49,10 +48,16 @@ class DashboardController extends Controller
         return [
             'now' => $now,
             'quick_bonus_end' => $quick_bonus_end,
-            'days_left' => $quick_bonus_days_left,
             'min_amount' => number_format($min_amount / 100, 2),
             'current_amount' => number_format($current_amount / 100, 2),
             'current_percent' => $current_percent
         ];
+    }
+
+    public function acceptQuickBonus(Request $request)
+    {
+        $request->user()->acceptQuickBonus();
+
+        return back();
     }
 }

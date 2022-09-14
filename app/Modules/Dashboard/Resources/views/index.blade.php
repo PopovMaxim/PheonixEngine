@@ -6,9 +6,7 @@
     var countDownDate = new Date("{{ $quick_bonus['quick_bonus_end'] }}").getTime();
 
     var x = setInterval(function() {
-
         var now = new Date().getTime();
-
         var distance = countDownDate - now;
 
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -16,23 +14,14 @@
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        if (hours < 10) {
-            hours = '0' + hours;
-        }
-
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        } 
-
-        if (seconds < 10) {
-            seconds = '0' + seconds;
-        } 
+        if (hours < 10) { hours = '0' + hours; }
+        if (minutes < 10) { minutes = '0' + minutes; } 
+        if (seconds < 10) { seconds = '0' + seconds; } 
         
         document.getElementById("days").innerHTML = days;
         document.getElementById("hours").innerHTML = hours;
         document.getElementById("minutes").innerHTML = minutes;
         document.getElementById("seconds").innerHTML = seconds;
-
 
         if (distance < 0) {
             clearInterval(x);
@@ -103,59 +92,64 @@
             </div>
         </div>
     </div>
-
-    <div class="block">
-        <div class="block-header block-header-default">
-            <h3 class="block-title text-center">Быстрый бонус</h3>
-        </div>
-        <div class="block-content">
-            <div class="row">
-                <div class="col-md-6 text-center">
-                    <h4>Правила и условия акции</h4>
-                    <p>
-                        Чтобы получить бонус в 10,000.00, Вам необходимо набрать объём<br/>
-                        личных продаж на 100,000.00 в течении 30 дней с момента регистрации.
-                    </p>
-                    <p class="text-center">До окончания действия акции осталось:</p>
-                    <div class="d-flex justify-content-center text-center mb-3">
-                        <div class="me-5">
-                            <div id="days" class="display-5">*</div>
-                            <div class="text-muted">ДНИ</div>
-                        </div>
-                        <div class="me-5">
-                            <div id="hours" class="display-5">*</div>
-                            <div class="text-muted">ЧАСЫ</div>
-                        </div>
-                        <div class="me-5">
-                            <div id="minutes" class="display-5">*</div>
-                            <div class="text-muted">МИНУТЫ</div>
-                        </div>
-                        <div>
-                            <div id="seconds" class="display-5">*</div>
-                            <div class="text-muted">СЕКУНДЫ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="text-center">
-                        <h4>Ваш прогресс</h4>
-
-                        <div class="js-pie-chart pie-chart" data-percent="{{ $quick_bonus['current_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#0665d0" data-track-color="#e9e9e9">
-                            <span>{{ $quick_bonus['current_percent'] }}%</span>
-                        </div>
-
-                        <div class="block-content">
-                            <p class="text-uppercase fs-sm fw-bold">
-                                {{ $quick_bonus['current_amount'] }} / {{ $quick_bonus['min_amount'] }} {{ config('app.internal-currency') }}
-                            </p>
+    @if ($quick_bonus['quick_bonus_end']->addDays(2) >= now() || ($quick_bonus['current_percent'] >= 100 && !request()->user()->quick_bonus_accepted))
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 class="block-title text-center">Быстрый бонус</h3>
+            </div>
+            <div class="block-content">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <h4>Правила и условия акции</h4>
+                        <p>
+                            Чтобы получить бонус в 10,000.00 {{ config('app.internal-currency') }}, Вам необходимо набрать объём<br/>
+                            личных продаж в 100,000.00 {{ config('app.internal-currency') }} в течении 30 дней с момента регистрации.
+                        </p>
+                        <p class="text-center">До окончания действия акции осталось:</p>
+                        <div class="d-flex justify-content-center text-center mb-3">
+                            <div class="me-5">
+                                <div id="days" class="display-5">*</div>
+                                <div class="text-muted">ДНИ</div>
+                            </div>
+                            <div class="me-5">
+                                <div id="hours" class="display-5">*</div>
+                                <div class="text-muted">ЧАСЫ</div>
+                            </div>
+                            <div class="me-5">
+                                <div id="minutes" class="display-5">*</div>
+                                <div class="text-muted">МИНУТЫ</div>
+                            </div>
+                            <div>
+                                <div id="seconds" class="display-5">*</div>
+                                <div class="text-muted">СЕКУНДЫ</div>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="text-center">
+                            <h4>Ваш прогресс</h4>
 
-                    
+                            <div class="js-pie-chart pie-chart" data-percent="{{ $quick_bonus['current_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#6849ad" data-track-color="#e9e9e9">
+                                <span>{{ $quick_bonus['current_percent'] }}%</span>
+                            </div>
+
+                            <div class="block-content">
+                                <p class="text-uppercase fs-sm fw-bold">
+                                    {{ $quick_bonus['current_amount'] }} / {{ $quick_bonus['min_amount'] }} {{ config('app.internal-currency') }}
+                                </p>
+                                @if ($quick_bonus['current_percent'] >= 100)
+                                    <form method="post" action="{{ route('accept-quick-bonus') }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary btn-sm mb-3">Забрать бонус</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="row items-push">
         <div class="col-xl-6">

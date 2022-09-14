@@ -23,7 +23,8 @@ class Transaction extends Model
         'refill' => 'Пополнение',
         'withdrawal' => 'Выплата',
         'transfer' => 'Перевод',
-        'leader_pull' => 'Лидерский пулл'
+        'leader_pull' => 'Лидерский пулл',
+        'quick_bonus' => 'Быстрый бонус'
     ];
 
     protected $casts = [

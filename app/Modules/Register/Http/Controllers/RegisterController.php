@@ -15,26 +15,29 @@ class RegisterController extends Controller
 {
     public function index(Request $request, $sponsor = null, $leg = null)
     {
-        if (is_null($sponsor)) {
+        /*if (is_null($sponsor)) {
             return redirect()
                 ->route('login');
+        }*/
+
+        $sponsor_query = null;
+
+        if (is_null($sponsor)) {
+            $sponsor_query = User::query()
+                ->where('hash', $sponsor)
+                ->first();
         }
 
-        $sponsor_query = User::query()
-            ->where('hash', $sponsor)
-            ->first();
-
+        /*
         if (is_null($sponsor_query)) {
             return redirect()
                 ->route('login');
-        }
+        }*/
 
         if (!is_null($leg) && !in_array($leg, ['left', 'right'])) {
             return redirect()
                 ->route('login');
         }
-
-        $random_quote = TradersQuotes::random();
 
         if ($request->isMethod('post')) {
             $request->validate([
@@ -59,6 +62,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'confirmed'],
                 'password_confirmation' => ['required'],
             ], [
+                'nickname.required' => 'Вы не ввели никнейм.',
                 'email.required' => 'Вы не ввели электронную почту.',
                 'email.email' => 'Неправильный формат электронной почты.',
                 'password.required' => 'Вы не ввели пароль.',
@@ -69,25 +73,33 @@ class RegisterController extends Controller
             $nickname = $request->input('nickname');
             $password = $request->input('password');
 
-            $create = User::create([
+            $payload = [
                 'email' => $email,
                 'nickname' => $nickname,
                 'hash' => md5($email . now()->timestamp),
                 'password' => Hash::make($password),
-                'sponsor_id' => $sponsor_query['id'],
                 'account_number' => User::generateAccountNumber()
-            ]);
+            ];
+
+            if ($sponsor_query) {
+                $payload['sponsor_id'] = $sponsor_query['id'];
+            }
+
+            $create = User::create($payload);
             
             //$create->addToBinaryTree($leg);
 
             $create->notify(new \App\Notifications\Register);
             $create->notify(new \App\Notifications\SettingsUpdate);
-            $sponsor_query->notify(new \App\Notifications\RegisterPartner($nickname));
+
+            if ($sponsor_query) {
+                $sponsor_query->notify(new \App\Notifications\RegisterPartner($nickname));
+            }
+
             //$create->notify(new \App\Notifications\AddToBinary);
 
             if ($create && Auth::attempt(['email' => $email, 'password' => $password])) {
                 $request->session()->regenerate();
-     
                 return redirect()->route('dashboard');
             }
 
@@ -98,7 +110,6 @@ class RegisterController extends Controller
 
         return view('register::index')
             ->with([
-                'quote' => $random_quote,
                 'sponsor' => $sponsor,
                 'leg' => $leg
             ]);

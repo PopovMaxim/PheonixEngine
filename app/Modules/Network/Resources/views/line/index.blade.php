@@ -19,34 +19,34 @@
 
     <div class="block block-rounded">
         <ul class="nav nav-tabs nav-tabs-alt d-flex justify-content-center" role="tablist">
-            <li class="nav-item" @if ($lines < 1)data-bs-toggle="tooltip" data-bs-title="Уровень 1 доступен при подписке на тарифы: Start, Medium, Business"@endif>
+            <li class="nav-item" @if ($lines < 1)data-bs-toggle="tooltip" data-bs-title="Уровень 1 доступен при подписке на тарифы: Старт, Стандарт, Бизнес, Профессионал"@endif>
                 <a @if ($lines >= 1)href="{{ route('network.line') }}"@endif class="nav-link @if ($level == 1) active @endif @if ($lines < 1) disabled @endif">@if ($lines < 1)<i class="fa fa-lock"></i>@endif Уровень 1</a>
             </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 2 доступен при подписке на тарифы: Medium, Business"@endif>
+            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 2 доступен при подписке на тарифы: Стандарт, Бизнес, Профессионал"@endif>
                 <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 2]) }}"@endif class="nav-link @if ($level == 2) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 2</a>
             </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 3 доступен при подписке на тарифы: Medium, Business"@endif>
+            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 3 доступен при подписке на тарифы: Стандарт, Бизнес, Профессионал"@endif>
                 <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 3]) }}"@endif class="nav-link @if ($level == 3) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 3</a>
             </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 4 доступен при подписке на тарифы: Medium, Business"@endif>
+            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 4 доступен при подписке на тарифы: Стандарт, Бизнес, Профессионал"@endif>
                 <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 4]) }}"@endif class="nav-link @if ($level == 4) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 4</a>
             </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 5 доступен при подписке на тарифы: Medium, Business"@endif>
+            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 5 доступен при подписке на тарифы: Стандарт, Бизнес, Профессионал"@endif>
                 <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 5]) }}"@endif class="nav-link @if ($level == 5) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 5</a>
             </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 6 доступен при подписке на тарифы: Business"@endif>
+            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 6 доступен при подписке на тарифы: Бизнес, Профессионал"@endif>
                 <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 6]) }}"@endif class="nav-link @if ($level == 6) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 6</a>
             </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 7 доступен при подписке на тарифы: Business"@endif>
+            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 7 доступен при подписке на тарифы: Бизнес, Профессионал"@endif>
                 <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 7]) }}"@endif class="nav-link @if ($level == 7) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 7</a>
             </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 8 доступен при подписке на тарифы: Business"@endif>
+            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 8 доступен при подписке на тарифы: Бизнес, Профессионал"@endif>
                 <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 8]) }}"@endif class="nav-link @if ($level == 8) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 8</a>
             </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 9 доступен при подписке на тарифы: Business"@endif>
+            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 9 доступен при подписке на тарифы: Бизнес, Профессионал"@endif>
                 <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 9]) }}"@endif class="nav-link @if ($level == 9) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 9</a>
             </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 10 доступен при подписке на тарифы: Business"@endif>
+            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 10 доступен при подписке на тарифы: Бизнес, Профессионал"@endif>
                 <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 10]) }}"@endif class="nav-link @if ($level == 10) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 10</a>
             </li>
         </ul>

@@ -59,9 +59,9 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
 
-    <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
+    <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/192x192.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/media/favicons/180x180.png') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" id="css-main" href="assets/css/dashmix.min.css">
 
@@ -82,7 +82,6 @@
                 background-position: top;
             }
         }
-
     </style>
 </head>
 <body>
@@ -216,7 +215,7 @@
                                 О продукте
                             </h2>
                             <h4 class="text-muted mb-0 text-center">
-                                Наши Уникальные Торговые алгоритмы позволяют <br /> упростить процесс работы с торговыми
+                                Наши уникальные торговые алгоритмы позволяют <br /> упростить процесс работы с торговыми
                                 терминалами
                             </h4>
                         </div>

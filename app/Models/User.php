@@ -604,4 +604,33 @@ class User extends Authenticatable
 
         return $generate($prefix . '-' . rand(111, 999) . '-' . rand(111, 999));
     }
+
+    public function getQuickBonusAcceptedAttribute()
+    {
+        $bonus = $this->transactions()
+            ->whereType('quick_bonus')
+            ->whereStatus('completed')
+            ->first();
+
+        if ($bonus) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function acceptQuickBonus() {
+        if (!$this->quick_bonus_accepted) {
+            $this->transactions()->create([
+                'id' => \Str::uuid(),
+                'user_id' => $this->id,
+                'type' => 'quick_bonus',
+                'status' => 'completed',
+                'amount' => 1000000,
+                'direction' => 'inner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+    }
 }

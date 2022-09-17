@@ -13,7 +13,7 @@ class Tariff extends Model
         1 => [
             'title' => 'Старт',
             'key' => 'start',
-            'price' => 759900,
+            'price' => 799000,
             'binary' => true,
             'line_marketing' => 1,
             'period' => '1 year',
@@ -22,7 +22,7 @@ class Tariff extends Model
         2 => [
             'title' => 'Стандарт',
             'key' => 'medium',
-            'price' => 1259900,
+            'price' => 1299000,
             'binary' => true,
             'line_marketing' => 5,
             'period' => '2 years',
@@ -31,7 +31,7 @@ class Tariff extends Model
         3 => [
             'title' => 'Бизнес',
             'key' => 'business',
-            'price' => 2759900,
+            'price' => 2799000,
             'binary' => true,
             'line_marketing' => 10,
             'period' => '5 years',
@@ -40,7 +40,7 @@ class Tariff extends Model
         4 => [
             'title' => 'Профессионал',
             'key' => 'professional',
-            'price' => 2759900,
+            'price' => 2999000,
             'binary' => true,
             'line_marketing' => 10,
             'period' => '1 years',

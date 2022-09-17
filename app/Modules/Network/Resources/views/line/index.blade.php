@@ -141,9 +141,9 @@
                         {
                             label: "Регистрации",
                             fill: false,
-                            backgroundColor: "#2770dd",
-                            borderColor: "#2770dd",
-                            pointBackgroundColor: "#2770dd",
+                            backgroundColor: "#6849ad",
+                            borderColor: "#6849ad",
+                            pointBackgroundColor: "#6849ad",
                             data: chart_payload.registration.values
                         }, {
                             label: "Активации",

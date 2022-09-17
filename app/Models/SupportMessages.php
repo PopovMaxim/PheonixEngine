@@ -16,4 +16,15 @@ class SupportMessages extends Model
     public $casts = [
         'created_at' => 'datetime'
     ];
+    
+    public function ticket()
+    {
+        return $this->belongsTo('\App\Models\SupportTickets', 'ticket_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('\App\Models\User', 'user_id', 'id');
+    }
+
 }

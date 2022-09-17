@@ -67,7 +67,7 @@
                             Не объявлено
                         </abbr>
                         <p class="text-muted mb-0">
-                            Прибыль компании
+                            Ваша прибыль
                         </p>
                     </div>
                     <div class="ms-3 item">

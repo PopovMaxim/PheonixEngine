@@ -1,37 +1,128 @@
 <div class="bg-sidebar-dark p-3 push">
     <div class="d-lg-none">
         <button type="button" class="btn w-100 btn-dark d-flex justify-content-between align-items-center"
-            data-toggle="class-toggle" data-target="#horizontal-navigation-click-centered-dark" data-class="d-none">
+            data-toggle="class-toggle" data-target="#admin-menu" data-class="d-none">
                 Меню администратора
                 <i class="fa fa-bars"></i>
         </button>
     </div>
 
-    <div id="horizontal-navigation-click-centered-dark" class="d-none d-lg-block mt-2 mt-lg-0">
-        <ul class="nav-main nav-main-horizontal nav-main-horizontal-center nav-main-dark">
+    <div id="admin-menu" class="d-none d-lg-block mt-2 mt-lg-0">
+        <ul class="nav-main nav-main-horizontal nav-main-hover nav-main-horizontal-center nav-main-dark">            
             <li class="nav-main-item">
-                <a class="nav-main-link" href="{{ route('admin.users') }}">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.users') }}">
                     <i class="nav-main-link-icon fa fa-users"></i>
                     <span class="nav-main-link-name">Пользователи</span>
                 </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{{ route('admin.users') }}">
+                            <span class="nav-main-link-name">Все пользователи</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Заблокированные</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Создать пользователя</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
             <li class="nav-main-item">
-                <a class="nav-main-link" href="{{ route('admin.transactions') }}">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.transactions') }}">
                     <i class="nav-main-link-icon fa fa-coins"></i>
                     <span class="nav-main-link-name">Операции</span>
                 </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{{ route('admin.transactions') }}">
+                            <span class="nav-main-link-name">Все операции</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Список пополнений</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Заявки на выплату</span>
+                            <span class="nav-main-link-badge badge rounded-pill bg-primary">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Создать операцию</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
             <li class="nav-main-item">
                 <a class="nav-main-link" href="{{ route('admin.subscribes') }}">
                     <i class="nav-main-link-icon fa fa-star"></i>
                     <span class="nav-main-link-name">Подписки</span>
                 </a>
             </li>
+
             <li class="nav-main-item">
                 <a class="nav-main-link" href="{{ route('admin.tariffs') }}">
                     <i class="nav-main-link-icon fa fa-cubes"></i>
                     <span class="nav-main-link-name">Тарифы</span>
                 </a>
+            </li>
+            
+            <li class="nav-main-item">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                    <i class="nav-main-link-icon fa fa-gift"></i>
+                    <span class="nav-main-link-name">Бонусы</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Линейный бонус</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Быстрый бонус</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Лидерский пулл</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-main-item">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.support') }}">
+                    <i class="nav-main-link-icon fa fa-headset"></i>
+                    <span class="nav-main-link-name">Техническая поддержка</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{{ route('admin.support') }}">
+                            <span class="nav-main-link-name">Список заявок</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Закрытые заявки</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="#">
+                            <span class="nav-main-link-name">Создать заявку</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

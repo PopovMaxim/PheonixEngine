@@ -30,6 +30,16 @@ class SupportTickets extends Model
         return $this->hasMany('\App\Models\SupportMessages', 'ticket_id', 'id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('\App\Models\User', 'user_id', 'id');
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo('\App\Models\User', 'staff_id', 'id');
+    }
+
     public function getStatusAttributesAttribute()
     {
         return match($this->status)

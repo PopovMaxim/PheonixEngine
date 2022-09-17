@@ -35,11 +35,6 @@
         <span class="nav-main-link-name">ЛИЧНЫЙ КАБИНЕТ</span>
     </a>
 </li>
-<li class="nav-main-item">
-    <a class="nav-main-link" href="#" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
-        <i class="far fa-moon" id="dark-mode-toggler"></i>
-    </a>
-</li>
 @endsection
 <!doctype html>
 <html lang="en">
@@ -322,9 +317,14 @@
                                         <tr class="table-dark text-uppercase fs-sm">
                                             <th class="py-4" style="width: 180px;"></th>
                                             <th class="py-4">Старт</th>
-                                            <th class="py-4">Стандарт</th>
-                                            <th class="py-4 bg-primary">Бизнес</th>
-                                            <th class="py-4 bg-primary">Профессионал</th>
+                                            <th class="py-4 bg-primary ribbon ribbon-bookmark ribbon-success">
+                                                Стандарт
+                                                <div class="ribbon-box">
+                                                    ХИТ
+                                                </div>
+                                            </th>
+                                            <th class="py-4">Бизнес</th>
+                                            <th class="py-4">Профессионал</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -334,13 +334,13 @@
                                                 <div class="h1 fw-bold mb-0">7,990 ₽</div>
                                             </td>
                                             <td class="py-4">
-                                                <div class="h1 fw-bold mb-0">12,990 ₽</div>
+                                                <div class="h1 fw-bold mb-0 text-primary">12,990 ₽</div>
                                             </td>
                                             <td class="py-4">
-                                                <div class="h1 fw-bold text-primary mb-0">27,990 ₽</div>
+                                                <div class="h1 fw-bold mb-0">27,990 ₽</div>
                                             </td>
                                             <td class="py-4">
-                                                <div class="h1 fw-bold text-primary mb-0">27,990 ₽</div>
+                                                <div class="h1 fw-bold mb-0">29,990 ₽</div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -359,31 +359,31 @@
                                         </tr>
                                         <tr>
                                             <td class="fs-sm text-end">Windows</td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
                                         </tr>
                                         <tr>
                                             <td class="fs-sm text-end">Android</td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
                                         </tr>
                                         <tr>
                                             <td class="fs-sm text-end">macOS</td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
                                         </tr>
                                         <tr>
                                             <td class="fs-sm text-end">Тех. Поддержка</td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
-                                            <td><i class="fas fa-circle-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
+                                            <td><i class="fas fa-check text-success"></i></td>
                                         </tr>
                                         <tr class="bg-body-light">
                                             <td></td>
@@ -394,17 +394,17 @@
                                             </td>
                                             <td>
                                                 <button type="button"
-                                                    class="btn rounded-0 btn-sm btn-hero btn-secondary px-4"
+                                                    class="btn rounded-0 btn-sm btn-hero btn-primary px-4"
                                                     wire:click="openModal(2)">Подробнее</button>
                                             </td>
                                             <td>
                                                 <button type="button"
-                                                    class="btn rounded-0 btn-sm btn-hero btn-primary px-4"
+                                                    class="btn rounded-0 btn-sm btn-hero btn-secondary px-4"
                                                     wire:click="openModal(3)">Подробнее</button>
                                             </td>
                                             <td>
                                                 <button type="button"
-                                                    class="btn rounded-0 btn-sm btn-hero btn-primary px-4"
+                                                    class="btn rounded-0 btn-sm btn-hero btn-secondary px-4"
                                                     wire:click="openModal(3)">Подробнее</button>
                                             </td>
                                         </tr>
@@ -456,7 +456,7 @@
                                     Техническая поддержка
                                 </h4>
                                 <p class="mb-0 text-muted">
-                                    Есть вопросы? Наша бесплатная техническая поддержка ответит на любые вопросы по
+                                    Есть вопросы? Наша техническая поддержка ответит на любые вопросы по
                                     нашим
                                     продуктам.
                                 </p>
@@ -475,25 +475,14 @@
                         <h3 class="fw-semibold">Правовые документы</h3>
                         <ul class="list list-simple-mini">
                             <li>
-                                <a class="fw-semibold" href="javascript:void(0)">
-                                    <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Согласие на обработку
-                                    персональных данных
+                                <a class="fw-semibold" href="{{ asset('docs/license-agreements.docx') }}" target="_blank">
+                                    <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Лицензионное соглашение
                                 </a>
                             </li>
                             <li>
-                                <a class="fw-semibold" href="javascript:void(0)">
-                                    <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Договор оферта
-                                </a>
-                            </li>
-                            <li>
-                                <a class="fw-semibold" href="javascript:void(0)">
+                                <a class="fw-semibold" href="{{ asset('docs/pheonix-technology-privacy-policy.docx') }}" target="_blank">
                                     <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Политика
                                     конфиденциальности
-                                </a>
-                            </li>
-                            <li>
-                                <a class="fw-semibold" href="javascript:void(0)">
-                                    <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Реквизиты компании
                                 </a>
                             </li>
                         </ul>
@@ -504,8 +493,13 @@
                     <div class="col-md-4">
                         <h3 class="fw-semibold">Контакты</h3>
                         <div class="fs-sm push">
-                            г. Краснодар, ул. Феоникса 20, п.910<br>
-                            <abbr title="Phone">WhatsApp:</abbr> +7 (123) 456-7890
+                            <div>Наименование: ООО «ВОСХОЖДЕНИЕ»</div>
+                            <div><abbr title="Юридический адрес компании">Адрес:</abbr> 350016, Краснодарский кр, город Краснодар, улица Российская, дом 267/3</div>
+                            <div><abbr title="Индивидуальный налоговый идентификатор">ИНН:</abbr> 2311250039</div>
+                            <div><abbr title="ОГРН">ОГРН:</abbr> 1172375101194</div>
+                            {{--<div><abbr title="Telegram для связи">Telegram:</abbr> @pheonix_support</div>
+                            <div><abbr title="What's App для связи">What's App:</abbr> +7 (987)-654-3210</div>--}}
+                            <div><abbr title="Электронная почта для связи">E-Mail:</abbr> support@pheonix.tech</div>
                         </div>
                     </div>
                 </div>
@@ -513,14 +507,14 @@
 
                 <!-- Footer Copyright -->
                 <div class="fs-sm pt-4 text-center">
-                    <a class="fw-semibold" href="#" target="_blank">Pheonix.Tech</a> &copy; <span
+                    <a class="fw-semibold" href="{{ url('/') }}" target="_blank">Pheonix.Tech</a> &copy; <span
                         data-toggle="year-copy"></span> Все права защищены.
                 </div>
                 <!-- END Footer Copyright -->
             </div>
         </footer>
     </div>
-    <script src="assets/js/dashmix.app.min.js"></script>
+    <script src="{{ asset('assets/js/dashmix.app.min.js') }}"></script>
 </body>
 
 </html>

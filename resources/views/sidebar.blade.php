@@ -21,7 +21,7 @@
         <div class="content-side">
             <ul class="nav-main">
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('/')) active @endif"
+                    <a class="nav-main-link @if(request()->is('dashboard')) active @endif"
                         href="{{ route('dashboard') }}">
                         <i class="nav-main-link-icon fa fa-dashboard"></i>
                         <span class="nav-main-link-name">Панель управления</span>

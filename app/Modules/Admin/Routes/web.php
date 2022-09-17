@@ -27,4 +27,8 @@ Route::middleware('auth')->prefix('admin')->group(function() {
     Route::prefix('tariffs')->group(function() {
         Route::get('/', 'TariffsController@index')->name('admin.tariffs');
     });
+
+    Route::prefix('support')->group(function() {
+        Route::get('/{id?}', 'SupportController@index')->where('id', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')->name('admin.support');
+    });
 });

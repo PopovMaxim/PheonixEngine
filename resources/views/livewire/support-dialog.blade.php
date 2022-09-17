@@ -1,20 +1,29 @@
-<div class="block block-rounded">
+<div class="block block-rounded" wire:poll>
     <div class="block-content block-content-full text-break overflow-y-auto" style="height: 500px;">
         @forelse ($ticket->messages()->orderBy('id', 'desc')->get() as $message)
-        <div class="@if (request()->user()->id == $message['user_id']) ms-4 text-end @else me-4 @endif">
-            <div
-                class="fs-sm text-muted animated fadeIn my-2 @if (request()->user()->id == $message['user_id']) text-end @endif">
-                {{ $message['created_at']->format('d.m.Y в H:i:s') }}</div>
-        </div>
-
-        <div class="@if (request()->user()->id == $message['user_id']) ms-4 text-end @else me-4 @endif">
-            <div
-                class="fs-sm d-inline-block fw-medium animated fadeIn bg-body-light border-3 px-3 py-2 mb-2 shadow-sm mw-100 @if (request()->user()->id == $message['user_id']) border-end border-primary rounded-start text-start @else border-start border-dark rounded-end @endif">
-                {{ $message['message'] }}
+            <div class="mb-3 @if (request()->user()->id == $message['user_id']) ms-4 text-end @else me-4 @endif">
+                <div style="max-width: 75% !important;" class="fs-sm d-inline-block fw-medium animated fadeIn bg-body-light border-3 px-3 py-2 mb-2 shadow-sm @if (request()->user()->id == $message['user_id']) border-end border-primary rounded-start text-start @else border-start border-dark rounded-end @endif">
+                    <div class="text-muted fs-sm mb-1 @if (request()->user()->id == $message['user_id']) ms-4 text-end @else me-4 @endif">
+                        @if ($message['user_id'] == $message['ticket']['user_id'])
+                            @if (request()->user()->id == $message['user_id'])
+                                Вы
+                            @else
+                                {{ $message['user']['nickname'] }}
+                            @endif
+                        @else
+                            Support
+                        @endif
+                    </div>
+                    <div class="@if (request()->user()->id == $message['user_id']) ms-4 text-end @else me-4 @endif">{{ $message['message'] }}</div>
+                    <div class="@if (request()->user()->id == $message['user_id']) ms-4 text-end @else me-4 @endif">
+                        <div class="fs-sm text-muted animated fadeIn my-2 @if (request()->user()->id == $message['user_id']) text-end @endif">
+                            {{ $message['created_at']->format('d.m.Y в H:i:s') }}
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         @empty
-        <div class="alert alert-info">Здесь пока нет ни одного сообщения...</div>
+            <div class="alert alert-primary">Здесь пока нет ни одного сообщения...</div>
         @endforelse
     </div>
 

@@ -51,8 +51,8 @@
     <meta property="og:site_name" content="Pheonix.Tech">
     <meta property="og:description" content="Pheonix.Tech - уникальные алгоритмы для продуктивной торговли">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
+    <meta property="og:url" content="https://pheonix.tech">
+    <meta property="og:image" content="{{ asset('assets/media/logos/logo-icon-colorfull.png') }}">
 
     <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.ico') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/192x192.png') }}">
@@ -64,18 +64,9 @@
     <style>
         .bg-hero {
             background-image: url('assets/media/welcome/hero2.jpg');
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: top;
-        }
-
-        @media screen and (max-width: 1100px) {
-            .bg-hero {
-                background-image: url('assets/media/welcome/hero2.jpg');
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-position: top;
-            }
         }
     </style>
 </head>
@@ -145,7 +136,6 @@
         </header>
 
         <main id="main-container">
-            <!-- Hero -->
             <div class="bg-image bg-hero" id="index">
                 <div class="hero bg-primary-dark-op">
                     <div class="hero-inner">
@@ -183,9 +173,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- END Hero -->
-
-                <!-- Section 2 -->
+            </div>
+                
                 <div class="bg-body-extra-light" id="about-company">
                     <div class="content content-full">
                         <div class="py-5 push">
@@ -200,9 +189,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- END Section 2 -->
-
-                <!-- Section 2 -->
+                
                 <div class="bg-body-light" id="about-product">
                     <div class="content content-full">
                         <div class="py-5 push">
@@ -297,9 +284,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- END Section 2 -->
-
-                <!-- Section 5 -->
+                
                 <div class="bg-body-light" id="tariffs">
                     <div class="content content-full">
                         <div class="py-5 push">
@@ -391,9 +376,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- END Section 5 -->
-
-                <!-- Section 6 -->
+                
                 <div class="bg-body-extra-light" id="tariffs">
                     <div class="content content-full">
                         <div class="py-5 push">
@@ -441,8 +424,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- END Section 6 -->
-
         </main>
 
         <footer id="page-footer" class="footer-static bg-body-light">

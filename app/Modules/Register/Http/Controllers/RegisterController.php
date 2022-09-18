@@ -20,24 +20,17 @@ class RegisterController extends Controller
                 ->route('login');
         }*/
 
-        $sponsor_query = null;
-
-        if (is_null($sponsor)) {
-            $sponsor_query = User::query()
-                ->where('hash', $sponsor)
-                ->first();
-        }
-
         /*
         if (is_null($sponsor_query)) {
             return redirect()
                 ->route('login');
-        }*/
+        }
 
         if (!is_null($leg) && !in_array($leg, ['left', 'right'])) {
             return redirect()
                 ->route('login');
-        }
+        }*/
+
 
         if ($request->isMethod('post')) {
             $request->validate([
@@ -61,7 +54,9 @@ class RegisterController extends Controller
                 ],
                 'password' => ['required', 'confirmed'],
                 'password_confirmation' => ['required'],
+                'agreement' => ['accepted'],
             ], [
+                'agreement.accepted' => 'Вы должны согласиться с политикой конфиденциальности и лицензионным соглашением.',
                 'nickname.required' => 'Вы не ввели никнейм.',
                 'email.required' => 'Вы не ввели электронную почту.',
                 'email.email' => 'Неправильный формат электронной почты.',
@@ -73,11 +68,22 @@ class RegisterController extends Controller
             $nickname = $request->input('nickname');
             $password = $request->input('password');
 
+            $sponsor_query = null;
+
+            if ($request->has('invite_hash'))
+            {
+                $hash = $request->input('invite_hash');
+
+                $sponsor_query = User::query()
+                    ->where('hash', $hash)
+                    ->first();
+            }
+
             $payload = [
                 'email' => $email,
                 'nickname' => $nickname,
-                'hash' => md5($email . now()->timestamp),
                 'password' => Hash::make($password),
+                'hash' => User::generateHash(),
                 'account_number' => User::generateAccountNumber()
             ];
 

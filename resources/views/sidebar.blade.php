@@ -51,10 +51,9 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('wallet')) active @endif" {{--href="{{ url('wallet') }}"--}}>
+                    <a class="nav-main-link @if(request()->is('withdraw')) active @endif" href="{{ route('withdraw') }}">
                         <i class="nav-main-link-icon fa fa-arrow-up"></i>
                         <span class="nav-main-link-name">Вывод</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
                 <li class="nav-main-item">

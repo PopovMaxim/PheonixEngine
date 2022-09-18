@@ -41,6 +41,12 @@
                             @enderror
                         </div>
                         <div class="mb-4">
+                            <input type="text" class="form-control form-control-alt @error('invite_hash') is-invalid @enderror" id="invite_hash" name="invite_hash" value="{{ $sponsor ?? old('invite_hash') }}" placeholder="Код приглашения (если есть)">
+                            @error('invite_hash')
+                                <div class="invalid-feedback animated fadeIn">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
                             <input type="password" class="form-control form-control-alt @error('password') is-invalid @enderror" id="password" name="password" placeholder="Пароль">
                             @error('password')
                                 <div class="invalid-feedback animated fadeIn">{{ $message }}</div>
@@ -51,6 +57,12 @@
                             @error('password_confirmation')
                                 <div class="invalid-feedback animated fadeIn">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input @error('password_confirmation') is-invalid @enderror" type="checkbox" value="1" id="agreement" name="agreement">
+                                <label class="form-check-label" for="agreement">Я согласен/согласна с <a href="#">политикой конфиденциальности</a> и <a href="#">лицензионным соглашением</a>.</label>
+                            </div>
                         </div>
                         <div class="mb-4">
                             <button type="submit" class="btn w-100 btn-hero btn-primary">

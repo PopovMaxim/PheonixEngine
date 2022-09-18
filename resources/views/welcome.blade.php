@@ -162,7 +162,7 @@
                                             реализуя и продвигая современные IT-решения
                                         </h2>
                                         <div>
-                                            <a class="btn btn-primary px-3 py-2 m-1" href="javascript:void(0)">
+                                            <a class="btn btn-primary px-3 py-2 m-1" href="#about-company">
                                                 Узнать подробнее
                                             </a>
                                         </div>
@@ -216,24 +216,24 @@
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mb-5">
-                            <div class="me-5">
+                            <div class="me-md-5">
                                 <div class="d-flex flex-row align-items-center mb-5 justify-content-center">
                                     <i class="fa fa-3x fa-tachometer-alt text-primary"></i>
-                                    <div class="ms-md-3">
+                                    <div class="ms-3">
                                         <h3 class="mb-0">Скорость</h3>
                                         <p class="mb-0">Высокая скорость обработки сигналов и совершения сделок на их основе</p>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-5 justify-content-center">
                                     <i class="fa fa-3x fa-layer-group text-primary"></i>
-                                    <div class="ms-md-3">
+                                    <div class="ms-3">
                                         <h3 class="mb-0">Удобный интерфейс</h3>
                                         <p class="mb-0">Мы продумали всё до мелочей, чтобы у Вас остался только положительный пользовательский опыт</p>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-5 justify-content-center">
                                     <i class="fa fa-3x fa-chart-line text-primary"></i>
-                                    <div class="ms-md-3">
+                                    <div class="ms-3">
                                         <h3 class="mb-0">Уникальные алгоритмы</h3>
                                         <p class="mb-0">Наши эксперты реализовали уникальные и сильные алгоритмы торговли, демонстрирующие впечатляющие результаты</p>
                                     </div>
@@ -384,29 +384,6 @@
                                             <td><i class="fas fa-check text-success"></i></td>
                                             <td><i class="fas fa-check text-success"></i></td>
                                             <td><i class="fas fa-check text-success"></i></td>
-                                        </tr>
-                                        <tr class="bg-body-light">
-                                            <td></td>
-                                            <td>
-                                                <button type="button"
-                                                    class="btn rounded-0 btn-sm btn-hero btn-secondary px-4"
-                                                    wire:click="openModal(1)">Подробнее</button>
-                                            </td>
-                                            <td>
-                                                <button type="button"
-                                                    class="btn rounded-0 btn-sm btn-hero btn-primary px-4"
-                                                    wire:click="openModal(2)">Подробнее</button>
-                                            </td>
-                                            <td>
-                                                <button type="button"
-                                                    class="btn rounded-0 btn-sm btn-hero btn-secondary px-4"
-                                                    wire:click="openModal(3)">Подробнее</button>
-                                            </td>
-                                            <td>
-                                                <button type="button"
-                                                    class="btn rounded-0 btn-sm btn-hero btn-secondary px-4"
-                                                    wire:click="openModal(3)">Подробнее</button>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

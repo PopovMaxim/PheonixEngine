@@ -25,7 +25,7 @@
     <div class="bg-transparent">
         <div class="content content-full content-top">
             <div class="text-center">
-                <h1 class="fw-bold text-dark mb-2">
+                <h1 class="fw-bold text-dark mb-4">
                     Мои партнёры
                 </h1>
             </div>

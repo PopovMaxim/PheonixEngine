@@ -134,7 +134,8 @@
                         </div>
                         </div>
                         <div class="block-content">
-                            <p>Вы уверены, что хотите оформить подписку на тариф <b>«{{ $this->tariffs[$this->selectedTariff]['title'] }}»</b>? Отменить это действие будет нельзя.</p>
+                            <p>Вы уверены, что согласны с <a href="#">лицензионным соглашением</a> и хотите оформить подписку на тариф <b>«{{ $this->tariffs[$this->selectedTariff]['title'] }}»</b>? Отменить это действие будет нельзя.</p>
+                            
                         </div>
                         <div class="block-content block-content-full text-end bg-body">
                             <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-dismiss="modal">Отмена</button>

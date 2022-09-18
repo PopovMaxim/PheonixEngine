@@ -147,6 +147,10 @@ class User extends Authenticatable
                     } else {
                         $balance -= $transaction['amount'];
                     }
+                } else if ($transaction['status'] == 'pending') {
+                    if ($transaction['type'] == 'withdrawal') {
+                        $balance -= $transaction['amount'];
+                    }
                 }
             }
         }
@@ -605,6 +609,29 @@ class User extends Authenticatable
         return $generate($prefix . '-' . rand(111, 999) . '-' . rand(111, 999));
     }
 
+    public static function generateHash($length = 8)
+    {
+        $hash = self::generateRandomString($length);
+
+        $generate = function ($hash) use (&$generate, $length)
+        {
+            $search = \DB::table('users')
+                ->whereHash($hash)
+                ->count();
+
+            if ($search)
+            {
+                $hash = self::generateRandomString($length);
+
+                return $generate($hash);
+            }
+
+            return $hash;
+        };
+
+        return $generate($hash);
+    }
+
     public function getQuickBonusAcceptedAttribute()
     {
         $bonus = $this->transactions()
@@ -617,6 +644,19 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    private static function generateRandomString($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 
     public function acceptQuickBonus() {

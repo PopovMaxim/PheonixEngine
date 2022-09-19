@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -54,6 +55,13 @@ class Handler extends ExceptionHandler
             return back()->with(['request_status' => [
                 'type' => 'danger',
                 'text' => 'Вы превысили кол-во попыток за заданный промежуток времени. Попробуйте позже.'
+            ]]);
+        }
+
+        if ($e instanceof TokenMismatchException) {
+            return back()->with(['toast_notify' => [
+                'type' => 'danger',
+                'text' => 'Срок действия текущей сессии истёк. Попробуйте выполнить действие ещё раз.'
             ]]);
         }
 

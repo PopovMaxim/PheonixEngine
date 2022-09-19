@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/dashmix.min.css') }}">
     <link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/xsmooth.min.css') }}">
+    <link rel="stylesheet" id="css-theme" href="{{ asset('assets/js/plugins/toast/jquery.toast.min.css') }}">
 
     @stack('css')
     @livewireStyles
@@ -36,8 +37,24 @@
 
     <script src="{{ asset('assets/js/dashmix.app.min.js') }}"></script>
     <script src="{{ asset('assets/js/lib/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/toast/jquery.toast.min.js') }}"></script>
 
     @stack('js')
     @livewireScripts
+    @if (session()->has('toast_notify'))
+        @php
+            $toast = session('toast_notify');
+        @endphp
+        <script>
+            $.toast({
+                heading: 'Внимание!',
+                text: "{{ $toast['text'] }}",
+                icon: 'error',
+                loader: false,
+                hideAfter: 7000,
+                position: 'bottom-right'
+            })
+        </script>
+    @endif
 </body>
 </html>

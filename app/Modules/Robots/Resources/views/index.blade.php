@@ -31,7 +31,7 @@
                         </p>
                     </div>
                     <div class="p-1 p-md-3">
-                        <a class="btn btn-sm btn-alt-primary rounded-pill px-3 me-1 my-1" href="#">
+                        <a class="btn btn-sm btn-alt-primary rounded-pill px-3 me-1 my-1" href="{{ route('subscribes.read', ['uuid' => $subscribe['id']]) }}">
                             <i class="fa fa-wrench opacity-50 me-1"></i> Управление
                         </a>
                         {{--

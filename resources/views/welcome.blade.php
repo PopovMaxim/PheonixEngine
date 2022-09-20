@@ -227,7 +227,7 @@
                                 </div>
                             </div>
                             <div class="d-none d-lg-block">
-                                <img src="{{ asset('assets/media/welcome/macbook.png') }}" class="img-fluid" />
+                                <img src="{{ asset('assets/media/welcome/macbook_1.png') }}" class="img-fluid" />
                             </div>
                         </div>
                     </div>
@@ -309,7 +309,7 @@
                                                 </div>
                                             </th>
                                             <th class="py-4">Бизнес</th>
-                                            <th class="py-4">Профессионал</th>
+                                            <th class="py-4">Insider</th>
                                         </tr>
                                     </thead>
                                     <tbody>

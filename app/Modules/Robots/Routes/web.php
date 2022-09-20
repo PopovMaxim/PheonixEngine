@@ -13,4 +13,5 @@
 
 Route::middleware('auth')->prefix('subscribes')->group(function() {
     Route::match(['get', 'post'], '/', 'RobotsController@index')->name('subscribes');
+    Route::match(['get', 'post'], '{uuid}', 'RobotsController@read')->name('subscribes.read');
 });

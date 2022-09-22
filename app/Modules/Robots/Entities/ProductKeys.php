@@ -24,6 +24,6 @@ class ProductKeys extends Model
 
     public function subscribe()
     {
-        return $this->belongsTo('App\Modules\Robots\Entities\Subscribe', 'id', 'subscribe_id');
+        return $this->belongsTo('App\Modules\Robots\Entities\Subscribe', 'subscribe_id', 'id');
     }
 }

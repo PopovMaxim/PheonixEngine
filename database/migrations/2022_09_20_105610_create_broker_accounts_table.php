@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('ea_version');
             $table->string('status')->default(0);
             $table->timestamp('expires_at');
+            $table->softDeletes($column = 'deleted_at');
             $table->timestamps();
         });
     }

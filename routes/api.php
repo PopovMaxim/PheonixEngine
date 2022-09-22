@@ -79,23 +79,23 @@ Route::get('test', function (Request $request) {
         'account_company' => 'Roboforex',
         'ea_name' => 'PHEONIX_INSIDER',
         'ea_version' => '1.0',
-        'activation_code' => 'ccdea6ac-eb4f-4f11-ace2-32736d2a9b6f'
+        'activation_code' => '53ccaaec-090b-400a-9c70-79f1225e9019'
     ]));
 });
 
 Route::prefix('v1/expert')->group(function () {
     Route::get('identify', function (Request $request)
     {
-        $data = 'eyJhY2NvdW50X25hbWUiOiJUZXN0IiwiYWNjb3VudF9udW1iZXIiOiIyMTMyNTgzOSIsImFjY291bnRfY29tcGFueSI6IlJvYm9mb3JleCIsImVhX25hbWUiOiJQSEVPTklYX0lOU0lERVIiLCJlYV92ZXJzaW9uIjoiMS4wIiwiYWN0aXZhdGlvbl9jb2RlIjoiY2NkZWE2YWMtZWI0Zi00ZjExLWFjZTItMzI3MzZkMmE5YjZmIn0=';
+        //$data = 'eyJhY2NvdW50X25hbWUiOiJUZXN0IiwiYWNjb3VudF9udW1iZXIiOiIyMTMyNTgzOSIsImFjY291bnRfY29tcGFueSI6IlJvYm9mb3JleCIsImVhX25hbWUiOiJQSEVPTklYX0lOU0lERVIiLCJlYV92ZXJzaW9uIjoiMS4wIiwiYWN0aXZhdGlvbl9jb2RlIjoiNTNjY2FhZWMtMDkwYi00MDBhLTljNzAtNzlmMTIyNWU5MDE5In0=';
 
-        /*if (!$request->has('data')) {
+        if (!$request->has('data')) {
             return [
                 'status' => 0,
                 'message' => 'Empty Data...'
             ];
-        }*/
+        }
 
-        $data = json_decode(base64_decode($data), true);
+        $data = json_decode(base64_decode($request->input('data')), true);
 
         if (!is_null($data['account_number'])) {
             $account = BrokerAccounts::query()
@@ -153,10 +153,10 @@ Route::prefix('v1/expert')->group(function () {
                     ];
                 }
 
-                /*return [
+                return [
                     'status' => 0,
                     'message' => "Номер счёта {$data['account_number']} не зарегистрирован."
-                ];*/
+                ];
             }
 
             $product = Product::query()

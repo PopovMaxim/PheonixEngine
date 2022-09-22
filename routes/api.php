@@ -84,7 +84,7 @@ Route::get('test', function (Request $request) {
 });
 
 Route::prefix('v1/expert')->group(function () {
-    Route::get('identify', function (Request $request)
+    Route::post('identify', function (Request $request)
     {
         //$data = 'eyJhY2NvdW50X25hbWUiOiJUZXN0IiwiYWNjb3VudF9udW1iZXIiOiIyMTMyNTgzOSIsImFjY291bnRfY29tcGFueSI6IlJvYm9mb3JleCIsImVhX25hbWUiOiJQSEVPTklYX0lOU0lERVIiLCJlYV92ZXJzaW9uIjoiMS4wIiwiYWN0aXZhdGlvbl9jb2RlIjoiNTNjY2FhZWMtMDkwYi00MDBhLTljNzAtNzlmMTIyNWU5MDE5In0=';
 

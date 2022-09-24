@@ -72,22 +72,9 @@ Route::prefix('v1/telegram')->group(function () {
     });
 });
 
-Route::get('test', function (Request $request) {
-    return base64_encode(json_encode([
-        'account_name' => 'Test',
-        'account_number' => '21325839',
-        'account_company' => 'Roboforex',
-        'ea_name' => 'PHEONIX_INSIDER',
-        'ea_version' => '1.0',
-        'activation_code' => '53ccaaec-090b-400a-9c70-79f1225e9019'
-    ]));
-});
-
 Route::prefix('v1/expert')->group(function () {
     Route::post('identify', function (Request $request)
     {
-        //$data = 'eyJhY2NvdW50X25hbWUiOiJUZXN0IiwiYWNjb3VudF9udW1iZXIiOiIyMTMyNTgzOSIsImFjY291bnRfY29tcGFueSI6IlJvYm9mb3JleCIsImVhX25hbWUiOiJQSEVPTklYX0lOU0lERVIiLCJlYV92ZXJzaW9uIjoiMS4wIiwiYWN0aXZhdGlvbl9jb2RlIjoiNTNjY2FhZWMtMDkwYi00MDBhLTljNzAtNzlmMTIyNWU5MDE5In0=';
-
         if (!$request->has('data')) {
             return [
                 'status' => 0,
@@ -139,12 +126,12 @@ Route::prefix('v1/expert')->group(function () {
                             ->where('version', $data['ea_version'])
                             ->first();
 
-                        return [
+                        return base64_encode(json_encode([
                             'account_number' => $account['account_number'],
                             'status' => $account['status'],
                             'support_date_end' => $product['support_date_end'] ?? null,
                             'expires_at' => $account['expires_at']
-                        ];
+                        ]));
                     }
                 } else {
                     return [
@@ -164,12 +151,12 @@ Route::prefix('v1/expert')->group(function () {
                 ->where('version', $data['ea_version'])
                 ->first();
 
-            return [
+            return base64_encode(json_encode([
                 'account_number' => $account['account_number'],
                 'status' => $account['status'],
                 'support_date_end' => $product['support_date_end'] ?? null,
                 'expires_at' => $account['expires_at']
-            ];
+            ]));
         }
     });
 });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a065d24e72eba3d4fd1cd2fadad83e90",
+    "content-hash": "b878ca96d2e132f99134df66ce780541",
     "packages": [
         {
             "name": "brick/math",
@@ -5930,6 +5930,46 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "westwallet/westwallet-php-api",
+            "version": "v1.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WestWallet/westwallet-php-api.git",
+                "reference": "7a26edf7d24b8449198661a51b4f71fd32d80e23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WestWallet/westwallet-php-api/zipball/7a26edf7d24b8449198661a51b4f71fd32d80e23",
+                "reference": "7a26edf7d24b8449198661a51b4f71fd32d80e23",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WestWallet\\WestWallet\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "WestWallet API library",
+            "homepage": "https://github.com/WestWallet/westwallet-php-api",
+            "keywords": [
+                "cryptocurrency",
+                "finance",
+                "payments"
+            ],
+            "support": {
+                "issues": "https://github.com/WestWallet/westwallet-php-api/issues",
+                "source": "https://github.com/WestWallet/westwallet-php-api/tree/v1.8.2"
+            },
+            "time": "2022-08-09T17:25:34+00:00"
         }
     ],
     "packages-dev": [

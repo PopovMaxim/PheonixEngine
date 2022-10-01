@@ -27,6 +27,7 @@
                             <th style="width: 30%;" class="fs-sm text-muted">Электронная почта</th>
                             <th style="width: 10%;" class="text-center fs-sm text-muted">Тариф</th>
                             <th style="width: 10%;" class="fs-sm text-muted">Баланс</th>
+                            <th class="fs-sm text-muted">Роль</th>
                             <th style="width: 10%;" class="text-center fs-sm text-muted">Регистрация</th>
                             <th class="text-center" style="width: 100px;"></th>
                         </tr>
@@ -54,6 +55,7 @@
                                 <td class="text-muted fs-sm">{{ $user['email'] }}</td>
                                 <td class="text-center text-muted fs-sm">{{ $user['current_subscribe_title'] }}</td>
                                 <td class="fs-sm text-muted">{{ $user['formatted_balance'] }}</td>
+                                <td class="fs-sm text-muted">{{ $user->getRoleNames() }}</td>
                                 <td class="text-muted fs-sm text-center">{{ $user['created_at']->format('d.m.Y') }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">

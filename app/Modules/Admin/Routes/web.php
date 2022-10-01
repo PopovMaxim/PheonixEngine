@@ -26,6 +26,8 @@ Route::middleware('auth')->prefix('admin')->group(function() {
 
     Route::prefix('tariffs')->group(function() {
         Route::get('/', 'TariffsController@index')->name('admin.tariffs');
+        Route::match(['get', 'post'], 'create', 'TariffsController@create')->name('admin.tariffs.create');
+        //Route::match(['get', 'post'], '{id}/edit', 'TariffsController@edit')->where('id')->name('admin.tariffs.edit');
     });
 
     Route::prefix('support')->group(function() {

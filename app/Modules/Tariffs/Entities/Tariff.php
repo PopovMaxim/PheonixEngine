@@ -9,6 +9,8 @@ class Tariff extends Model
 {
     use HasFactory;
 
+    public $table = 'tariffs';
+
     public static $tariffs = [
         1 => [
             'title' => 'Старт',
@@ -49,9 +51,48 @@ class Tariff extends Model
     ];
 
     protected $guarded = [];
+
+    public $casts = [
+        'ribbon' => 'array',
+        'details' => 'array',
+        'sale' => 'array',
+        'color' => 'string',
+    ];
+
+    public $periods = [
+        '1 week' => '1 неделя',
+        '2 weeks' => '2 недели',
+        '3 weeks' => '3 недели',
+        '6 months' => '6 месяцев',
+        '9 months' => '9 месяцев',
+        '1 year' => '1 год',
+        '2 years' => '2 года',
+        '3 years' => '3 года',
+        '4 years' => '4 года',
+        '5 years' => '5 лет',
+    ];
     
     protected static function newFactory()
     {
         return \App\Modules\Tariffs\Database\factories\TariffFactory::new();
+    }
+
+    public function line()
+    {
+        return $this->belongsTo('App\Modules\Tariffs\Entities\TariffLines', 'tariff_line', 'id');
+    }
+
+    public function getTranslatedPeriodAttribute()
+    {
+        return $this->periods[$this->period] ?? '';
+    }
+
+    public function getResultPriceAttribute()
+    {
+        if (isset($this->sale['variant']) && $this->sale['variant'] == 'percentage') {
+            return $this->price * (100 - $this->sale['sum']) / 100;
+        } else if (isset($this->sale['variant']) && $this->sale['variant'] == 'numeric') {
+            return $this->price - ($this->sale['sum'] * 100) / 100;
+        }
     }
 }

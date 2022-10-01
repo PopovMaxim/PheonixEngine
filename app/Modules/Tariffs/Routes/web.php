@@ -12,5 +12,5 @@
 */
 
 Route::middleware('auth')->prefix('tariffs')->group(function() {
-    Route::match(['get', 'post'], '/', 'TariffsController@index')->name('tariffs');
+    Route::match(['get', 'post'], '/{id?}', 'TariffsController@index')->name('tariffs');
 });

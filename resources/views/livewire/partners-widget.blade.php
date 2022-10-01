@@ -11,10 +11,9 @@
                             <i class="far fa-user"></i>
                         </th>
                         <th>Никнейм</th>
-                        <th class="text-center" style="width: 15%;">Тариф</th>
-                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Партнёры</th>
+                        <th class="text-center" style="width: 25%;">Тариф</th>
+                        <th class="d-none d-sm-table-cell text-center" style="width: 25%;">Количество партнёров</th>
                         {{--<th class="text-center" style="width: 20%;">Объём</th>--}}
-                        <th class="d-none d-sm-table-cell text-center" style="width: 15%;">Активация</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,9 +24,8 @@
                             </td>
                             <td class="fw-normal">{{ $partner['nickname'] }}</td>
                             <td class="text-center">{{ $partner['current_subscribe_title'] }}</td>
-                            <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }}</td>
+                            <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }} чел.</td>
                             {{--<td class="text-center">{{ $partner['total_value'] }}</td>--}}
-                            <td class="d-none d-md-table-cell text-center">{!! $partner['activated_at']?->format('d-m-Y') ?? '<span class="badge bg-danger">Не активирован</span>' !!}</td>
                         </tr>
                     @empty
                         <tr>

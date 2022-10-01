@@ -28,11 +28,21 @@
                     </a>
                 </li>
                 <li class="nav-main-heading">Продукты</li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('tariffs')) active @endif" href="{{ route('tariffs') }}">
-                        <i class="nav-main-link-icon fa fa-cubes"></i>
-                        <span class="nav-main-link-name">Тарифы</span>
+
+                <li class="nav-main-item @if(request()->is('tariffs*')) open @endif" href="{{ route('tariffs') }}">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                      <i class="nav-main-link-icon fa fa-cubes"></i>
+                      <span class="nav-main-link-name">Продукты</span>
                     </a>
+                    <ul class="nav-main-submenu">
+                        @foreach (\App\Modules\Tariffs\Entities\TariffLines::query()->orderBy('order', 'asc')->get() as $line)
+                            <li class="nav-main-item">
+                                <a class="nav-main-link @if(request()->is("tariffs/{$line['id']}")) active @endif" href="{{ route('tariffs', ['id' => $line['id']]) }}">
+                                    <span class="nav-main-link-name">{{ $line['title'] }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </li>
 
                 <li class="nav-main-item">
@@ -44,10 +54,9 @@
 
                 <li class="nav-main-heading">Финансы</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('wallet')) active @endif" {{--href="{{ url('wallet') }}"--}}>
+                    <a class="nav-main-link @if(request()->is('refill*')) active @endif" href="{{ route('refill') }}">
                         <i class="nav-main-link-icon fa fa-arrow-down"></i>
                         <span class="nav-main-link-name">Пополнение</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
                 <li class="nav-main-item">

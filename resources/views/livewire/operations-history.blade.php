@@ -1,8 +1,10 @@
 <div class="block block-rounded block-mode-loading-refresh h-100 mb-0">
-    <div class="block-header block-header-default">
-        <h3 class="block-title">История операций</h3>
-    </div>
-    <div class="block-content d-flex justify-content-between flex-column" style="min-height: 370px;">
+    @if ($header)
+        <div class="block-header block-header-default">
+            <h3 class="block-title">История операций</h3>
+        </div>
+    @endif
+    <div class="block-content d-flex justify-content-between flex-column" @if ($min_height) style="min-height: {{ $min_height }}px; @endif">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover table-vcenter fs-sm">
                 <thead>

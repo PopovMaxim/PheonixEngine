@@ -12,17 +12,26 @@ class OperationsHistory extends Component
     
     protected $paginationTheme = 'bootstrap';
 
+    public $header = true;
+
+    public $limit = 5;
+
+    public $min_height = 375;
+
     public function render(Request $request)
     {
         $transactions = $request
             ->user()
             ->transactions()
+            ->whereNotIn('type', ['refill', 'transfer', 'withdrawal'])
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate($this->limit);
 
         return view('livewire.operations-history')
             ->with([
-                'transactions' => $transactions
+                'transactions' => $transactions,
+                'header' => $this->header,
+                'min_height' => $this->min_height,
             ]);
     }
 }

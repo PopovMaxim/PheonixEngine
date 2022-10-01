@@ -2,61 +2,73 @@
 
 namespace App\Http\Livewire;
 
-use App\Modules\Tariffs\Entities\Tariff;
 use App\Modules\Profile\Entities\Activity;
+use App\Modules\Tariffs\Entities\Tariff;
+use App\Modules\Tariffs\Entities\TariffLines;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class Tariffs extends Component
 {
-    public $selectedTariff;
+    public $line;
+    public $tariff;
+    public $tariffs;
+    public $tariff_line;
+    public $open_description = false;
 
-    public $modalVisible = false;
-
-    public function __construct()
+    public function mount($line)
     {
-        $this->tariffs = Tariff::$tariffs;
+        $this->line = $line;
+        $this->tariffs = Tariff::query()->where('tariff_line', $this->line)->get()->keyBy('id');
+        $this->tariff_line = TariffLines::find($this->line);
     }
 
-    public function openModal($tariff)
+    public function selectTariff($tariff)
     {
-        $this->modalVisible = true;
-        $this->selectedTariff = $tariff;
-        $this->dispatchBrowserEvent('openModal');
+        $this->tariff = Tariff::query()->where('tariff_line', $this->line)->get()->keyBy('id')->get($tariff);
+        $this->dispatchBrowserEvent('selectTariff');
+    }
+
+    public function openDescription($tariff)
+    {
+        $this->tariff = Tariff::query()->where('tariff_line', $this->line)->get()->keyBy('id')->get($tariff);
+        $this->dispatchBrowserEvent('openDescription');
     }
 
     public function submit(Request $request)
     {
-        $tariff = $this->selectedTariff;
+        $tariff = $this->tariff;
 
-        if (!in_array($tariff, array_keys($this->tariffs)))
+        $price = number_format($tariff['result_price'], 2, '', '');
+
+        $period = $tariff['period'];
+        $title = $tariff['title'];
+
+        if (!$tariff['status'])
         {
             return session()->flash('status', [
                 'type' => 'danger',
-                'message' => 'Произошла ошибка, попробуйте ещё раз...'
+                'message' => "Вы не можете совершить подписку, т.к. сейчас указанный тариф не активен."
             ]);
         }
 
-        $tariff_period = $this->tariffs[$tariff]['period'];
-        $tariff_price = $this->tariffs[$tariff]['price'];
-        $tariff_title = $this->tariffs[$tariff]['title'];
-
-        if ($request->user()->raw_balance < $tariff_price)
+        if ($request->user()->raw_balance < $price)
         {
             return session()->flash('status', [
                 'type' => 'danger',
-                'message' => "На балансе лицевого счёта недостаточно средств для оформления подписки на тариф <b>{$tariff_title}</b>..."
+                'message' => "На балансе лицевого счёта недостаточно средств для оформления подписки на тариф <b>{$title}</b>..."
             ]);
         }
 
         $tx = $request->user()->transactions->create([
             'type' => 'subscribe',
             'status' => 'completed',
-            'amount' => $tariff_price,
+            'amount' => $price,
             'user_id' => $request->user()->id,
             'details' => [
-                'tariff' => $tariff,
-                'expired_at' => now()->parse($tariff_period)
+                'tariff' => $tariff['id'],
+                'expired_at' => now()->parse($period)
             ],
             'direction' => 'outer',
         ]);
@@ -70,14 +82,18 @@ class Tariffs extends Component
 
         $this->emitTo('topbar-balance', '$refresh');
 
-        Activity::storeAction('subscription_tariff_' . $tariff, $request);
+        return session()->flash('status', [
+            'type' => 'success',
+            'message' => "Вы успешно подписались на тариф <b>{$title}</b>. Управление подпиской доступно в разделе - <a href=\"/subscribes\">подписки</a>"
+        ]);
 
-        $this->modalVisible = false;
+        //Activity::storeAction('subscription_tariff_' . $title, $request);
 
+    
         // Update binary total value
         /*$request->user()->node->update([
             'total_value' => $request->user()->node['total_value'] + $tariff_price
-        ]);*/
+        ]);*
 
         // Accural line marketing bonuses
         $request->user()->calcLineMarketing($tariff, $tariff_price, $tx['id']);
@@ -85,7 +101,7 @@ class Tariffs extends Component
         return session()->flash('status', [
             'type' => 'success',
             'message' => "Вы успешно подписались на тариф <b>{$tariff_title}</b>. Управление подпиской доступно в разделе - «Роботы»."
-        ]);
+        ]);*/
     }
 
     public function render()

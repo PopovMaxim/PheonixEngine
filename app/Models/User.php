@@ -12,10 +12,11 @@ use App\Models\BinaryTree;
 use App\Modules\Profile\Entities\Activity;
 use App\Modules\Transactions\Entities\Transaction;
 use Illuminate\Notifications\Action;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -354,7 +355,7 @@ class User extends Authenticatable
             9 => 1
         ];
 
-        $tariff = Tariff::$tariffs[$tariff_id];
+        $tariff = Tariff::query()->get()->keyBy('id')->toArray();
 
         $level_depth = 10;
 
@@ -394,12 +395,12 @@ class User extends Authenticatable
             $user = User::find($value);
             $subscribe = $user->getCurrentSubscribe();
 
-            if (count($subscribe) && $subscribe['line_marketing'] > $key)
+            if (count($subscribe) && $subscribe['details']['marketing_limit'] > $key)
             {
                 Transaction::create([
                     'type' => 'line_bonus',
                     'status' => 'completed',
-                    'amount' => $tariff['price'] * $percents[$key] / 100,
+                    'amount' => $price * $percents[$key] / 100,
                     'user_id' => $value,
                     'direction' => 'inner',
                     'details' => [
@@ -502,8 +503,7 @@ class User extends Authenticatable
         {
             ///$partner_pull = $partner->getLeaderPull();
 
-            if ($pull[1]['count'] >= 3)
-            {
+            if ($pull[1]['count'] >= 3) {
                 $pull[2]['count']++;
             }
         }
@@ -552,7 +552,7 @@ class User extends Authenticatable
             return [];
         }
 
-        $tariffs = Tariff::$tariffs;
+        $tariffs = Tariff::query()->get()->keyBy('id')->toArray();
 
         $list = [];
         $priority = [];
@@ -578,7 +578,6 @@ class User extends Authenticatable
 
         $priority_id = array_keys($priority, min($priority));
         $current_subscribe = $list[$priority_id[0]];
-
 
         return $tariffs[$current_subscribe['details']['tariff']];
     }

@@ -21,7 +21,7 @@
 </div>
 <div class="content content-boxed">
     <div class="row d-flex justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="block">
                 <div class="block-header block-header-default">
                     <h3 class="block-title text-center">Мой номер счёта</h3>

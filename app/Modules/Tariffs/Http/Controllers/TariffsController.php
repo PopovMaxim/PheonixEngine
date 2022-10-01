@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tariffs\Http\Controllers;
 
+use App\Modules\Tariffs\Entities\TariffLines;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -12,11 +13,14 @@ class TariffsController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request, $id = null)
     {
-        request()->user()->getCurrentSubscribe();
+        if (is_null($id)) {
+            $id = TariffLines::query()->orderBy('order', 'asc')->first();
+        }
 
-        return view('tariffs::index');
+        return view('tariffs::index')
+            ->with('line', $id);
     }
 
     /**

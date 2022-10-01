@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('refill')->group(function() {
-    Route::get('/', 'RefillController@index');
+Route::middleware('auth')->prefix('refill')->group(function() {
+    Route::match(['get', 'post'], '/', 'RefillController@index')->name('refill');
+    Route::match(['get', 'post'], '/{type?}/{currency?}', 'RefillController@form')->name('refill.form');
+    Route::get('/{type?}/{currency?}/{uuid?}', 'RefillController@pay')->name('refill.pay');
+    Route::post('/{type?}/{currency?}/{uuid?}', 'RefillController@cancel')->name('refill.cancel');
 });
+
+Route::match(['get', 'post'], 'refill/ipn/{uuid}', 'RefillController@ipn')->name('refill.ipn');

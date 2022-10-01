@@ -104,6 +104,8 @@ class RegisterController extends Controller
 
             //$create->notify(new \App\Notifications\AddToBinary);
 
+            $create->assignRole('user');
+
             if ($create && Auth::attempt(['email' => $email, 'password' => $password])) {
                 $request->session()->regenerate();
                 return redirect()->route('dashboard');

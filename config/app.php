@@ -17,7 +17,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'internal-currency' => env('INTERNAL_CURRENCY_ABBR', 'PH'),
+    'internal-currency' => env('INTERNAL_CURRENCY_ABBR', 'PX'),
+    'external-currency' => env('EXTERNAL_CURRENCY_ABBR', '$'),
 
     /*
     |--------------------------------------------------------------------------

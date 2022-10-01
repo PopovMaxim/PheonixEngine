@@ -94,5 +94,7 @@ class Tariff extends Model
         } else if (isset($this->sale['variant']) && $this->sale['variant'] == 'numeric') {
             return $this->price - ($this->sale['sum'] * 100) / 100;
         }
+
+        return $this->price;
     }
 }

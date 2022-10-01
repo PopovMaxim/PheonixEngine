@@ -62,7 +62,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">Ни одной транзакции не найдено...</td>
+                                <td colspan="5" class="text-center">Ни одной транзакции не найдено...</td>
                             </tr>
                         @endforelse
                     </tbody>

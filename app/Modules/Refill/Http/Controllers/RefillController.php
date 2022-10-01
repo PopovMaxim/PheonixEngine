@@ -18,7 +18,8 @@ class RefillController extends Controller
                 'user_id' => $request->user()->id,
                 'type' => 'refill'
             ])
-            ->paginate(6);
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         $crypto = Crypto::$currencies;
 
@@ -35,6 +36,11 @@ class RefillController extends Controller
 
     public function form(Request $request, $type = null, $currency = null, $uuid = null)
     {
+        if (is_null($type) || is_null($currency)) {
+            return redirect()
+                ->route('refill');
+        }
+
         if ($type == 'crypto') {
             $this->gateway = new Crypto($currency);
         }
@@ -46,6 +52,10 @@ class RefillController extends Controller
             ],
             [
                 'title' => trans('refill.' . $this->gateway->type),
+                'url' => route('refill')
+            ],
+            [
+                'title' => $this->gateway->data['title'],
                 'active' => true
             ],
         ];
@@ -67,7 +77,7 @@ class RefillController extends Controller
                         'text' => 'У Вас уже есть открытый счёт на оплату по этому направлению. Оплатите или отмените его.'
                     ]);
             }
-            
+
             $tx = Refill::create([
                 'id' => \Str::uuid(),
                 'user_id' => $request->user()->id,

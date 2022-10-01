@@ -55,7 +55,13 @@
                                 <td class="text-center">{!! $transaction['html_status'] !!}</td>
                                 <td class="text-center">{{ $transaction['type'] }}</td>
                                 <td><img src="{{ asset($transaction['gateway']->data['icon']) }}" class="me-2" style="width: 30px; height: 30px;" />{{ $transaction['gateway']->data['title'] }}</td>
-                                <td class="text-center fw-bold" style="width: 20%;">{{ $transaction['details']['amount'] ?? 'Ожидает поступление' }}</td>
+                                <td class="text-center" style="width: 20%;">
+                                    @if ($transaction['status'] == 'canceled')
+                                        0 {{ $transaction['gateway']->data['abbr'] }}
+                                    @else
+                                        <span class="fw-bold">{{ $transaction['details']['amount'] ?? 'Ожидает поступление' }}</span>
+                                    @endif
+                                </td>
                                 <td class="text-center">
                                     <span class="fs-sm text-muted">{{ $transaction['updated_at']->format('d.m.y в H:i:s') }}</span>
                                 </td>

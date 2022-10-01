@@ -23,8 +23,8 @@
     <div class="content-heading pt-0">Криптовалюты</div>
     <div class="row items-push">
         @foreach ($crypto as $currency)
-            <div class="col-md-3">
-                <a class="block block-rounded block-link-shadow" href="{{ route('refill.form', ['type' => $currency['type'], 'currency' => $currency['key']]) }}">
+            <div class="col-md-6 col-lg-3">
+                <a class="block block-rounded block-link-shadow mb-0" href="{{ route('refill.form', ['type' => $currency['type'], 'currency' => $currency['key']]) }}">
                     <div class="block-content block-content-full d-flex align-items-center justify-content-between px-4">
                         <img src="{{ asset($currency['icon']) }}" style="width: 50px; height: 50px;">
                         <div class="fs-4 fw-semibold">{{ $currency['title'] }}</div>
@@ -54,7 +54,7 @@
                             <tr style="min-height: 60px; cursor: pointer;" onclick="return location.href = '{{ route('refill.pay', ['uuid' => $transaction['id'], 'type' => $transaction['details']['type'], 'currency' => $transaction['details']['currency']]) }}'">
                                 <td class="text-center">{!! $transaction['html_status'] !!}</td>
                                 <td class="text-center">{{ $transaction['type'] }}</td>
-                                <td><img src="{{ asset($transaction['gateway']->data['icon']) }}" class="me-2" style="width: 30px; height: 30px;" />{{ $transaction['gateway']->data['title'] }}</td>
+                                <td><div class="d-flex flex-row align-items-center"><img src="{{ asset($transaction['gateway']->data['icon']) }}" class="me-2" style="width: 30px; height: 30px;" /> <span class="d-none d-sm-block">{{ $transaction['gateway']->data['title'] }}</span></div></td>
                                 <td class="text-center" style="width: 20%;">
                                     @if ($transaction['status'] == 'canceled')
                                         0 {{ $transaction['gateway']->data['abbr'] }}

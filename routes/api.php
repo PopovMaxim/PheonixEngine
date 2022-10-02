@@ -78,11 +78,18 @@ Route::prefix('v1/expert')->group(function () {
         if (!$request->has('data')) {
             return [
                 'status' => 0,
-                'message' => 'Empty Data...'
+                'message' => 'Неправильные входные параметры.'
             ];
         }
 
         $data = json_decode(base64_decode($request->input('data')), true);
+
+        if (isset($data['activation_code']) && !is_null($data['activation_code']) && preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $data['activation_code']) !== 1) {
+            return [
+                'status' => 0,
+                'message' => 'Неправильный формат ключа активации...'
+            ];
+        }
 
         if (!is_null($data['account_number'])) {
             $account = BrokerAccounts::query()

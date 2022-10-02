@@ -76,19 +76,19 @@ Route::prefix('v1/expert')->group(function () {
     Route::post('identify', function (Request $request)
     {
         if (!$request->has('data')) {
-            return [
+            return base64_encode(json_encode([
                 'status' => 0,
                 'message' => 'Неправильные входные параметры.'
-            ];
+            ]));
         }
 
         $data = json_decode(base64_decode($request->input('data')), true);
 
         if (isset($data['activation_code']) && !is_null($data['activation_code']) && preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $data['activation_code']) !== 1) {
-            return [
+            return base64_encode(json_encode([
                 'status' => 0,
                 'message' => 'Неправильный формат ключа активации...'
-            ];
+            ]));
         }
 
         if (!is_null($data['account_number'])) {
@@ -141,16 +141,16 @@ Route::prefix('v1/expert')->group(function () {
                         ]));
                     }
                 } else {
-                    return [
+                    return base64_encode(json_encode([
                         'status' => 0,
                         'message' => "Ключ активации не найден или не соответствует номеру счёта {$data['account_number']}."
-                    ];
+                    ]));
                 }
 
-                return [
+                return base64_encode(json_encode([
                     'status' => 0,
                     'message' => "Номер счёта {$data['account_number']} не зарегистрирован."
-                ];
+                ]));
             }
 
             $product = Product::query()

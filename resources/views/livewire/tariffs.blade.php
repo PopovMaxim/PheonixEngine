@@ -48,7 +48,7 @@
                         @foreach ($tariffs->sortBy('priority') as $tariff)
                             <td class="py-4">
                                 <div class="h1 fw-bold mb-0 @if ($tariff['color']) text-{{ $tariff['color'] }} @endif">
-                                    $ {{ $tariff['result_price'] }}
+                                    {{ $tariff['result_price'] }} {{ config('app.external-currency') }}
                                 </div>
                                 @if (isset($tariff['sale']['variant']))
                                     <div class="h6 text-muted mb-0">

@@ -18,4 +18,4 @@ Route::middleware('auth')->prefix('refill')->group(function() {
     Route::post('/{type?}/{currency?}/{uuid?}', 'RefillController@cancel')->name('refill.cancel');
 });
 
-Route::match(['get', 'post'], 'refill/ipn/{uuid}', 'RefillController@ipn')->name('refill.ipn');
+Route::match(['get', 'post'], '/api/v1/refill/{type}/ipn/{uuid}', 'RefillController@ipn')->name('refill.ipn');

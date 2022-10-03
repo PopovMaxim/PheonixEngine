@@ -2,8 +2,10 @@
 
 namespace App\Modules\Refill\Payments\WestWallet;
 
-use WestWallet\WestWallet\Client;
-use WestWallet\WestWallet\CurrencyNotFoundException;
+use Illuminate\Http\Request;
+use App\Modules\Refill\Entities\Refill;
+use App\Modules\Refill\Payments\WestWallet\Client;
+use App\Modules\Refill\Payments\WestWallet\CurrencyNotFoundException;
 
 class Gateway {
     public static $currencies = [
@@ -123,19 +125,25 @@ class Gateway {
 
     public $type = 'crypto';
 
-    public function __construct($currency)
+    public $client;
+
+    public function __construct($currency = null)
     {
         $this->currency = $currency;
-        $this->data = self::$currencies[$currency];
+
+        if (!is_null($currency)) {
+            $this->data = self::$currencies[$currency];
+        }
+
         $this->client = new Client(config('wallet.public_key'), config('wallet.private_key'));
     }
 
-    public function generateAddress($label)
+    public function generateAddress($data = [])
     {
         $result = null;
 
         try {
-            $result = $this->client->generateAddress($this->currency, route('refill.ipn', ['uuid' => $label]), $label);
+            $result = $this->client->generateAddress($this->currency, route('refill.ipn', ['uuid' => $data['id'], 'type' => $data['type']]), $data['id']);
         } catch(CurrencyNotFoundException $e) {
             $result = [
                 'status' => 0,
@@ -144,5 +152,40 @@ class Gateway {
         }
 
         return $result;
+    }
+
+    public function ipn($data, $uuid) {
+        $uuid = $data['label'];
+
+        $tx = Refill::query()
+            ->whereType('refill')
+            //->whereStatus('pending')
+            ->whereId($uuid)
+            ->first();
+
+        if (is_null($tx)) {
+            return 0;
+        }
+
+        if ($tx['status'] == 'completed' || $tx['status'] == 'canceled') {
+            return 0;
+        }
+
+        $details = $tx['details'];
+
+        $details['gateway']['id'] = $data['id'];
+        $details['gateway']['dest_tag'] = $data['dest_tag'];
+        $details['gateway']['label'] = $data['label'];
+        $details['gateway']['amount'] = $data['amount'];
+        $details['gateway']['currency'] = $data['currency'];
+        $details['gateway']['status'] = $data['status'];
+        $details['gateway']['blockchain_confirmations'] = $data['blockchain_confirmations'];
+        $details['gateway']['fee'] = $data['fee'];
+        $details['gateway']['blockchain_hash'] = $data['blockchain_hash'];
+
+        $tx->update([
+            'status' => $data['status'],
+            'details' => $details,
+        ]);
     }
 }

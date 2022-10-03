@@ -74,17 +74,17 @@
                                 <div class="d-flex flex-row justify-content-between">
                                     <div>
                                         <div>Адрес</div>
-                                        <small><b>{{ $tx['details']['address'] }}</b></small>
+                                        <small><b>{{ $tx['details']['gateway']['address'] }}</b></small>
                                     </div>
                                     <div class="d-flex flex-column">
                                         <a href="#" id="qrCode" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true"><i class="fa fa-qrcode" style="font-size: 20px;"></i></a>
-                                        <div hidden><div data-name="popover-content">{!! \QrCode::size(160)->generate($tx['details']['address']) !!}</div></div>
-                                        <a class="copy" data-clipboard-text="{{ $tx['details']['address'] }}"><i class="fa fa-copy" style="font-size: 20px;"></i></a>
+                                        <div hidden><div data-name="popover-content">{!! \QrCode::size(160)->generate($tx['details']['gateway']['address']) !!}</div></div>
+                                        <a class="copy" data-clipboard-text="{{ $tx['details']['gateway']['address'] }}"><i class="fa fa-copy" style="font-size: 20px;"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="border-top py-3">
-                                <form method="post" action="{{ route('refill.cancel', ['uuid' => $tx['id'], 'type' => $tx['details']['type'], 'currency' => $tx['details']['currency']]) }}">
+                                <form method="post" action="{{ route('refill.cancel', ['uuid' => $tx['id'], 'type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-outline-danger">Отменить заявку</button>
                                 </form>

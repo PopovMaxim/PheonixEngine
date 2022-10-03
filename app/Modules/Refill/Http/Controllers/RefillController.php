@@ -64,8 +64,8 @@ class RefillController extends Controller
             ->where([
                 'user_id' => $request->user()->id,
                 'status' => 'pending',
-                'details->type' => $type,
-                'details->currency' => $currency,
+                'details->gateway->type' => $type,
+                'details->gateway->currency' => $currency,
             ])->first();
 
         if ($request->isMethod('post')) {
@@ -86,21 +86,23 @@ class RefillController extends Controller
                 'direction' => 'inner',
                 'amount' => 0,
                 'details' => [
-                    'type' => $type,
-                    'currency' => $currency
+                    'gateway' => [
+                        'type' => $type,
+                        'currency' => $currency
+                    ]
                 ]
             ]);
 
-            $crypto = $this->gateway->generateAddress($tx['id']);
+            $crypto = $this->gateway->generateAddress(['id' => $tx['id'], 'type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]);
 
             if ($crypto['error'] == 'ok') {
                 $details = $tx['details'];
-                $details['address'] = $crypto['address'];
+                $details['gateway']['address'] = $crypto['address'];
 
                 $tx->update(['details' => $details]);
 
                 return redirect()
-                    ->route('refill.pay', ['uuid' => $tx['id'], 'type' => $tx['details']['type'], 'currency' => $tx['details']['currency']]);
+                    ->route('refill.pay', ['uuid' => $tx['id'], 'type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]);
             }
         }
 
@@ -163,5 +165,34 @@ class RefillController extends Controller
                 'title' => 'Отмена заявки',
                 'text' => 'Заявка на отмену пополнения баланса по данному направлению успешно отменена.'
             ]);
+    }
+
+    public function ipn(Request $request, $type, $uuid)
+    {
+        if ($type == 'crypto') {
+            $this->gateway = new Crypto;
+        }
+
+        if ($this->gateway) {
+
+            $data = $request->all();
+
+            /*$data = [
+                "id" => 123123,
+                "amount" => 100,
+                "address" => "TVd1bWoSfN1ftJ7P5eTYJ9zPF4iG2FmsEY",
+                "dest_tag" => "",
+                "label" => "65fafebc-ff61-4d9b-bf75-9cee064811d2",
+                "currency" => "USDTTRC",
+                "status" => "completed",
+                "blockchain_confirmations" => 1,
+                "fee" => "0",
+                "blockchain_hash" => "72648cefcc47b4371f28dc3328bc863918913eebf81b40d4a97d577b96c1ce53"
+            ];*/
+
+            \Log::info(json_encode($data));
+
+            $this->gateway->ipn($data, $uuid);
+        }
     }
 }

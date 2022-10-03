@@ -13,6 +13,7 @@
 
 Route::middleware('auth')->prefix('withdraw')->group(function() {
     Route::get('/', 'WithdrawController@index')->name('withdraw');
-    Route::post('request', 'WithdrawController@request')->middleware('throttle:1,3')->name('withdraw.request');
+    Route::get('/{uuid}', 'WithdrawController@read')->name('withdraw.read');
+    Route::post('request', 'WithdrawController@request')->name('withdraw.request');
     Route::post('cancel', 'WithdrawController@cancel')->name('withdraw.cancel');
 });

@@ -480,8 +480,8 @@ class User extends Authenticatable
             $pull[0]['level_2_sum'] += $partner->getCurrentLeaderPullSum();
         }
 
-        $pull[0]['level_1_percent'] =  number_format(($pull[0]['level_1_sum'] / 10000000) * 100, 2);
-        $pull[0]['level_2_percent'] =  number_format((($pull[0]['level_1_sum'] + $pull[0]['level_2_sum']) / 30000000) * 100, 2);
+        $pull[0]['level_1_percent'] =  number_format(($pull[0]['level_1_sum'] / config('marketing.leader_pull.level_1_sum')) * 100, 2);
+        $pull[0]['level_2_percent'] =  number_format((($pull[0]['level_1_sum'] + $pull[0]['level_2_sum']) / config('marketing.leader_pull.level_2_sum')) * 100, 2);
 
         if ($pull[0]['level_1_percent'] >= 100 && $pull[0]['level_2_percent'] >= 100)
         {

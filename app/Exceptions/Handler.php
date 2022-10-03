@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($e instanceof \Illuminate\Http\Exceptions\ThrottleRequestsException) {
-            return back()->with(['request_status' => [
+            return back()->with(['toast_notify' => [
                 'type' => 'danger',
                 'text' => 'Вы превысили кол-во попыток за заданный промежуток времени. Попробуйте позже.'
             ]]);

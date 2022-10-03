@@ -20,25 +20,9 @@
     </div>
 </div>
 <div class="content content-boxed">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-7">
-            <div class="block">
-                <div class="block-header block-header-default">
-                    <h3 class="block-title text-center">Мой номер счёта</h3>
-                </div>
-                <div class="block-content pb-4">
-                    <div>
-                        <p class="text-center">Для получения перевода от другого участника, сообщите ему свой номер счёта.</p>
-                        <div class="d-flex justify-content-center">
-                            <div class="bg-gray w-50 p-3 rounded text-center fw-bold">
-                                {{ request()->user()->account_number }}
-                            </div>
-                        </div>
-                        <div class="text-muted text-center"><small>Нажмите на код, чтобы скопировать</small></div>
-                    </div>
-                </div>
-            </div>
-            <div class="block">
+    <div class="row items-push">
+        <div class="col-md-6">
+            <div class="block h-100">
                 <div class="block-header block-header-default">
                     <h3 class="block-title text-center">Форма перевода</h3>
                 </div>
@@ -70,6 +54,70 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="block h-100">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title text-center">Мой номер счёта</h3>
+                </div>
+                <div class="block-content py-5">
+                    <div>
+                        <p class="text-center">Для получения перевода от другого участника, сообщите ему свой номер счёта.</p>
+                        <div class="d-flex justify-content-center">
+                            <div class="bg-gray w-50 p-3 rounded text-center fw-bold">
+                                {{ request()->user()->account_number }}
+                            </div>
+                        </div>
+                        <div class="text-muted text-center"><small>Нажмите чтобы скопировать</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-heading pt-0">История переводов</div>
+
+    <div class="block block-rounded h-100 mb-0">
+        <div class="block-content d-flex justify-content-between flex-column">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-vcenter fs-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 20%;">Статус</th>
+                            <th class="text-center" style="width: 20%;">Отправитель</th>
+                            <th class="text-center" style="width: 20%;">Сумма</th>
+                            <th class="text-center" style="width: 20%;">Дата</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($transfers as $transaction)
+                            <tr style="min-height: 60px; cursor: pointer;" onclick="return location.href = '{{ route('transfer.read', ['uuid' => $transaction['id']]) }}'">
+                                <td class="text-center">{!! $transaction['html_status'] !!}</td>
+                                <td class="text-center">
+                                    @if ($transaction['details']['sender'] == $transaction['user_id'])
+                                        Я
+                                    @else
+                                        <div>{{ $transaction['sender']['nickname'] }}</div>
+                                    @endif
+                                </td>
+                                <td class="text-center" style="width: 20%;">
+                                    {{ $transaction['formatted_amount'] }}
+                                </td>
+                                <td class="text-center">
+                                    <span class="fs-sm text-muted">{{ $transaction['updated_at']->format('d.m.y в H:i:s') }}</span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Ни одного перевода не найдено...</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                {{ $transfers->links() }}
             </div>
         </div>
     </div>

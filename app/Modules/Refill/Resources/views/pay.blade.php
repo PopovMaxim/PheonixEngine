@@ -1,4 +1,4 @@
-@extends('transfer::layouts.master')
+@extends('refill::layouts.master')
 
 @push('js')
     @if (in_array($tx['status'], ['new', 'pending']))

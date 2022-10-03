@@ -74,7 +74,7 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('transactions')) active @endif" href="{{ route('transactions') }}">
                         <i class="nav-main-link-icon fa fa-history"></i>
-                        <span class="nav-main-link-name">История</span>
+                        <span class="nav-main-link-name">История начислений</span>
                     </a>
                 </li>
 

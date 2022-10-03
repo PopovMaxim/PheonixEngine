@@ -5,7 +5,7 @@
         <div class="content content-full content-top">
             <div class="text-center">
                 <h1 class="fw-bold text-dark mb-4">
-                    История операций
+                    История начислений
                 </h1>
             </div>
         </div>
@@ -44,7 +44,7 @@
         @else
             <div class="block block-rounded">
                 <div class="block-content text-center">
-                    <p>На данный момент история операций пуста...</p>
+                    <p>На данный момент история начислений пуста...</p>
                 </div>
             </div>
         @endif

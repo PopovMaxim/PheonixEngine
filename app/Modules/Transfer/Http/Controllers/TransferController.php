@@ -6,12 +6,54 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use \App\Modules\Transactions\Entities\Transaction;
+use App\Modules\Transfer\Entities\Transfer;
 
 class TransferController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('transfer::index');
+        $transfers = Transfer::query()
+            ->whereType('transfer')
+            ->where('user_id', $request->user()->id)
+            ->paginate();
+
+        return view('transfer::index')
+            ->with([
+                'transfers' => $transfers
+            ]);
+    }
+
+    public function read(Request $request, $uuid)
+    {
+        $breadcrumbs = [
+            [
+                'title' => 'Переводы',
+                'url' => route('transfer')
+            ],
+            [
+                'title' => 'Детали перевода',
+                'active' => true
+            ],
+        ];
+
+        if (!is_null($uuid)) {
+            $tx = Transfer::query()
+                ->whereId($uuid)
+                ->where([
+                    'user_id' => $request->user()->id,
+                ])->first();
+        } else {
+            $tx = Transfer::query()
+                ->where([
+                    'user_id' => $request->user()->id,
+                    'type' => 'transfer',
+                ])->first();
+        }
+
+        return view('transfer::read', [
+            'breadcrumbs' => $breadcrumbs,
+            'tx' => $tx
+        ]);
     }
 
     public function send(Request $request)
@@ -59,6 +101,10 @@ class TransferController extends Controller
             'type' => 'transfer',
             'status' => 'completed',
             'batch_id' => $batch_id,
+            'details' => json_encode([
+                'sender' => $request->user()->id,
+                'receiver' => $user['id'],
+            ]),
             'created_at' => now(),
             'updated_at' => now()
         ], [
@@ -69,6 +115,10 @@ class TransferController extends Controller
             'type' => 'transfer',
             'status' => 'completed',
             'batch_id' => $batch_id,
+            'details' => json_encode([
+                'sender' => $request->user()->id,
+                'receiver' => $user['id'],
+            ]),
             'created_at' => now(),
             'updated_at' => now()
         ]]);

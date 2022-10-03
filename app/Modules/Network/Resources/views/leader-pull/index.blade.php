@@ -63,8 +63,8 @@
             <a class="block block-rounded block-link-shadow h-100 mb-0" href="javascript:void(0)">
                 <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div>
-                        <abbr class="fs-lg fw-semibold mb-0 " data-bs-toggle="tooltip" data-bs-title="Прибыль компании объявляется в начале нового календарного месяца.">
-                            Не объявлено
+                        <abbr class="fs-lg fw-semibold mb-0 " data-bs-toggle="tooltip" data-bs-title="Итоги подводятся в начале календарного месяца.">
+                            Пока неизвестно
                         </abbr>
                         <p class="text-muted mb-0">
                             Ваша прибыль
@@ -95,7 +95,7 @@
                     <span>{{ $pull[0]['level_1_percent'] }}%</span>
                 </div>
                 <p class="fw-medium text-muted mt-2 mb-0">
-                    {{ number_format($pull[0]['level_1_sum'] / 100, 2) }} / 100,000.00 {{ config('app.internal-currency') }}
+                    {{ number_format($pull[0]['level_1_sum'] / 100, 2) }} / {{ number_format(config('marketing.leader_pull.level_1_sum') / 100, 2) }} {{ config('app.internal-currency') }}
                 </p>
             </div>
             <div class="col-md-6">
@@ -106,7 +106,7 @@
                     <span>{{ $pull[0]['level_2_percent'] }}%</span>
                 </div>
                 <p class="fw-medium text-muted mt-2 mb-0">
-                    {{ number_format(($pull[0]['level_1_sum'] + $pull[0]['level_2_sum']) / 100, 2) }} / 300,000.00 {{ config('app.internal-currency') }}
+                    {{ number_format(($pull[0]['level_1_sum'] + $pull[0]['level_2_sum']) / 100, 2) }} / {{ number_format(config('marketing.leader_pull.level_2_sum') / 100, 2) }} {{ config('app.internal-currency') }}
                 </p>
             </div>
             </div>
@@ -132,7 +132,7 @@
                                 <span>{{ $pull[0]['level_1_percent'] }}%</span>
                             </div>
                             <p class="fw-medium text-muted mt-2 mb-0">
-                                {{ number_format($pull[0]['level_1_sum'] / 100, 2) }} / 100,000.00 {{ config('app.internal-currency') }}
+                                {{ number_format($pull[0]['level_1_sum'] / 100, 2) }} / {{ number_format(config('marketing.leader_pull.level_1_sum') / 100, 2) }} {{ config('app.internal-currency') }}
                             </p>
                         </div>
                         <div class="col-md-6">
@@ -168,7 +168,7 @@
                                 <span>{{ $pull[0]['level_1_percent'] }}%</span>
                             </div>
                             <p class="fw-medium text-muted mt-2 mb-0">
-                                {{ number_format($pull[0]['level_1_sum'] / 100, 2) }} / 100,000.00 {{ config('app.internal-currency') }}
+                                {{ number_format($pull[0]['level_1_sum'] / 100, 2) }} / {{ number_format(config('marketing.leader_pull.level_1_sum') / 100, 2) }} {{ config('app.internal-currency') }}
                             </p>
                         </div>
                         <div class="col-md-6">
@@ -209,11 +209,11 @@
 
                     <b>Условия выполнения:</b>
                     <ul class="mt-3">
-                        <li>Объем с первой линии: 100,000.00 {{ config('app.internal-currency') }}</li>
-                        <li>Объем с первой и второй линии: 300,000.00 {{ config('app.internal-currency') }}</li>
+                        <li>Объем с первой линии: {{ number_format(config('marketing.leader_pull.level_1_sum') / 100, 2) }}{{ config('app.internal-currency') }}</li>
+                        <li>Объем с первой и второй линии: {{ number_format(config('marketing.leader_pull.level_2_sum') / 100, 2) }} {{ config('app.internal-currency') }}</li>
                     </ul>
 
-                    <p class="text-muted">Примечание: второе условие также может быть засчитано, если только в первой линии будет достигнут объем в 300,000.00 PH или более.</p>
+                    <p class="text-muted">Примечание: второе условие также может быть засчитано, если только в первой линии будет достигнут объем в {{ number_format(config('marketing.leader_pull.level_2_sum') / 100, 2) }} {{ config('app.internal-currency') }} или более.</p>
                 </div>
             </div>
         </div>

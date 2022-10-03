@@ -38,10 +38,10 @@
                             </div>
                         @endif
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
-                            @if ($counter)
-                                <a class="btn btn-primary w-100" href="{{ route('refill.pay', ['uuid' => $counter['id'], 'type' => $counter['details']['gateway']['type'], 'currency' => $counter['details']['gateway']['currency']]) }}">Перейти к заявке</a>
+                            @if ($tx)
+                                <a class="btn btn-primary w-100" href="{{ route('refill.pay', ['type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]) }}">Перейти к заявке</a>
                             @else
-                                <form method="post" class="w-100">
+                                <form method="post" class="w-100" action="{{ route('refill.pay', ['type' => $gateway->data['type'], 'currency' => $gateway->data['key']]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-primary w-100">Получить адрес</button>
                                 </form>

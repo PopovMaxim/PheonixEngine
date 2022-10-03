@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/refill', function (Request $request) {
-    return $request->user();
-});
+Route::match(['get', 'post'], 'v1/refill/{type}/ipn', 'RefillController@ipn')->name('refill.ipn');

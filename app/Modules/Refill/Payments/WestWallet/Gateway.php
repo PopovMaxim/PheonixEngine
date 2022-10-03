@@ -21,6 +21,7 @@ class Gateway {
             'min_amount' => 0.0005,
             'processing_comission' => 0,
             'network_comission' => null,
+            'rate' => null,
             'order' => 2,
         ],
         'ETH' => [
@@ -32,9 +33,10 @@ class Gateway {
             'network' => 'Ethereum',
             'icon' => 'assets/media/icons/cryptocurrency/eth.svg',
             'min_confirmations' => 10,
-            'min_amount' => 19,
-            'processing_comission' => 10,
+            'min_amount' => 0.01,
+            'processing_comission' => 0.001,
             'network_comission' => null,
+            'rate' => null,
             'order' => 3,
         ],
         'TRX' => [
@@ -49,6 +51,7 @@ class Gateway {
             'min_amount' => 10,
             'processing_comission' => 0,
             'network_comission' => null,
+            'rate' => null,
             'order' => 4,
         ],
         'XRP' => [
@@ -59,10 +62,11 @@ class Gateway {
             'abbr' => 'XRP',
             'network' => 'Ripple',
             'icon' => 'assets/media/icons/cryptocurrency/xrp.svg',
-            'min_confirmations' => 19,
+            'min_confirmations' => 1,
             'min_amount' => 10,
             'processing_comission' => 0,
             'network_comission' => null,
+            'rate' => null,
             'order' => 5,
         ],
         'LTC' => [
@@ -73,10 +77,11 @@ class Gateway {
             'abbr' => 'LTC',
             'network' => 'Litecoin',
             'icon' => 'assets/media/icons/cryptocurrency/ltc.svg',
-            'min_confirmations' => 19,
-            'min_amount' => 10,
+            'min_confirmations' => 3,
+            'min_amount' => 0.05,
             'processing_comission' => 0,
             'network_comission' => null,
+            'rate' => null,
             'order' => 6,
         ],
         'DOGE' => [
@@ -87,10 +92,11 @@ class Gateway {
             'abbr' => 'DOGE',
             'network' => 'Dogecoin',
             'icon' => 'assets/media/icons/cryptocurrency/doge.svg',
-            'min_confirmations' => 19,
-            'min_amount' => 10,
+            'min_confirmations' => 3,
+            'min_amount' => 50,
             'processing_comission' => 0,
             'network_comission' => null,
+            'rate' => null,
             'order' => 7,
         ],
         'USDT' => [
@@ -101,10 +107,11 @@ class Gateway {
             'abbr' => 'USDT',
             'network' => 'Ethereum',
             'icon' => 'assets/media/icons/cryptocurrency/usdt.svg',
-            'min_confirmations' => 19,
+            'min_confirmations' => 10,
             'min_amount' => 10,
-            'processing_comission' => 1,
+            'processing_comission' => 5,
             'network_comission' => null,
+            'rate' => 1,
             'order' => 1,
         ],
         'USDTTRC' => [
@@ -119,6 +126,7 @@ class Gateway {
             'min_amount' => 10,
             'processing_comission' => 0,
             'network_comission' => null,
+            'rate' => 1,
             'order' => 0,
         ]
     ];
@@ -154,7 +162,11 @@ class Gateway {
         return $result;
     }
 
-    public function ipn($data, $uuid) {
+    public function ipn($data) {
+        if (!isset($data['label'])) {
+            return 0;
+        }
+
         $uuid = $data['label'];
 
         $tx = Refill::query()
@@ -183,7 +195,27 @@ class Gateway {
         $details['gateway']['fee'] = $data['fee'];
         $details['gateway']['blockchain_hash'] = $data['blockchain_hash'];
 
+        $amount = 0;
+
+        $rate = self::$currencies[$data['currency']]['rate'];
+
+        if ($data['status'] == 'completed') {
+            $abbr = self::$currencies[$data['currency']]['abbr'];
+
+            if (is_null($rate)) {
+                $rate_query = json_decode(file_get_contents("https://api.binance.com/api/v3/ticker/price?symbol={$abbr}USDT"), true);
+                $rate = $rate_query['price'];
+            }
+        }
+
+        $details['gateway']['rate'] = $rate;
+
+        $amount = $data['amount'] * $rate;
+        $amount = sprintf("%01.2f", $amount);
+        $amount = number_format($amount, 2, '', '');
+
         $tx->update([
+            'amount' => $amount,
             'status' => $data['status'],
             'details' => $details,
         ]);

@@ -51,7 +51,7 @@
                     </thead>
                     <tbody>
                         @forelse ($refills as $transaction)
-                            <tr style="min-height: 60px; cursor: pointer;" onclick="return location.href = '{{ route('refill.pay', ['uuid' => $transaction['id'], 'type' => $transaction['details']['type'], 'currency' => $transaction['details']['currency']]) }}'">
+                            <tr style="min-height: 60px; cursor: pointer;" onclick="return location.href = '{{ route('refill.form', ['uuid' => $transaction['id'], 'type' => $transaction['details']['gateway']['type'], 'currency' => $transaction['details']['gateway']['currency']]) }}'">
                                 <td class="text-center">{!! $transaction['html_status'] !!}</td>
                                 <td class="text-center">{{ $transaction['type'] }}</td>
                                 <td><div class="d-flex flex-row align-items-center"><img src="{{ asset($transaction['gateway']->data['icon']) }}" class="me-2" style="width: 30px; height: 30px;" /> <span class="d-none d-sm-block">{{ $transaction['gateway']->data['title'] }}</span></div></td>
@@ -59,7 +59,13 @@
                                     @if ($transaction['status'] == 'canceled')
                                         0 {{ $transaction['gateway']->data['abbr'] }}
                                     @else
-                                        <span class="fw-bold">{{ $transaction['details']['amount'] ?? 'Ожидает поступление' }}</span>
+                                        <span class="">
+                                            @if (isset($transaction['details']['gateway']['amount']))
+                                                {{ $transaction['details']['gateway']['amount'] }} {{ $transaction['gateway']->data['abbr'] }}
+                                            @else
+                                                <i class="fa fa-circle-notch fa-spin text-primary"></i>
+                                            @endif
+                                        </span>
                                     @endif
                                 </td>
                                 <td class="text-center">

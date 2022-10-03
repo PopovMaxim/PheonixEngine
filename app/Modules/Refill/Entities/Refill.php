@@ -11,7 +11,7 @@ class Refill extends Model
     use HasFactory, Uuid;
 
     public $statuses = [
-        'new' => 'Новая',
+        'new' => 'Ожидает пополнения',
         'pending' => 'Обработка',
         'completed' => 'Исполнено',
         'canceled' => 'Отмена'
@@ -75,19 +75,19 @@ class Refill extends Model
 
     public function getGatewayAttribute()
     {
-        $gateway = $this->gateways[$this->details['type']];
+        $gateway = $this->gateways[$this->details['gateway']['type']];
 
-        return new $gateway($this->details['currency']);
+        return new $gateway($this->details['gateway']['currency']);
     }
 
     public function getTypeAttribute()
     {
-        return $this->details['type'] ? $this->types[$this->details['type']] : 'Неизвестно';
+        return $this->details['gateway']['type'] ? $this->types[$this->details['gateway']['type']] : 'Неизвестно';
     }
 
     public function getCurrencyAttribute()
     {
-        return $this->details['currency'] ?? 'Неизвестно';
+        return $this->details['gateway']['currency'] ?? 'Неизвестно';
     }
 
     protected static function newFactory()

@@ -1,7 +1,7 @@
 @extends('transfer::layouts.master')
 
 @push('js')
-    @if ($tx['status'] == 'pending')
+    @if (in_array($tx['status'], ['new', 'pending']))
         <script src="{{ asset('assets/js/plugins/clipboardjs/clipboard.min.js') }}"></script>
         <script>
             $(function() {
@@ -45,33 +45,53 @@
             <div class="col-md-6">
                 <div class="block block-transparent">
                     <div class="block-content p-0">
-                        <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
+                        <div class="border-bottom py-3">
+                            <div class="d-flex flex-row justify-content-between  align-items-center">
+                                <div>
+                                    <div>ID платежа</div>
+                                    <small><b>{{ $tx['id'] }}</b></small>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a class="copy" data-clipboard-text="{{ $tx['id'] }}"><i class="fa fa-copy" style="font-size: 20px;"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between border-bottom py-3">
+                            <b>Статус</b> {!! $tx['html_status'] !!}</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between border-bottom py-3">
                             <b>Монета</b> <span class="ms-3 d-flex align-items-center"><img src="{{ asset($gateway->data['icon']) }}" class="me-1" style="width: 24px; height: 24px;"> {{ $gateway->data['title'] }}</span>
                         </div>
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
                             <b>Сеть</b> {{ $gateway->data['network'] }}</span>
                         </div>
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
-                            <b>Подтверждения</b> {{ $gateway->data['min_confirmations'] }}</span>
+                            <b>Подтверждения</b> {{ $tx['details']['gateway']['blockchain_confirmations'] ?? 0 }} / {{ $gateway->data['min_confirmations'] }}</span>
                         </div>
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
                             <b>Минимальная сумма</b> {{ $gateway->data['min_amount'] }} {{ $gateway->data['abbr'] }}</span>
                         </div>
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
-                            <b>Комиссия платформы</b> {{ $gateway->data['processing_comission'] }} {{ $gateway->data['abbr'] }}</span>
+                            <b>Комиссия шлюза</b> {{ $gateway->data['processing_comission'] }} {{ $gateway->data['abbr'] }}</span>
                         </div>
                         @if ($gateway->data['network_comission'])
                             <div class="d-flex align-items-center justify-content-between border-bottom py-3">
                                 <b>Комиссия сети</b> {{ $gateway->data['network_comission'] }} {{ $gateway->data['abbr'] }}</span>
                             </div>
                         @endif
-                        <div class="d-flex align-items-center justify-content-between py-3">
-                            <b>Статус</b> {!! $tx['html_status'] !!}</span>
+                        <div class="d-flex align-items-center justify-content-between border-bottom py-3">
+                            <b>Полученная сумма</b> <div>{!! $tx['details']['gateway']['amount'] ?? 0 !!} {{ $gateway->data['abbr'] }}</div></span>
                         </div>
 
-                        @if ($tx['status'] == 'pending')
-                            <div class="border-top py-3">
-                                <div class="d-flex flex-row justify-content-between">
+                        @if (isset($tx['details']['gateway']['rate']))
+                            <div class="d-flex align-items-center justify-content-between border-bottom py-3">
+                                <b>Текущая цена:</b> <div>{!! number_format($tx['details']['gateway']['rate'], 2) ?? 0 !!} {{ config('app.external-currency') }}</div></span>
+                            </div>
+                        @endif
+
+                        @if (in_array($tx['status'], ['new', 'pending']))
+                            <div class="border-bottom py-3">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
                                     <div>
                                         <div>Адрес</div>
                                         <small><b>{{ $tx['details']['gateway']['address'] }}</b></small>
@@ -83,8 +103,22 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
+
+                        @if (isset($tx['details']['gateway']['blockchain_hash']))
+                            <div class="border-bottom py-3">
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div>
+                                        <div>Hash</div>
+                                        <small><b>{{ $tx['details']['gateway']['blockchain_hash'] }}</b></small>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        
+                        @if (in_array($tx['status'], ['new']))
                             <div class="border-top py-3">
-                                <form method="post" action="{{ route('refill.cancel', ['uuid' => $tx['id'], 'type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]) }}">
+                                <form method="post" action="{{ route('refill.cancel', ['type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-outline-danger">Отменить заявку</button>
                                 </form>

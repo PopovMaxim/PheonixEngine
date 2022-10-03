@@ -59,11 +59,60 @@ class RefillController extends Controller
                 'active' => true
             ],
         ];
-                
+
+        if (!is_null($uuid)) {
+            $tx = Refill::query()
+                ->whereId($uuid)
+                ->where([
+                    'user_id' => $request->user()->id,
+                ])->first();
+        } else {
+            $tx = Refill::query()
+                ->whereNotIn('status', [
+                    'completed',
+                    'canceled'
+                ])
+                ->where([
+                    'user_id' => $request->user()->id,
+                    'details->gateway->type' => $type,
+                    'details->gateway->currency' => $currency,
+                ])->first();
+        }
+
+        if ($tx) {
+            return view('refill::pay', [
+                'breadcrumbs' => $breadcrumbs,
+                'gateway' => $this->gateway,
+                'tx' => $tx,
+            ]);
+        }        
+
+        return view('refill::form', [
+            'breadcrumbs' => $breadcrumbs,
+            'gateway' => $this->gateway,
+            'tx' => $tx
+        ]);
+    }
+
+    public function pay(Request $request, $type = null, $currency = null)
+    {
+        if (is_null($type) || is_null($currency)) {
+            return redirect()
+                ->route('refill');
+        }
+
+        if ($type == 'crypto') {
+            $this->gateway = new Crypto($currency);
+        }
+
+
         $counter = Refill::query()
+            ->whereNotIn('status', [
+                'completed',
+                'canceled'
+            ])
             ->where([
                 'user_id' => $request->user()->id,
-                'status' => 'pending',
                 'details->gateway->type' => $type,
                 'details->gateway->currency' => $currency,
             ])->first();
@@ -82,7 +131,7 @@ class RefillController extends Controller
                 'id' => \Str::uuid(),
                 'user_id' => $request->user()->id,
                 'type' => 'refill',
-                'status' => 'pending',
+                'status' => 'new',
                 'direction' => 'inner',
                 'amount' => 0,
                 'details' => [
@@ -102,64 +151,30 @@ class RefillController extends Controller
                 $tx->update(['details' => $details]);
 
                 return redirect()
-                    ->route('refill.pay', ['uuid' => $tx['id'], 'type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]);
+                    ->route('refill.form', ['type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]);
             }
         }
-
-        return view('refill::form', [
-            'breadcrumbs' => $breadcrumbs,
-            'gateway' => $this->gateway,
-            'counter' => $counter
-        ]);
     }
 
-    public function pay(Request $request, $type = null, $currency = null, $uuid = null)
-    {
-        if ($type == 'crypto') {
-            $this->gateway = new Crypto($currency);
-        }
-
-        $tx = Refill::query()->where([
-            'id' => $uuid,
-            'type' => 'refill',
-        ])->firstOrFail();
-
-        $breadcrumbs = [
-            [
-                'title' => 'Пополнение',
-                'url' => route('refill')
-            ],
-            [
-                'title' => trans('refill.' . $this->gateway->type),
-                'url' => route('refill')
-            ],
-            [
-                'title' => $this->gateway->data['title'],
-                'active' => true
-            ],
-        ];
-
-        return view('refill::pay', [
-            'breadcrumbs' => $breadcrumbs,
-            'gateway' => $this->gateway,
-            'tx' => $tx
-        ]);
-    }
-
-    public function cancel(Request $request, $type = null, $currency = null, $uuid = null)
+    public function cancel(Request $request, $type = null, $currency = null)
     {
         $tx = Refill::query()
-            ->where([
-                'id' => $uuid,
-                'user_id' => $request->user()->id
-            ])->firstOrFail();
+        ->whereNotIn('status', [
+            'completed',
+            'canceled'
+        ])
+        ->where([
+            'type' => 'refill',
+            'details->gateway->type' => $type,
+            'details->gateway->currency' => $currency,
+        ])->firstOrFail();
 
         $tx->update([
             'status' => 'canceled'
         ]);
 
         return redirect()
-            ->route('refill.pay', ['uuid' => $tx['id'], 'type' => $tx['details']['type'], 'currency' => $tx['details']['currency']])
+            ->route('refill.pay', ['type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']])
             ->with('status', [
                 'type' => 'success',
                 'title' => 'Отмена заявки',
@@ -167,8 +182,10 @@ class RefillController extends Controller
             ]);
     }
 
-    public function ipn(Request $request, $type, $uuid)
+    public function ipn(Request $request, $type)
     {
+        \Log::info(json_encode($request->all()));
+
         if ($type == 'crypto') {
             $this->gateway = new Crypto;
         }
@@ -190,9 +207,9 @@ class RefillController extends Controller
                 "blockchain_hash" => "72648cefcc47b4371f28dc3328bc863918913eebf81b40d4a97d577b96c1ce53"
             ];*/
 
-            \Log::info(json_encode($data));
+            //\Log::info(json_encode($data));
 
-            $this->gateway->ipn($data, $uuid);
+            $this->gateway->ipn($data);
         }
     }
 }

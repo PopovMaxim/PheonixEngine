@@ -11,7 +11,6 @@
                             <i class="far fa-user"></i>
                         </th>
                         <th>Никнейм</th>
-                        <th class="text-center" style="width: 25%;">Тариф</th>
                         <th class="d-none d-sm-table-cell text-center" style="width: 25%;">Количество партнёров</th>
                         {{--<th class="text-center" style="width: 20%;">Объём</th>--}}
                     </tr>
@@ -23,7 +22,6 @@
                                 <img class="img-avatar img-avatar32" src="{{ asset('assets/media/avatars/avatar1.jpg') }}" alt="">
                             </td>
                             <td class="fw-normal">{{ $partner['nickname'] }}</td>
-                            <td class="text-center">{{ $partner['current_subscribe_title'] }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $partner['partners']->count() }} чел.</td>
                             {{--<td class="text-center">{{ $partner['total_value'] }}</td>--}}
                         </tr>

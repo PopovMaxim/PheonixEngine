@@ -64,8 +64,8 @@
 
         <script>
             $.toast({
-                heading: '{{ $status['title'] }}!',
-                text: "{{ $status['text'] }}",
+                heading: '{!! $status['title'] !!}',
+                text: "{!! $status['text'] !!}",
                 icon: "{{ $status['type'] }}",
                 loader: false,
                 hideAfter: 7000,

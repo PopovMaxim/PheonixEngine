@@ -1,122 +1,19 @@
 <div>
-    <div class="text-center mb-5">
-        <div>
-            <div class="bg-transparent">
-                <div class="content content-full content-top">
-                    <div class="text-center">
-                        <h1 class="fw-bold text-dark mb-5">
-                            {{ $tariff_line['title'] }}
-                        </h1>
-                    </div>
-                </div>
+    <div class="bg-transparent">
+        <div class="content content-full content-top">
+            <div class="text-center">
+                <h1 class="fw-bold text-dark mb-4">
+                    {{ $tariff_line['title'] }}
+                </h1>
             </div>
-            
-        @if (session('status'))
-            @php
-                $status = session('status');
-                $type = $status['type'];
-                $message = $status['message'];
-            @endphp
-            <div class="alert alert-{{ $type }} alert-dismissible" role="alert">
-                <h3 class="alert-heading fs-4 my-2">Внимание!</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
-                <p class="mb-0">{!! $message !!}</p>
-            </div>
-        @endif
-        
-            <table class="table table-borderless table-hover table-vcenter text-center mb-0 border">
-                <thead>
-                    <tr class="table-dark text-uppercase fs-sm">
-                        <th class="py-4" style="width: 180px;"></th>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <th class="@if ($tariff['color']) bg-{{ $tariff['color'] }} @endif @if ($tariff['ribbon']) ribbon @endif  @if (isset($tariff['ribbon']['form'])) ribbon-{{ $tariff['ribbon']['form'] }} @endif @if (isset($tariff['ribbon']['color'])) ribbon-{{ $tariff['ribbon']['color'] }} @endif">
-                                <div>
-                                    {{ $tariff['title'] }}
-                                    @if (isset($tariff['ribbon']['text']))
-                                        <div class="ribbon-box" style="margin: 8px 0; padding: 0px 15px; top: 0; bottom: 0;">
-                                            {{ $tariff['ribbon']['text'] }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-body-light">
-                        <td></td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td class="py-4">
-                                <div class="h1 fw-bold mb-0 @if ($tariff['color']) text-{{ $tariff['color'] }} @endif">
-                                    {{ $tariff['result_price'] }} {{ config('app.external-currency') }}
-                                </div>
-                                @if (isset($tariff['sale']['variant']))
-                                    <div class="h6 text-muted mb-0">
-                                        скидка
-                                        @if ($tariff['sale']['variant'] == 'percentage') {{ $tariff['sale']['sum'] }}% @elseif ($tariff['sale']['variant'] == 'numeric') {{ $tariff['sale']['sum'] }} {{ config('app.external-currency') }} @endif
-                                    </div>
-                                @endif
-                            </td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td class="fs-sm text-end">Срок</td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>{{ $tariff['translated_period'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td class="fs-sm text-end">Количество лицензий</td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>{{ $tariff['details']['license_limit'] ?? 0 }} шт.</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td class="fs-sm text-end">Линейный маркетинг</td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>{{ $tariff['details']['marketing_limit'] ?? 0 }} ур.</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td class="fs-sm text-end">Лидерский бонус</td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>@if ($tariff['details']['leader_bonus']) <i class="fas fa-check text-success"></i> @else <i class="fas fa-times text-danger"></i> @endif</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td class="fs-sm text-end">Быстрый бонус</td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>@if ($tariff['details']['quick_bonus']) <i class="fas fa-check text-success"></i> @else <i class="fas fa-times text-danger"></i> @endif</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td class="fs-sm text-end">Тех. Поддержка</td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>@if ($tariff['details']['support']) <i class="fas fa-check text-success"></i> @else <i class="fas fa-times text-danger"></i> @endif</td>
-                        @endforeach
-                    </tr>
-                    <tr class="bg-body-light">
-                        <td></td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>
-                                <div>
-                                    <button type="button" class="btn rounded-0 btn-sm btn-hero @if ($tariff['color']) btn-{{ $tariff['color'] }} @else btn-secondary @endif px-4" wire:click="selectTariff({{ $tariff['id'] }})">Оформить</button>
-                                </div>
-                            </td>
-                        @endforeach
-                    </tr>
-                    <tr class="bg-body-light">
-                        <td></td>
-                        @foreach ($tariffs->sortBy('priority') as $tariff)
-                            <td>
-                                <button type="button" class="btn rounded-0 btn-sm btn-link px-4" wire:click="openDescription({{ $tariff['id'] }})">Подробнее</button>
-                            </td>
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
+    
+    @if (isset($tariff_line['details']['design']))
+        @include("tariffs::tpl.{$tariff_line['details']['design']}")
+    @else
+        @include('tariffs::tpl.default')
+    @endif
 
     @if ($this->tariff)
         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="selectTariff">

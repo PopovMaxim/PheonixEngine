@@ -11,6 +11,14 @@ class LineController extends Controller
 {
     public function index(Request $request, $level_depth = 1)
     {
+        $subscribe = $request->user()->getCurrentSubscribe();
+
+        $lines = $subscribe['details']['marketing_limit'] ?? 0;
+
+        if ($level_depth > $lines) {
+            $level_depth = 1;
+        }
+
         if ($level_depth > 10)
         {
             $level_depth = 10;
@@ -448,6 +456,8 @@ class LineController extends Controller
                 'total_activated_partners' => $total_activated_partners,
                 'partners_activation_percentage' => $partners_activation_percentage,
                 'level' => $level_depth,
+                'subscribe' => $subscribe,
+                'lines' => $lines,
                 'chart' => $this->getChartData($partners->get())
             ]);
     }
@@ -512,13 +522,13 @@ class LineController extends Controller
         ]);
     }
 
-    private function getPartnersActivationPercentage($total_partners, $partners_instance)
+    private function getPartnersActivationPercentage($total_partners, $partners)
     {
         if (!$total_partners) {
             return sprintf("%.2f", 0);
         }
 
-        $activated_partners = $partners_instance
+        $activated_partners = $partners
             ->whereNotNull('activated_at')
             ->count();
 

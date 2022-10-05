@@ -53,9 +53,9 @@ class Tariff extends Model
     protected $guarded = [];
 
     public $casts = [
-        'ribbon' => 'array',
-        'details' => 'array',
-        'sale' => 'array',
+        'ribbon' => 'json',
+        'details' => 'json',
+        'sale' => 'json',
         'color' => 'string',
     ];
 

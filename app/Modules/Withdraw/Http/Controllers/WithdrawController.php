@@ -56,13 +56,14 @@ class WithdrawController extends Controller
             $tx = Withdraw::query()
                 ->whereId($uuid)
                 ->where([
+                    'type' => 'withdrawal',
                     'user_id' => $request->user()->id,
                 ])->first();
         } else {
             $tx = Withdraw::query()
                 ->where([
-                    'user_id' => $request->user()->id,
                     'type' => 'withdrawal',
+                    'user_id' => $request->user()->id,
                 ])->first();
         }
         

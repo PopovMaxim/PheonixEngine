@@ -13,6 +13,10 @@ class TariffLines extends Model
     
     public $table = 'tariff_lines';
 
+    public $casts = [
+        'details' => 'json',
+    ];
+
     protected static function newFactory()
     {
         return \App\Modules\Tariffs\Database\factories\TariffLinesFactory::new();

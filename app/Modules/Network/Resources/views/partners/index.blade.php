@@ -1,26 +1,5 @@
 @extends('network::layouts.master')
 
-@push('js')
-    <script src="{{ asset('assets/js/plugins/clipboardjs/clipboard.min.js') }}"></script>
-
-    <script>
-        var clipboard = new ClipboardJS('.copy');
-
-        clipboard.on('success', function(e) {
-            tooltip = new bootstrap.Tooltip($(e.trigger), {
-                placement: 'top',
-                title: 'Ссылка скопирована!',
-            })
-
-            setTimeout(() => {
-                tooltip.dispose()
-            }, 1000)
-
-            e.clearSelection();
-        });
-    </script>
-@endpush
-
 @section('content')
     <div class="bg-transparent">
         <div class="content content-full content-top">
@@ -85,11 +64,10 @@
                 @livewire('update-partner-register-side')
             </div>
         </div>
-        --}}
 
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Ссылки на приглашение партнёров</h3>
+                <h3 class="block-title">Ссылкf на приглашение партнёров</h3>
             </div>
             <div class="block-content block-content-full">
                 <a class="block block-rounded bg-light mb-2 copy" href="javascript:void(0)" data-clipboard-text="{{ request()->user()->referral_link }}">
@@ -107,6 +85,7 @@
                 </a>
             </div>
         </div>
+        --}}
 
         @if (request()->user()->sponsor)
             <h2 class="content-heading">

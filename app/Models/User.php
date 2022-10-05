@@ -340,7 +340,7 @@ class User extends Authenticatable
         }
     }
 
-    public function calcLineMarketing($tariff_id, $price, $tx_id)
+    public function calcLineMarketing($tariff, $tx_id)
     {
         $percents = [
             0 => 20,
@@ -354,8 +354,6 @@ class User extends Authenticatable
             8 => 1,
             9 => 1
         ];
-
-        $tariff = Tariff::query()->get()->keyBy('id')->toArray();
 
         $level_depth = 10;
 
@@ -393,24 +391,34 @@ class User extends Authenticatable
         foreach ($levels as $key => $value)
         {
             $user = User::find($value);
-            $subscribe = $user->getCurrentSubscribe();
+            //$subscribe = $user->getCurrentSubscribe();
+            $subscribes = $user->getSubscribes();
+            $tariff_line_subscribes = $subscribes[$tariff['tariff_line']] ?? [];
 
-            if (count($subscribe) && $subscribe['details']['marketing_limit'] > $key)
-            {
-                Transaction::create([
-                    'type' => 'line_bonus',
-                    'status' => 'completed',
-                    'amount' => $price * $percents[$key] / 100,
-                    'user_id' => $value,
-                    'direction' => 'inner',
-                    'details' => [
-                        'level' => $i,
-                        'tx_id' => $tx_id,
-                        'price' => $price,
-                        'tariff' => $tariff_id,
-                        'user_id' => request()->user()->id
-                    ]
-                ]);
+            if (count($tariff_line_subscribes)) {
+                usort($tariff_line_subscribes, function ($a, $b) {
+                    return $b['priority'] - $a['priority'];
+                });
+
+                $priority = $tariff_line_subscribes[0];
+
+                if (isset($priority) && !is_null($priority) && isset($priority['details']['marketing_limit']) && $priority['details']['marketing_limit'] > $key)
+                {
+                    Transaction::create([
+                        'type' => 'line_bonus',
+                        'status' => 'completed',
+                        'amount' => $tariff['price'] * $percents[$key],
+                        'user_id' => $value,
+                        'direction' => 'inner',
+                        'details' => [
+                            'level' => $i,
+                            'tx_id' => $tx_id,
+                            'price' => $tariff['price'],
+                            'tariff' => $tariff['id'],
+                            'user_id' => request()->user()->id
+                        ]
+                    ]);
+                }
             }
 
             $i++;
@@ -421,18 +429,20 @@ class User extends Authenticatable
     {
         $now = now();
 
-        $month_start = $this->created_at->startOfMonth();
-        $month_end = $this->created_at->endOfMonth();
+        $month_start = $now->startOfMonth()->format('Y-m-d H:i:s');
+        $month_end = $now->endOfMonth()->format('Y-m-d H:i:s');
 
-        $my_partners = $this->partners
-            ->get();
+        $my_partners = $this->partners->get();
 
         $current_amount = 0;
 
         foreach ($my_partners as $partner)
         {
             $current_amount += $partner->transactions()
-                ->whereType('subscribe')
+                ->where([
+                    'type' => 'subscribe',
+                    'status' => 'completed'
+                ])
                 ->whereBetween('created_at', [$month_start, $month_end])
                 ->sum('amount');
         }
@@ -486,7 +496,7 @@ class User extends Authenticatable
         if ($pull[0]['level_1_percent'] >= 100 && $pull[0]['level_2_percent'] >= 100)
         {
             $pull[0]['status'] = 'completed';
-            $pull[0]['color'] = 'success';
+            $pull[0]['color'] = 'primary';
         }
 
         foreach ($this->partners->get() as $partner)
@@ -514,13 +524,13 @@ class User extends Authenticatable
         if ($pull[0]['level_1_percent'] >= 100 && $pull[1]['count'] >= 3)
         {
             $pull[1]['status'] = 'completed';
-            $pull[1]['color'] = 'success';
+            $pull[1]['color'] = 'primary';
         }
 
         if ($pull[0]['level_1_percent'] >= 100 && $pull[2]['count'] >= 3)
         {
             $pull[2]['status'] = 'completed';
-            $pull[2]['color'] = 'success';
+            $pull[2]['color'] = 'primary';
         }
 
         return $pull;
@@ -582,6 +592,35 @@ class User extends Authenticatable
         return $tariffs[$current_subscribe['details']['tariff']];
     }
 
+    public function getSubscribes()
+    {
+        $subscribes = $this->transactions()->whereType('subscribe')->get();
+
+        if (!count($subscribes))
+        {
+            return [];
+        }
+
+        $tariffs = Tariff::query()->get()->keyBy('id')->toArray();
+
+        $list = [];
+
+        foreach ($subscribes as $subscribe)
+        {
+            $tariff = $tariffs[$subscribe['details']['tariff']];
+            $expired_at = now()->parse($subscribe['details']['expired_at']);
+
+            if ($expired_at->timestamp <= now()->timestamp)
+            {
+                continue;
+            }
+
+            $list[$tariff['tariff_line']][$tariff['id']] = $tariff;
+        }
+
+        return $list;
+    }
+
     public function getCurrentSubscribeTitleAttribute()
     {
         $subscribe = $this->getCurrentSubscribe();
@@ -589,7 +628,7 @@ class User extends Authenticatable
         return $subscribe['title'] ?? 'Нет';
     }
 
-    public static function generateAccountNumber($prefix = 'PH')
+    public static function generateAccountNumber($prefix = 'PX')
     {
         $generate = function ($number) use (&$generate, $prefix)
         {

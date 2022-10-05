@@ -62,19 +62,19 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('withdraw')) active @endif" href="{{ route('withdraw') }}">
                         <i class="nav-main-link-icon fa fa-arrow-up"></i>
-                        <span class="nav-main-link-name">Вывод</span>
+                        <span class="nav-main-link-name">Выводы</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('transfer')) active @endif" href="{{ route('transfer') }}">
                         <i class="nav-main-link-icon fa fa-exchange"></i>
-                        <span class="nav-main-link-name">Перевод</span>
+                        <span class="nav-main-link-name">Переводы</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('transactions')) active @endif" href="{{ route('transactions') }}">
                         <i class="nav-main-link-icon fa fa-history"></i>
-                        <span class="nav-main-link-name">История начислений</span>
+                        <span class="nav-main-link-name">История</span>
                     </a>
                 </li>
 

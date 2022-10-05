@@ -1,3 +1,26 @@
+@push('js')
+    <script src="{{ asset('assets/js/plugins/clipboardjs/clipboard.min.js') }}"></script>
+
+    <script>
+        var clipboard = new ClipboardJS('.copy');
+
+        clipboard.on('success', function(e) {
+            tooltip = new bootstrap.Tooltip($(e.trigger), {
+                placement: 'bottom',
+                title: 'Ссылка на приглашение скопирована!',
+            })
+
+            tooltip.show()
+
+            setTimeout(() => {
+                tooltip.dispose()
+            }, 3000)
+
+            e.clearSelection();
+        });
+    </script>
+@endpush
+
 <header id="page-header">
     <div class="content-header">
         <div class="space-x-1">
@@ -7,6 +30,12 @@
         </div>
 
         <div class="space-x-1">
+            <div class="d-inline-block">
+                <div class="btn btn-alt-secondary copy" data-clipboard-text="{{ request()->user()->referral_link }}">
+                    <i class="fa fa-fw fa-user-plus fs-sm"></i>
+                    <span class="fs-sm">Пригласить</span>
+                </div>
+            </div>
             @livewire('topbar-balance')
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown"

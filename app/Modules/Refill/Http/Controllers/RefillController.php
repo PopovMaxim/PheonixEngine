@@ -64,6 +64,7 @@ class RefillController extends Controller
             $tx = Refill::query()
                 ->whereId($uuid)
                 ->where([
+                    'type' => 'refill',
                     'user_id' => $request->user()->id,
                 ])->first();
         } else {
@@ -73,6 +74,7 @@ class RefillController extends Controller
                     'canceled'
                 ])
                 ->where([
+                    'type' => 'refill',
                     'user_id' => $request->user()->id,
                     'details->gateway->type' => $type,
                     'details->gateway->currency' => $currency,
@@ -111,6 +113,7 @@ class RefillController extends Controller
                 'canceled'
             ])
             ->where([
+                'type' => 'refill',
                 'user_id' => $request->user()->id,
                 'details->gateway->type' => $type,
                 'details->gateway->currency' => $currency,

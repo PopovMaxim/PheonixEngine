@@ -91,7 +91,7 @@
                 <p class="fw-medium text-muted mb-2 mb-0">
                     Объём первой линии
                 </p>
-                <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_1_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#82b54b" data-track-color="#e9e9e9">
+                <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_1_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#6849ad" data-track-color="#e9e9e9">
                     <span>{{ $pull[0]['level_1_percent'] }}%</span>
                 </div>
                 <p class="fw-medium text-muted mt-2 mb-0">
@@ -102,7 +102,7 @@
                 <p class="fw-medium text-muted mb-2 mb-0">
                     Объём первой и второй линии
                 </p>
-                <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_2_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#82b54b" data-track-color="#e9e9e9">
+                <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_2_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#6849ad" data-track-color="#e9e9e9">
                     <span>{{ $pull[0]['level_2_percent'] }}%</span>
                 </div>
                 <p class="fw-medium text-muted mt-2 mb-0">
@@ -128,7 +128,7 @@
                             <p class="fw-medium text-muted mb-2 mb-0">
                                 Объём первой линии
                             </p>
-                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_1_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#82b54b" data-track-color="#e9e9e9">
+                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_1_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#6849ad" data-track-color="#e9e9e9">
                                 <span>{{ $pull[0]['level_1_percent'] }}%</span>
                             </div>
                             <p class="fw-medium text-muted mt-2 mb-0">
@@ -139,7 +139,7 @@
                             <p class="fw-medium text-muted mb-2 mb-0">
                                 Партнёров с пуллом #1
                             </p>
-                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[1]['percent'] }}" data-line-width="5" data-size="120" data-bar-color="#82b54b" data-track-color="#e9e9e9">
+                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[1]['percent'] }}" data-line-width="5" data-size="120" data-bar-color="#6849ad" data-track-color="#e9e9e9">
                                 <span>{{ $pull[1]['percent'] }}%</span>
                             </div>
                             <p class="fw-medium text-muted mt-2 mb-0">
@@ -164,7 +164,7 @@
                             <p class="fw-medium text-muted mb-2 mb-0">
                                 Объём первой линии
                             </p>
-                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_1_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#82b54b" data-track-color="#e9e9e9">
+                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[0]['level_1_percent'] }}" data-line-width="5" data-size="120" data-bar-color="#6849ad" data-track-color="#e9e9e9">
                                 <span>{{ $pull[0]['level_1_percent'] }}%</span>
                             </div>
                             <p class="fw-medium text-muted mt-2 mb-0">
@@ -175,7 +175,7 @@
                             <p class="fw-medium text-muted mb-2 mb-0">
                                 Партнёров с пуллом #2
                             </p>
-                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[2]['percent'] }}" data-line-width="5" data-size="120" data-bar-color="#82b54b" data-track-color="#e9e9e9">
+                            <div class="js-pie-chart pie-chart" data-percent="{{ $pull[2]['percent'] }}" data-line-width="5" data-size="120" data-bar-color="#6849ad" data-track-color="#e9e9e9">
                                 <span>{{ $pull[2]['percent'] }}%</span>
                             </div>
                             <p class="fw-medium text-muted mt-2 mb-0">

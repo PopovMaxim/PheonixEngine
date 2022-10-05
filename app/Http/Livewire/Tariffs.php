@@ -82,10 +82,19 @@ class Tariffs extends Component
 
         $this->emitTo('topbar-balance', '$refresh');
 
-        return session()->flash('status', [
-            'type' => 'success',
-            'message' => "Вы успешно подписались на тариф <b>{$title}</b>. Управление подпиской доступно в разделе - <a href=\"/subscribes\">подписки</a>"
-        ]);
+        // Accural line marketing bonuses
+        $request->user()->calcLineMarketing($tariff, $tx['id']);
+
+        return redirect()
+            ->route('subscribes.read', ['uuid' => $tx['id']])
+            ->with([
+                'status' => [
+                    'title' => 'Оформление подписки',
+                    'type' => 'success',
+                    'text' => "Вы успешно подписались на тариф <b>{$title}</b>."
+                ]
+            ]);
+
 
         //Activity::storeAction('subscription_tariff_' . $title, $request);
 
@@ -95,8 +104,6 @@ class Tariffs extends Component
             'total_value' => $request->user()->node['total_value'] + $tariff_price
         ]);*
 
-        // Accural line marketing bonuses
-        $request->user()->calcLineMarketing($tariff, $tariff_price, $tx['id']);
 
         return session()->flash('status', [
             'type' => 'success',

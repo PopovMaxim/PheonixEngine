@@ -39,6 +39,7 @@ class User extends Authenticatable
         'telegram_id',
         'activated_at',
         'account_number',
+        'last_active_at',
         'partners_register_side',
     ];
 

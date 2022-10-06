@@ -84,12 +84,9 @@ class RegisterController extends Controller
                 'nickname' => $nickname,
                 'password' => Hash::make($password),
                 'hash' => User::generateHash(),
+                'sponsor_id' => $sponsor_query ? $sponsor_query['id'] : 1,
                 'account_number' => User::generateAccountNumber()
             ];
-
-            if ($sponsor_query) {
-                $payload['sponsor_id'] = $sponsor_query['id'];
-            }
 
             $create = User::create($payload);
             

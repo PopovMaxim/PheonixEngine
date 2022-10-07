@@ -1,19 +1,13 @@
 @extends('robots::layouts.master')
 
 @section('content')
-<div class="bg-transparent">
-    <div class="content content-full content-top">
-        <div class="text-center">
-            <h1 class="fw-bold text-dark mb-4">
-                Управление подпиской
-            </h1>
-        </div>
-    </div>
-</div>
+
+@include('hero', ['title' => '<a href="/subscribes"><i class="fa fa-arrow-left text-muted me-2"></i></a> Управление подпиской', 'breadcrumbs' => $breadcrumbs])
+
 <div class="content content-boxed">
     <div class="row d-flex justify-content-center">
         <div class="col-md-12">
-            @if (is_null($subscribe->productKey))
+            @if (!$product_key)
                 <form method="POST">
                     @csrf
                     <div class="block block-rounded">
@@ -38,7 +32,7 @@
                         </div>
                         <div class="block-content block-content-full block-content-sm bg-body-light text-center">
                             <button type="submit" class="btn btn-sm btn-alt-primary">
-                                <i class="fa fa-check opacity-50 me-1"></i> Получить ключ продукта
+                                <i class="fa fa-check opacity-50 me-1"></i> Активировать номер счёта
                             </button>
                         </div>
                     </div>
@@ -88,7 +82,7 @@
                             <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                               <div>
                                 <p class="fs-lg fw-semibold mb-0">
-                                    {{ $subscribe->productKey['account_number'] }}
+                                    {{ $product_key['account_number'] }}
                                 </p>
                                 <p class="text-muted mb-0">
                                     Номер счёта
@@ -109,9 +103,9 @@
                                 <div class="row justify-content-center py-sm-3 py-md-5">
                                     <div class="col-sm-10 col-md-8">
                                         <div class="d-flex justify-content-center">
-                                            <div class="bg-gray p-3 rounded text-center fw-bold">
-                                                {{ $subscribe->productKey['activation_key'] }}
-                                            </div>
+                                            <a class="bg-gray p-3 rounded text-center fw-bold copy" data-clipboard-text="{{ $product_key['activation_key'] }}" style="cursor: pointer;">
+                                                {{ $product_key['activation_key'] }}
+                                            </a>
                                         </div>
                                         <div class="text-muted text-center"><small>Нажмите на код, чтобы скопировать</small></div>
                                     </div>

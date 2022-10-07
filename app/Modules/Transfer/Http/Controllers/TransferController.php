@@ -91,45 +91,47 @@ class TransferController extends Controller
             ->whereAccountNumber($request->input('account_number'))
             ->first();
 
-        $batch_id = md5($user['email'] . $request->user()->email . now()->timestamp);
+        if ($user['id'] != $request->user()->id) {
+            $batch_id = md5($user['email'] . $request->user()->email . now()->timestamp);
 
-        $result = Transaction::insert([[
-            'id' => \Str::uuid(),
-            'user_id' => $request->user()->id,
-            'direction' => 'outer',
-            'amount' => $amount,
-            'type' => 'transfer',
-            'status' => 'completed',
-            'batch_id' => $batch_id,
-            'details' => json_encode([
-                'sender' => $request->user()->id,
-                'receiver' => $user['id'],
-            ]),
-            'created_at' => now(),
-            'updated_at' => now()
-        ], [
-            'id' => \Str::uuid(),
-            'user_id' => $user['id'],
-            'direction' => 'inner',
-            'amount' => $amount,
-            'type' => 'transfer',
-            'status' => 'completed',
-            'batch_id' => $batch_id,
-            'details' => json_encode([
-                'sender' => $request->user()->id,
-                'receiver' => $user['id'],
-            ]),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]]);
+            $result = Transaction::insert([[
+                'id' => \Str::uuid(),
+                'user_id' => $request->user()->id,
+                'direction' => 'outer',
+                'amount' => $amount,
+                'type' => 'transfer',
+                'status' => 'completed',
+                'batch_id' => $batch_id,
+                'details' => json_encode([
+                    'sender' => $request->user()->id,
+                    'receiver' => $user['id'],
+                ]),
+                'created_at' => now(),
+                'updated_at' => now()
+            ], [
+                'id' => \Str::uuid(),
+                'user_id' => $user['id'],
+                'direction' => 'inner',
+                'amount' => $amount,
+                'type' => 'transfer',
+                'status' => 'completed',
+                'batch_id' => $batch_id,
+                'details' => json_encode([
+                    'sender' => $request->user()->id,
+                    'receiver' => $user['id'],
+                ]),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]]);
 
-        if ($result)
-        {
-            return back()
-                ->with('request_status', [
-                    'type' => 'success',
-                    'text' => 'Перевод успешно осуществлён.'
-                ]);
+            if ($result)
+            {
+                return back()
+                    ->with('request_status', [
+                        'type' => 'success',
+                        'text' => 'Перевод успешно осуществлён.'
+                    ]);
+            }
         }
 
         return back()

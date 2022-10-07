@@ -1,26 +1,3 @@
-@push('js')
-    <script src="{{ asset('assets/js/plugins/clipboardjs/clipboard.min.js') }}"></script>
-
-    <script>
-        var clipboard = new ClipboardJS('.copy');
-
-        clipboard.on('success', function(e) {
-            tooltip = new bootstrap.Tooltip($(e.trigger), {
-                placement: 'bottom',
-                title: 'Ссылка на приглашение скопирована!',
-            })
-
-            tooltip.show()
-
-            setTimeout(() => {
-                tooltip.dispose()
-            }, 3000)
-
-            e.clearSelection();
-        });
-    </script>
-@endpush
-
 <header id="page-header">
     <div class="content-header">
         <div class="space-x-1">

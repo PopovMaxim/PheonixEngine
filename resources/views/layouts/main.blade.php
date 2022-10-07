@@ -43,6 +43,26 @@
     <script src="{{ asset('assets/js/lib/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/toast/jquery.toast.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/clipboardjs/clipboard.min.js') }}"></script>
+
+    <script>
+        var clipboard = new ClipboardJS('.copy');
+
+        clipboard.on('success', function(e) {
+            tooltip = new bootstrap.Tooltip($(e.trigger), {
+                placement: 'bottom',
+                title: 'Скопировано',
+            })
+
+            tooltip.show()
+
+            setTimeout(() => {
+                tooltip.dispose()
+            }, 3000)
+
+            e.clearSelection();
+        });
+    </script>
     <script>
         Swal.mixin({
             buttonsStyling: !1,

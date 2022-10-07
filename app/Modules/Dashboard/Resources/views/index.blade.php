@@ -38,15 +38,10 @@
 @endpush
 
 @section('content')
-<div class="bg-transparent">
-    <div class="content content-full content-top">
-        <div class="text-center">
-            <h1 class="fw-bold text-dark mb-4">
-                Информационная панель
-            </h1>
-        </div>
-    </div>
-</div>
+@php
+    $title = "Привет, " . request()->user()->nickname . "!";
+@endphp
+@include('hero', ['title' => "{$title}", 'content' => 'full'])
 <div class="content content-full">
     <div class="row items-push">
         <div class="col-sm-6 col-xl-3">

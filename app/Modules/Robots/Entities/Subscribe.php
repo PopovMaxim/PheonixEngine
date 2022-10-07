@@ -2,12 +2,13 @@
 
 namespace App\Modules\Robots\Entities;
 
+use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subscribe extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuid;
 
     protected $guarded = [];
 
@@ -22,8 +23,8 @@ class Subscribe extends Model
         return \App\Modules\Robots\Database\factories\SubscribeFactory::new();
     }
 
-    public function productKey()
+    public function productKey($uuid)
     {
-        return $this->belongsTo('App\Modules\Robots\Entities\ProductKeys', 'subscribe_id', 'id');
+        return ProductKeys::query()->where('subscribe_id', $uuid)->first() ?? null;
     }
 }

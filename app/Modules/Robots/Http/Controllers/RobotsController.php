@@ -29,12 +29,14 @@ class RobotsController extends Controller
 
     public function read(Request $request, $uuid)
     {
+        $subscribe = Subscribe::findOrFail($uuid);
+
         if ($request->isMethod('post')) {
             $request->validate([
                 'account_number' => ['required', 'numeric', function ($attribute, $value, $fail) use ($request) {
                     $response = Http::get("https://my.roboforex.com/api/partners/tree", [
-                        'account_id' => '30211061',
-                        'api_key' => '125ca979b1ef27e6',
+                        'account_id' => config('app.roboforex.account-id'),
+                        'api_key' => config('app.roboforex.api-key'),
                         'referral_account_id' => $request->input('account_number')
                     ]);
         
@@ -50,30 +52,71 @@ class RobotsController extends Controller
                 'numeric' => 'Неправильный формат номера счёта.',
             ]);
 
-            ProductKeys::create([
-                'user_id' => $request->user()->id,
-                'account_number' => $request->input('account_number'),
-                'activation_key' => \Str::uuid(),
-                'subscribe_id' => $uuid
-            ]);
-        }
+            if (!$request->input('accepted')) {
+                $breadcrumbs = [
+                    [
+                        'title' => 'Подписки',
+                        'url' => route('subscribes')
+                    ],
+                    [
+                        'title' => 'Управление подпиской',
+                        'url' => route('subscribes.read', ['uuid' => $uuid])
+                    ],
+                    [
+                        'title' => 'Соглашение об использовании',
+                        'active' => true
+                    ],
+                ];
 
-        $subscribe = Subscribe::find($uuid);
-        $subscribe->productKey()->associate(ProductKeys::query()->whereSubscribeId($uuid)->first());
+                return view('robots::terms')
+                    ->with([
+                        'back' => route('subscribes.read', ['uuid' => $uuid]),
+                        'subscribe' => $subscribe,
+                        'breadcrumbs' => $breadcrumbs,
+                    ]);
+            } else {
+                if (!ProductKeys::query()->where('subscribe_id', $uuid)->count()) {
+                    ProductKeys::create([
+                        'user_id' => $request->user()->id,
+                        'account_number' => $request->input('account_number'),
+                        'activation_key' => \Str::uuid(),
+                        'subscribe_id' => $uuid
+                    ]);
+
+                    return back();
+                }
+            }
+        }
 
         $account_number = null;
 
-        if (!is_null($subscribe->productKey)) {
+        $product_key = $subscribe->productKey($uuid);
+
+        if ($product_key) {
             $account_number = BrokerAccounts::query()
                 ->whereUserId($request->user()->id)
-                ->whereAccountNumber($subscribe->productKey['account_number'])
+                ->whereAccountNumber($product_key['account_number'] ?? null)
                 ->first();
         }
 
+        $breadcrumbs = [
+            [
+                'title' => 'Подписки',
+                'url' => route('subscribes')
+            ],
+            [
+                'title' => 'Управление подпиской',
+                'active' => true
+            ],
+        ];
+
         return view('robots::read')
             ->with([
+                'uuid' => $uuid,
+                'product_key' => $product_key,
                 'subscribe' => $subscribe,
-                'account_number' => $account_number
+                'breadcrumbs' => $breadcrumbs,
+                'account_number' => $account_number ?? null
             ]);
     }
 }

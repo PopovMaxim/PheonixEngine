@@ -65,9 +65,9 @@
                     <div>
                         <p class="text-center">Для получения перевода от другого участника, сообщите ему свой номер счёта.</p>
                         <div class="d-flex justify-content-center">
-                            <div class="bg-gray w-50 p-3 rounded text-center fw-bold">
+                            <a class="bg-gray w-50 p-3 rounded text-center fw-bold copy" data-clipboard-text="{{ request()->user()->account_number }}" style="cursor: pointer;">
                                 {{ request()->user()->account_number }}
-                            </div>
+                            </a>
                         </div>
                         <div class="text-muted text-center"><small>Нажмите чтобы скопировать</small></div>
                     </div>

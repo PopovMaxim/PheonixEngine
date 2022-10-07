@@ -22,8 +22,8 @@ class ProductKeys extends Model
         return \App\Modules\Robots\Database\factories\ProductKeysFactory::new();
     }
 
-    public function subscribe()
+    public function subscribe($uuid)
     {
-        return $this->belongsTo('App\Modules\Robots\Entities\Subscribe', 'subscribe_id', 'id');
+        return Subscribe::query()->where('id', $uuid)->first() ?? null;
     }
 }

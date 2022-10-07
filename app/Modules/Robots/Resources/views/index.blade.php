@@ -10,6 +10,7 @@
             </div>
         </div>
     </div>
+    
     <div class="content content-boxed">
         <div class="row d-flex justify-content-center">
             <div class="col-lg-7">

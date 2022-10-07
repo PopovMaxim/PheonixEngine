@@ -37,7 +37,7 @@
                         @csrf
                         <div class="mb-4">
                             <label class="form-label" for="account_number">Номер счёта получателя</label>
-                            <input type="text" class="form-control form-control-alt @error('account_number') is-invalid @enderror" id="account_number" name="account_number" placeholder="PH-123-456">
+                            <input type="text" class="form-control form-control-alt @error('account_number') is-invalid @enderror" id="account_number" name="account_number" placeholder="PX-123-456">
                             @error('account_number')
                                 <div class="invalid-feedback animated fadeIn">{{ $message }}</div>
                             @enderror

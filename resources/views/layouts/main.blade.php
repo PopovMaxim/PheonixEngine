@@ -29,7 +29,7 @@
         @include('header')
         
         <main id="main-container">
-            @role('super admin')
+            @role('super_admin')
                 @include('admin.navbar')
             @endrole
             @yield('hero')

@@ -124,6 +124,22 @@
                     </li>
                 </ul>
             </li>
+
+            @if(request()->user()->hasRole('super_admin') || request()->user()->can('show log-viewer'))
+                <li class="nav-main-item">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.transactions') }}">
+                        <i class="nav-main-link-icon fa fa-wrench"></i>
+                        <span class="nav-main-link-name">Обслуживание</span>
+                    </a>
+                    <ul class="nav-main-submenu">
+                        <li class="nav-main-item">
+                            <a class="nav-main-link" href="{{ url('/admin/log-viewer/logs') }}">
+                                <span class="nav-main-link-name">Логи</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </div>
 </div>

@@ -108,7 +108,7 @@ Route::prefix('v1/expert')->group(function () {
                     $key = ProductKeys::query()
                         ->whereAccountNumber($data['account_number'])
                         ->whereActivationKey($data['activation_code'])
-                        ->whereKey($data['ea_name'])
+                        ->where('key', $data['ea_name'])
                         ->whereAlreadyActivated(0)
                         ->first();
 
@@ -121,7 +121,7 @@ Route::prefix('v1/expert')->group(function () {
                             'ea_name' => $data['ea_name'],
                             'ea_version' => $data['ea_version'],
                             'status' => 1,
-                            'expires_at' => now()->parse($key->subscribe['details']['expired_at'])->format('Y-m-d H:i:s')
+                            'expires_at' => now()->parse($key['subscribe']['details']['expired_at'])->format('Y-m-d H:i:s')
                         ]);
                         
                         if ($account) {
@@ -141,11 +141,16 @@ Route::prefix('v1/expert')->group(function () {
                             'support_date_end' => $product['support_date_end'] ?? null,
                             'expires_at' => $account['expires_at']
                         ]));
+                    } else {
+                        return base64_encode(json_encode([
+                            'status' => 0,
+                            'message' => "Ключ активации не соответствует номеру счёта {$data['account_number']}"
+                        ]));
                     }
                 } else {
                     return base64_encode(json_encode([
                         'status' => 0,
-                        'message' => "Ключ активации не найден или не соответствует номеру счёта {$data['account_number']}."
+                        'message' => "Ключ активации не найден."
                     ]));
                 }
 

@@ -14,6 +14,6 @@
 Route::middleware('auth')->prefix('transfer')->group(function() {
     Route::get('/', 'TransferController@index')->name('transfer');
     Route::get('/{uuid}', 'TransferController@read')->name('transfer.read');
-    Route::post('send', 'TransferController@send')->middleware('throttle:1,15')->name('transfer.send');
+    Route::post('send', 'TransferController@send')->middleware('throttle:15,1')->name('transfer.send');
     Route::post('generate-account-number', 'TransferController@generateAccountNumber')->name('transfer.generate-account-number');
 });

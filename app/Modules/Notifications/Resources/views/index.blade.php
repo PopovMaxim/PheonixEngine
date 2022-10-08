@@ -28,7 +28,7 @@
                     <a href="{{ route('notifications.readed') }}" class="nav-link @if(\Route::current()->getName() == 'notifications.readed')) active @endif">Прочитанные</a>
                 </li>
                 <li class="nav-item ms-auto">
-                    <a data-bs-toggle="tooltip" data-bs-placement="left" title="Прочитать всё" @if (request()->user()->unreadNotifications()->count()) class="nav-link" href="{{ route('notifications.read-all') }}" @else class="nav-link disabled" @endif>
+                    <a data-bs-toggle="tooltip" data-bs-placement="left" title="Прочитать всё" @if (request()->user()->unreadNotifications()->count()) class="nav-link" href="{{ route('notifications.read-all') }}" @else class="nav-link text-muted" @endif>
                         <i class="fas fa-check-to-slot"></i>
                         <span class="visually-hidden">Прочитать всё</span>
                     </a>

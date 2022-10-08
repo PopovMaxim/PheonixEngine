@@ -41,7 +41,7 @@ class DashboardController extends Controller
             $current_amount += $sale['details']['price'];
         }
 
-        $min_amount = 10000000;
+        $min_amount = 160000;
 
         $current_percent = ($current_amount / $min_amount) * 100;
 

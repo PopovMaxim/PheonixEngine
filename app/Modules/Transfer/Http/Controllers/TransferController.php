@@ -2,11 +2,13 @@
 
 namespace App\Modules\Transfer\Http\Controllers;
 
+use App\Models\ConfirmCodes;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use \App\Modules\Transactions\Entities\Transaction;
 use App\Modules\Transfer\Entities\Transfer;
+use App\Notifications\ConfirmCode;
 
 class TransferController extends Controller
 {
@@ -15,11 +17,15 @@ class TransferController extends Controller
         $transfers = Transfer::query()
             ->whereType('transfer')
             ->where('user_id', $request->user()->id)
+            ->orderBy('created_at', 'desc')
             ->paginate();
+
+        $code = ConfirmCodes::query()->where('details->type', 'transfer')->where('details->expired_at', '>', now()->format('Y-m-d H:i:s'))->where('user_id', $request->user()->id)->first();
 
         return view('transfer::index')
             ->with([
-                'transfers' => $transfers
+                'transfers' => $transfers,
+                'code' => $code
             ]);
     }
 
@@ -58,6 +64,44 @@ class TransferController extends Controller
 
     public function send(Request $request)
     {
+        if ($request->has('send_confirm_code')) {
+            $code = ConfirmCodes::query()->where('details->type', 'transfer')->where('details->expired_at', '>', now()->format('Y-m-d H:i:s'))->where('user_id', $request->user()->id)->first();
+
+            if (is_null($code)) {
+                ConfirmCodes::query()->where('user_id', $request->user()->id)->where('details->type', 'transfer')->delete();
+
+                $random_code = rand(100000, 999999);
+
+                ConfirmCodes::create([
+                    'details' => [
+                        'type' => 'transfer',
+                        'expired_at' => now()->addSeconds(90)->format('Y-m-d H:i:s')
+                    ],
+                    'code' => $random_code,
+                    'user_id' => $request->user()->id
+                ]);
+
+                $request->user()->notify(new ConfirmCode($random_code));
+
+                return back()
+                    ->withInput()
+                    ->with('status', [
+                        'title' => 'Код подтверждения',
+                        'type' => 'success',
+                        'text' => "Код подтверждения выслан на Вашу электронную почту."
+                    ]);
+            }
+            
+            $time = now()->diffInSeconds($code['details']['expired_at']);
+
+            return back()
+                ->with('status', [
+                    'title' => 'Код подтверждения',
+                    'type' => 'error',
+                    'text' => "До повторного запроса кода подтверждения осталось: {$time} сек."
+                ]);
+        }
+
         $validator = \Validator::make($request->all(), [
             'account_number' => ['required', function ($attribute, $value, $fail) use ($request) {
                 if (!\DB::table('users')->whereRaw("lower({$attribute}) = lower(?)", [$value])->count())
@@ -72,9 +116,16 @@ class TransferController extends Controller
                 {
                     $fail('У Вас недостаточно средств на лицевом счёте.');
                 }
+            }],
+            'confirm_code' => ['required', function ($attribute, $value, $fail) use ($request) {
+                if (!ConfirmCodes::query()->where('user_id', $request->user()->id)->where('code', $value)->where('details->expired_at', '>', now()->format('Y-m-d H:i:s'))->count())
+                {
+                    $fail('Неправильный код подтверждения.');
+                }
             }]
         ], [
             'account_number.required' => 'Введите номер лицевого счёта получателя.',
+            'confirm_code.required' => 'Вы должны ввести код подтверждения.',
             'amount.required' => 'Введите сумму перевода.',
         ]);
 
@@ -94,7 +145,7 @@ class TransferController extends Controller
         if ($user['id'] != $request->user()->id) {
             $batch_id = md5($user['email'] . $request->user()->email . now()->timestamp);
 
-            $result = Transaction::insert([[
+            Transaction::insert([[
                 'id' => \Str::uuid(),
                 'user_id' => $request->user()->id,
                 'direction' => 'outer',
@@ -124,19 +175,20 @@ class TransferController extends Controller
                 'updated_at' => now()
             ]]);
 
-            if ($result)
-            {
-                return back()
-                    ->with('request_status', [
-                        'type' => 'success',
-                        'text' => 'Перевод успешно осуществлён.'
-                    ]);
-            }
+            ConfirmCodes::query()->where('user_id', $request->user()->id)->where('details->type', 'transfer')->delete();
+
+            return back()
+                ->with('status', [
+                    'type' => 'success',
+                    'title' => 'Перевод',
+                    'text' => 'Перевод успешно осуществлён.'
+                ]);
         }
 
         return back()
-            ->with('request_status', [
-                'type' => 'danger',
+            ->with('status', [
+                'type' => 'error',
+                'title' => 'Перевод',
                 'text' => 'Не удалось осуществить перевод. Попробуйте позже, если проблема не исчезнет, то обратитесь в техническую поддержку. Код ошибки: TRANSFER-0001'
             ]);
     }

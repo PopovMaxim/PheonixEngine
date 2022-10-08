@@ -706,7 +706,7 @@ class User extends Authenticatable
                 'user_id' => $this->id,
                 'type' => 'quick_bonus',
                 'status' => 'completed',
-                'amount' => 1000000,
+                'amount' => 160000,
                 'direction' => 'inner',
                 'created_at' => now(),
                 'updated_at' => now(),

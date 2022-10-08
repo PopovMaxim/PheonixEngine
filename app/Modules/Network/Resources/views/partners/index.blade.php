@@ -92,26 +92,16 @@
                 <i class="fa fa-angle-right text-muted me-1"></i> Мой спонсор
             </h2>
 
-            <a class="block block-rounded block-link-shadow border-start @if (is_null(request()->user()->sponsor->activated_at)) border-danger @else border-success @endif border-3" href="javascript:void(0)">
+            <a class="block block-rounded block-link-shadow" href="javascript:void(0)">
                 <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div>
-                    <p class="fs-lg fw-semibold mb-0">
-                        {{ request()->user()->sponsor->nickname }}
-                    </p>
-                    <p class="text-muted mb-0">
-                        @if (is_null(request()->user()->sponsor->activated_at))
-                            <span class="badge bg-danger">Не активирован</span>
-                        @else
-                            <span class="badge bg-success">Активирован</span>
-                        @endif
-                    </p>
+                        <p class="fs-lg fw-semibold mb-0 d-flex align-items-center">
+                            <img class="img-avatar img-avatar-thumb me-3" src="{{ asset('assets/media/avatars/avatar15.jpg') }}" alt="">
+                            {{ request()->user()->sponsor->nickname }}
+                        </p>
                     </div>
                     <div class="ms-3">
-                        <img class="img-avatar img-avatar-thumb" src="{{ asset('assets/media/avatars/avatar15.jpg') }}" alt="">
                     </div>
-                </div>
-                <div class="block-content block-content-full block-content-sm bg-body-light">
-                    <span class="fs-sm text-muted">Дата регистрации <strong>{{ request()->user()->sponsor->created_at->format('d-m-Y') }}</strong></span>
                 </div>
             </a>
         @endif

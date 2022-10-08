@@ -15,7 +15,7 @@ class TransactionsController extends Controller
             ->user()
             ->transactions()
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate(10);
 
         return view('transactions::index')
             ->with([

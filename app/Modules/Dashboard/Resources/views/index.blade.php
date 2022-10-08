@@ -89,6 +89,8 @@
             </div>
         </div>
     </div>
+
+    {{--
     @if ($quick_bonus['quick_bonus_end']->addDays(2) >= now() || ($quick_bonus['current_percent'] >= 100 && !request()->user()->quick_bonus_accepted))
         <div class="block">
             <div class="block-header block-header-default">
@@ -99,8 +101,8 @@
                     <div class="col-md-6 text-center">
                         <h4>Правила и условия акции</h4>
                         <p>
-                            Чтобы получить бонус в 10,000.00 {{ config('app.internal-currency') }}, Вам необходимо набрать объём<br/>
-                            личных продаж в 100,000.00 {{ config('app.internal-currency') }} в течении 30 дней с момента регистрации.
+                            Чтобы получить бонус в 160.00 {{ config('app.internal-currency') }}, Вам необходимо набрать объём<br/>
+                            личных продаж в 1,600.00 {{ config('app.internal-currency') }} в течении 30 дней с момента регистрации.
                         </p>
                         <p class="text-center">До окончания действия акции осталось:</p>
                         <div class="d-flex justify-content-center text-center mb-3">
@@ -147,6 +149,7 @@
             </div>
         </div>
     @endif
+    --}}
 
     <div class="row items-push">
         <div class="col-xl-6">

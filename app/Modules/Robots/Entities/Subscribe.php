@@ -2,6 +2,7 @@
 
 namespace App\Modules\Robots\Entities;
 
+use App\Modules\Tariffs\Entities\Tariff;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,5 +27,10 @@ class Subscribe extends Model
     public function productKey($uuid)
     {
         return ProductKeys::query()->where('subscribe_id', $uuid)->first() ?? null;
+    }
+
+    public function getTariffAttribute()
+    {
+        return Tariff::find($this->details['tariff']);
     }
 }

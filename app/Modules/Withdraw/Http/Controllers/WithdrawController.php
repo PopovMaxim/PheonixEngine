@@ -2,9 +2,11 @@
 
 namespace App\Modules\Withdraw\Http\Controllers;
 
+use App\Models\ConfirmCodes;
 use App\Modules\Transactions\Entities\Transaction;
 use App\Modules\Refill\Payments\WestWallet\Gateway as Crypto;
 use App\Modules\Withdraw\Entities\Withdraw;
+use App\Notifications\ConfirmCode;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -88,6 +90,44 @@ class WithdrawController extends Controller
             return back();
         }
 
+        if ($request->has('send_confirm_code')) {
+            $code = ConfirmCodes::query()->where('details->type', 'withdrawal')->where('details->expired_at', '>', now()->format('Y-m-d H:i:s'))->where('user_id', $request->user()->id)->first();
+
+            if (is_null($code)) {
+                ConfirmCodes::query()->where('user_id', $request->user()->id)->where('details->type', 'withdrawal')->delete();
+
+                $random_code = rand(100000, 999999);
+
+                ConfirmCodes::create([
+                    'details' => [
+                        'type' => 'withdrawal',
+                        'expired_at' => now()->addSeconds(90)->format('Y-m-d H:i:s')
+                    ],
+                    'code' => $random_code,
+                    'user_id' => $request->user()->id
+                ]);
+
+                $request->user()->notify(new ConfirmCode($random_code));
+
+                return back()
+                    ->withInput()
+                    ->with('status', [
+                        'title' => 'Код подтверждения',
+                        'type' => 'success',
+                        'text' => "Код подтверждения выслан на Вашу электронную почту."
+                    ]);
+            }
+            
+            $time = now()->diffInSeconds($code['details']['expired_at']);
+
+            return back()
+                ->with('status', [
+                    'title' => 'Код подтверждения',
+                    'type' => 'error',
+                    'text' => "До повторного запроса кода подтверждения осталось: {$time} сек."
+                ]);
+        }
+
         $validator = \Validator::make($request->all(), [
             'amount' => ['required', function ($attribute, $value, $fail) use ($request) {
                 $amount = intval(str_replace([',', '.'], '', $value));
@@ -97,9 +137,16 @@ class WithdrawController extends Controller
                     $fail('У Вас недостаточно средств на лицевом счёте.');
                 }
             }],
+            'confirm_code' => ['required', function ($attribute, $value, $fail) use ($request) {
+                if (!ConfirmCodes::query()->where('user_id', $request->user()->id)->where('code', $value)->where('details->expired_at', '>', now()->format('Y-m-d H:i:s'))->count())
+                {
+                    $fail('Неправильный код подтверждения.');
+                }
+            }],
             'address' => 'required|regex:/^[T][a-km-zA-HJ-NP-Z1-9]{25,34}$/i'
         ], [
             'address.required' => 'Вы не ввели адрес криптокошелька.',
+            'confirm_code.required' => 'Вы должны ввести код подтверждения.',
             'amount.required' => 'Вы не ввели сумму вывода.',
         ]);
 
@@ -126,6 +173,8 @@ class WithdrawController extends Controller
                 ]
             ]
         ]);
+
+        ConfirmCodes::query()->where('user_id', $request->user()->id)->where('details->type', 'withdrawal')->delete();
 
         return back();
     }

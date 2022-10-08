@@ -22,10 +22,7 @@
     <div class="content content-boxed">
         <div class="row d-flex justify-content-between mb-4">
             <div class="col-md-6">
-                <div class="block">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title text-center">Форма заявки</h3>
-                    </div>
+                <div class="block block-rounded">
                     <div class="block-content">
                         @if (!$withdraw_request)
                             @if(session()->has('request_status'))
@@ -51,7 +48,17 @@
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                                    <label class="form-label" for="amount">Код подтверждения</label>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <input type="text" class="form-control form-control-alt @error('confirm_code') is-invalid @enderror me-lg-4" name="confirm_code" placeholder="Код из почтового сообщения">
+                                        <button type="submit" name="send_confirm_code" class="btn btn-outline-primary">Выслать&nbsp;код</button>
+                                    </div>
+                                    @error('confirm_code')
+                                        <div class="text-danger fs-sm mt-1 animated fadeIn">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <button type="submit" class="btn btn-primary">Отправить</button>
                                 </div>
                             </form>
                         @else

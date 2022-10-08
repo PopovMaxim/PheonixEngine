@@ -22,10 +22,7 @@
 <div class="content content-boxed">
     <div class="row items-push">
         <div class="col-md-6">
-            <div class="block h-100">
-                <div class="block-header block-header-default">
-                    <h3 class="block-title text-center">Форма перевода</h3>
-                </div>
+            <div class="block block-rounded h-100">
                 <div class="block-content">
                     @if(session()->has('request_status'))
                         @php
@@ -37,19 +34,29 @@
                         @csrf
                         <div class="mb-4">
                             <label class="form-label" for="account_number">Номер счёта получателя</label>
-                            <input type="text" class="form-control form-control-alt @error('account_number') is-invalid @enderror" id="account_number" name="account_number" placeholder="PX-123-456">
+                            <input type="text" class="form-control form-control-alt @error('account_number') is-invalid @enderror" value="{{ old('account_number') }}" id="account_number" name="account_number" placeholder="PX-123-456">
                             @error('account_number')
                                 <div class="invalid-feedback animated fadeIn">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="amount">Сумма</label>
-                            <input type="text" class="form-control form-control-alt @error('amount') is-invalid @enderror" id="amount" name="amount" placeholder="100.00">
+                            <input type="text" class="form-control form-control-alt @error('amount') is-invalid @enderror" value="{{ old('amount') }}" id="amount" name="amount" placeholder="100.00">
                             @error('amount')
                                 <div class="invalid-feedback animated fadeIn">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-4">
+                            <label class="form-label" for="amount">Код подтверждения</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <input type="text" class="form-control form-control-alt @error('confirm_code') is-invalid @enderror me-lg-4" name="confirm_code" placeholder="Код из почтового сообщения">
+                                <button type="submit" name="send_confirm_code" class="btn btn-outline-primary">Выслать&nbsp;код</button>
+                            </div>
+                            @error('confirm_code')
+                                <div class="text-danger fs-sm mt-1 animated fadeIn">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div>
                             <button type="submit" class="btn btn-primary">Перевести</button>
                         </div>
                     </form>
@@ -57,12 +64,10 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="block h-100">
-                <div class="block-header block-header-default">
-                    <h3 class="block-title text-center">Мой номер счёта</h3>
-                </div>
+            <div class="block block-rounded h-100">
                 <div class="block-content py-5">
                     <div>
+                        <h3 class="h3 text-center">Мой номер счёта</h3>
                         <p class="text-center">Для получения перевода от другого участника, сообщите ему свой номер счёта.</p>
                         <div class="d-flex justify-content-center">
                             <a class="bg-gray w-50 p-3 rounded text-center fw-bold copy" data-clipboard-text="{{ request()->user()->account_number }}" style="cursor: pointer;">

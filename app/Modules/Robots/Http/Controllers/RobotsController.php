@@ -7,6 +7,7 @@ use App\Modules\Robots\Entities\BrokerAccounts;
 use App\Modules\Robots\Entities\ProductKeys;
 use App\Modules\Robots\Entities\Subscribe;
 use App\Modules\Tariffs\Entities\Tariff;
+use App\Modules\Tariffs\Entities\TariffLines;
 use App\Modules\Transactions\Entities\Transaction;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -80,6 +81,7 @@ class RobotsController extends Controller
                         'user_id' => $request->user()->id,
                         'account_number' => $request->input('account_number'),
                         'activation_key' => \Str::uuid(),
+                        'key' => $subscribe['tariff']['line']['details']['key'],
                         'subscribe_id' => $uuid
                     ]);
 

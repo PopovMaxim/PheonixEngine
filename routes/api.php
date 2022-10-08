@@ -104,7 +104,7 @@ Route::prefix('v1/expert')->group(function () {
                     ->whereAccountNumber($data['account_number'])
                     ->delete();
 
-                if (!is_null($data['activation_code'])) {
+                if (strlen($data['activation_code'])) {
                     $key = ProductKeys::query()
                         ->whereAccountNumber($data['account_number'])
                         ->whereActivationKey($data['activation_code'])

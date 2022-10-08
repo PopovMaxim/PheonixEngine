@@ -16,9 +16,9 @@ class TariffsController extends Controller
     public function index(Request $request, $id = null)
     {
         if (is_null($id)) {
-            $line = TariffLines::query()->where('details->status', 1)->orderBy('order', 'asc')->first();
+            $line = TariffLines::query()->where('details->status', 1)->orderBy('order', 'asc')->firstOrFail();
         } else {
-            $line = TariffLines::query()->where('id', $id)->where('details->status', 1)->orderBy('order', 'asc')->first();
+            $line = TariffLines::query()->where('id', $id)->where('details->status', 1)->orderBy('order', 'asc')->firstOrFail();
         }
 
         return view('tariffs::index')

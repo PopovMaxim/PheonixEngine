@@ -35,7 +35,7 @@
                       <span class="nav-main-link-name">Продукты</span>
                     </a>
                     <ul class="nav-main-submenu">
-                        @foreach (\App\Modules\Tariffs\Entities\TariffLines::query()->orderBy('order', 'asc')->get() as $line)
+                        @foreach (\App\Modules\Tariffs\Entities\TariffLines::query()->orderBy('order', 'asc')->where('details->status', 1)->get() as $line)
                             <li class="nav-main-item">
                                 <a class="nav-main-link @if(request()->is("tariffs/{$line['id']}")) active @endif" href="{{ route('tariffs', ['id' => $line['id']]) }}">
                                     <span class="nav-main-link-name">{{ $line['title'] }}</span>

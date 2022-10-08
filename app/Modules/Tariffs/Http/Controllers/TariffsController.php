@@ -16,11 +16,13 @@ class TariffsController extends Controller
     public function index(Request $request, $id = null)
     {
         if (is_null($id)) {
-            $id = TariffLines::query()->orderBy('order', 'asc')->first();
+            $line = TariffLines::query()->where('details->status', 1)->orderBy('order', 'asc')->first();
+        } else {
+            $line = TariffLines::query()->where('id', $id)->where('details->status', 1)->orderBy('order', 'asc')->first();
         }
 
         return view('tariffs::index')
-            ->with('line', $id);
+            ->with('line', $line['id']);
     }
 
     /**

@@ -6,7 +6,7 @@
                     P<span class="opacity-75">h</span>
                 </span>
                 <span class="smini-hidden">
-                    <img src="{{ asset('assets/media/logos/logo-short-white.png') }}" class="img-fluid" style="width: 200px;" />
+                    <img src="{{ asset('assets/media/logos/logo-short-full-white.png') }}" class="img-fluid" style="width: 200px;" />
                 </span>
             </a>
             <div>

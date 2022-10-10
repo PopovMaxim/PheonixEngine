@@ -10,9 +10,9 @@
                                 @if (isset($breadcrumb['url']))
                                     <a href="{{ $breadcrumb['url'] }}">
                                 @endif
-                                {{ $breadcrumb['title'] }}
+                                {!! $breadcrumb['title'] !!}
                                 @if (isset($breadcrumb['url']))
-                                </a>
+                                    </a>
                                 @endif
                             </li>
                         @endforeach

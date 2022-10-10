@@ -6,7 +6,7 @@
             <ul class="pagination">
                 {{-- Previous Page Link --}}
                 @if ($paginator->onFirstPage())
-                    <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                    <li class="page-item" aria-disabled="true" aria-label="@lang('pagination.previous')">
                         <span class="page-link" aria-hidden="true">&lsaquo;</span>
                     </li>
                 @else
@@ -19,7 +19,7 @@
                 @foreach ($elements as $element)
                     {{-- "Three Dots" Separator --}}
                     @if (is_string($element))
-                        <li class="page-item disabled" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
+                        <li class="page-item" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
                     @endif
 
                     {{-- Array Of Links --}}
@@ -40,7 +40,7 @@
                         <button type="button" dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}" class="page-link" wire:click="nextPage('{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</button>
                     </li>
                 @else
-                    <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                    <li class="page-item" aria-disabled="true" aria-label="@lang('pagination.next')">
                         <span class="page-link" aria-hidden="true">&rsaquo;</span>
                     </li>
                 @endif

@@ -285,7 +285,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-body-light" id="tariffs">
+                {{--<div class="bg-body-light" id="tariffs">
                     <div class="content content-full">
                         <div class="py-5 push">
                             <h2 class="mb-2 text-center">
@@ -375,7 +375,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 
                 <div class="bg-body-extra-light" id="tariffs">
                     <div class="content content-full">
@@ -451,12 +451,12 @@
                     <div class="col-md-4">
                         <h3 class="fw-semibold">Контакты</h3>
                         <div class="fs-sm push">
-                            <div>Наименование: ООО «ВОСХОЖДЕНИЕ»</div>
+                            {{--<div>Наименование: ООО «ВОСХОЖДЕНИЕ»</div>
                             <div><abbr title="Юридический адрес компании">Адрес:</abbr> 350016, Краснодарский кр, город Краснодар, улица Российская, дом 267/3</div>
                             <div><abbr title="Индивидуальный налоговый идентификатор">ИНН:</abbr> 2311250039</div>
                             <div><abbr title="ОГРН">ОГРН:</abbr> 1172375101194</div>
-                            {{--<div><abbr title="Telegram для связи">Telegram:</abbr> @pheonix_support</div>
-                            <div><abbr title="What's App для связи">What's App:</abbr> +7 (987)-654-3210</div>--}}
+                            {{--<div><abbr title="Telegram для связи">Telegram:</abbr> @pheonix_support</div>--}}
+                            <div><abbr title="What's App для связи">What's App:</abbr> +7 (987)-654-3210</div>
                             <div><abbr title="Электронная почта для связи">E-Mail:</abbr> support@pheonix.tech</div>
                         </div>
                     </div>

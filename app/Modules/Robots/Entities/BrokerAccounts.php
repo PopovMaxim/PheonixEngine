@@ -13,6 +13,10 @@ class BrokerAccounts extends Model
     protected $guarded = [];
     
     public $table = 'broker_accounts';
+
+    public $casts = [
+        'expires_at' => 'timestamp'
+    ];
     
     protected static function newFactory()
     {

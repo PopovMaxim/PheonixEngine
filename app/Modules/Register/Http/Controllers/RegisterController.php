@@ -84,7 +84,7 @@ class RegisterController extends Controller
                 'nickname' => $nickname,
                 'password' => Hash::make($password),
                 'hash' => User::generateHash(),
-                'sponsor_id' => $sponsor_query ? $sponsor_query['id'] : 1,
+                'sponsor_id' => $sponsor_query ? $sponsor_query['id'] : config('app.default-partner-id'),
                 'account_number' => User::generateAccountNumber()
             ];
 

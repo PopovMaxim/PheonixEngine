@@ -12,10 +12,12 @@ use Spatie\Permission\Models\Role;
 class Tariffs extends Component
 {
     public $line;
+    public $accept;
     public $tariff;
     public $tariffs;
     public $tariff_line;
     public $open_description = false;
+    public $show_terms = false;
 
     public function mount($line)
     {
@@ -36,8 +38,20 @@ class Tariffs extends Component
         $this->dispatchBrowserEvent('openDescription');
     }
 
+    public function openTerms($tariff)
+    {
+        $this->tariff = Tariff::query()->where('tariff_line', $this->line)->get()->keyBy('id')->get($tariff);
+        $this->show_terms = true;
+    }
+
     public function submit(Request $request)
     {
+        $this->validate([
+            'accept' => 'accepted'
+        ], [
+            'accept.accepted' => 'Вы должны согласиться с лицензионным соглашением.'
+        ]);
+
         $tariff = $this->tariff;
 
         $price = number_format($tariff['result_price'], 2, '', '');
@@ -94,25 +108,36 @@ class Tariffs extends Component
                     'text' => "Вы успешно подписались на тариф <b>{$title}</b>."
                 ]
             ]);
-
-
-        //Activity::storeAction('subscription_tariff_' . $title, $request);
-
     
         // Update binary total value
         /*$request->user()->node->update([
             'total_value' => $request->user()->node['total_value'] + $tariff_price
-        ]);*
-
-
-        return session()->flash('status', [
-            'type' => 'success',
-            'message' => "Вы успешно подписались на тариф <b>{$tariff_title}</b>. Управление подпиской доступно в разделе - «Роботы»."
         ]);*/
+
     }
 
     public function render()
     {
-        return view('livewire.tariffs');
+        if ($this->show_terms)
+        {
+            return view('livewire.tariffs.terms', [
+                'breadcrumbs' => [
+                    [
+                        'title' => 'Продукты',
+                        'url' => route('tariffs', ['id' => $this->tariff['tariff_line']])
+                    ],
+                    [
+                        'title' => $this->tariff['line']['title'],
+                        'url' => route('tariffs', ['id' => $this->tariff['tariff_line']])
+                    ],
+                    [
+                        'title' => $this->tariff['title'],
+                        'active' => true
+                    ]
+                ]
+            ]);
+        }
+
+        return view('livewire.tariffs.list');
     }
 }

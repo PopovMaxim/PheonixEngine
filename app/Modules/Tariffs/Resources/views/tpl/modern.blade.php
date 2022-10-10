@@ -47,7 +47,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="text-muted fs-sm">Линейный маркетинг</div>
                                         <div>
-                                            <strong>{{ $tariff['details']['license_limit'] ?? 0 }}</strong> шт.
+                                            <strong>{{ $tariff['details']['license_limit'] ?? 0 }}</strong> ур.
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full bg-body-light">
-                        <span class="btn btn-hero btn-primary px-4 w-100" wire:click="selectTariff({{ $tariff['id'] }})">Оформить</span>
+                        <span class="btn btn-hero btn-primary px-4 w-100" wire:click="openTerms({{ $tariff['id'] }})">Оформить</span>
                     </div>
                 </div>
             </div>

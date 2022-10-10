@@ -53,7 +53,11 @@ class RobotsController extends Controller
                 'numeric' => 'Неправильный формат номера счёта.',
             ]);
 
-            if (!$request->input('accepted')) {
+            $account = BrokerAccounts::query()
+                ->where('account_number', $request->input('account_number'))
+                ->first();
+
+            if ($account && isset($account['expires_at']) && now()->parse($account['expires_at'])->timestamp > now()->timestamp) {
                 $breadcrumbs = [
                     [
                         'title' => 'Подписки',
@@ -64,12 +68,26 @@ class RobotsController extends Controller
                         'url' => route('subscribes.read', ['uuid' => $uuid])
                     ],
                     [
-                        'title' => 'Соглашение об использовании',
+                        'title' => 'Внимание <i class="fa fa-warning text-warning mb-3"></i>',
                         'active' => true
                     ],
                 ];
 
-                return view('robots::terms')
+                if ($request->input('confirm')) {
+                    if (!ProductKeys::query()->where('subscribe_id', $uuid)->count()) {
+                        ProductKeys::create([
+                            'user_id' => $request->user()->id,
+                            'account_number' => $request->input('account_number'),
+                            'activation_key' => \Str::uuid(),
+                            'key' => $subscribe['tariff']['line']['details']['key'],
+                            'subscribe_id' => $uuid
+                        ]);
+            
+                        return back();
+                    }
+                }
+
+                return view('robots::already-exists')
                     ->with([
                         'back' => route('subscribes.read', ['uuid' => $uuid]),
                         'subscribe' => $subscribe,
@@ -84,7 +102,7 @@ class RobotsController extends Controller
                         'key' => $subscribe['tariff']['line']['details']['key'],
                         'subscribe_id' => $uuid
                     ]);
-
+        
                     return back();
                 }
             }

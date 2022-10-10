@@ -54,8 +54,8 @@ class Tariffs extends Component
     {
         $this->tariff = Tariff::query()->where('tariff_line', $this->line)->get()->keyBy('id')->get($tariff);
 
-        $title = $tariff['title'];
-        $price = number_format($tariff['result_price'], 2, '', '');
+        $title = $this->tariff['title'];
+        $price = number_format($this->tariff['result_price'], 2, '', '');
 
         if (request()->user()->raw_balance < $price)
         {

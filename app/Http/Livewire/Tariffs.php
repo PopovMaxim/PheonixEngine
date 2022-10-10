@@ -53,6 +53,18 @@ class Tariffs extends Component
     public function openTerms($tariff)
     {
         $this->tariff = Tariff::query()->where('tariff_line', $this->line)->get()->keyBy('id')->get($tariff);
+
+        $title = $tariff['title'];
+        $price = number_format($tariff['result_price'], 2, '', '');
+
+        if (request()->user()->raw_balance < $price)
+        {
+            return session()->flash('status', [
+                'type' => 'danger',
+                'message' => "На балансе лицевого счёта недостаточно средств для оформления подписки на тариф <b>{$title}</b>..."
+            ]);
+        }
+
         $this->show_terms = true;
     }
 

@@ -59,10 +59,11 @@ class Tariffs extends Component
 
         if (request()->user()->raw_balance < $price)
         {
-            return session()->flash('status', [
-                'type' => 'danger',
-                'message' => "На балансе лицевого счёта недостаточно средств для оформления подписки на тариф <b>{$title}</b>..."
-            ]);
+            return back()
+                ->with('status', [
+                    'type' => 'danger',
+                    'message' => "На балансе лицевого счёта недостаточно средств для оформления подписки на тариф <b>{$title}</b>..."
+                ]);
         }
 
         $this->show_terms = true;

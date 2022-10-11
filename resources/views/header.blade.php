@@ -10,7 +10,7 @@
             <div class="d-inline-block">
                 <div class="btn btn-alt-secondary copy" data-clipboard-text="{{ request()->user()->referral_link }}">
                     <i class="fa fa-fw fa-user-plus fs-sm"></i>
-                    <span class="fs-sm">Пригласить</span>
+                    <span class="fs-sm d-none d-md-inline-block">Пригласить</span>
                 </div>
             </div>
             @livewire('topbar-balance')
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-inline-block">
+            <div class="d-md-inline-block d-none">
                 <button type="button" class="btn btn-alt-secondary" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
                     <i class="far fa-moon" id="dark-mode-toggler"></i>
                 </button>

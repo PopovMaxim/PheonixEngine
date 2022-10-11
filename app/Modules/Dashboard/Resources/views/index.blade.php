@@ -1,5 +1,6 @@
 @extends('dashboard::layouts.master')
 
+{{--
 @push('js')
     @if ($quick_bonus['quick_bonus_end']->addDays(2) >= now() || ($quick_bonus['current_percent'] >= 100 && !request()->user()->quick_bonus_accepted))
         <script src="{{ asset('assets/js/plugins/easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
@@ -36,6 +37,7 @@
         <script>Dashmix.helpersOnLoad(['jq-easy-pie-chart']);</script>
     @endif
 @endpush
+--}}
 
 @section('content')
 @php

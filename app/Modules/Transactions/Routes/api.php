@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Modules\Transactions\Entities\Transaction;
 use App\Modules\Transactions\Transformers\Transaction as TransactionCollection;
@@ -26,11 +27,17 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
         $status = $request->input('status');
 
-        $transactions = Transaction::query()
-            ->where('user_id', $request->input('user_id'))
-            ->orderBy('created_at', $order)
-            ->get();
+        $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
-        return TransactionCollection::collection($transactions);
+        if ($user) {
+            $transactions = Transaction::query()
+                ->where('user_id', $user['id'])
+                ->orderBy('created_at', $order)
+                ->get();
+
+            return TransactionCollection::collection($transactions);
+        }
+
+        return [];
     });
 });

@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 Route::middleware('api')->prefix('v1')->group(function () {
     Route::post('profile/balance', function (Request $request) {
-        $user = User::find($request->input('user_id'));
+        $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
         if ($user) {
             return $user['formatted_balance'];
@@ -28,7 +28,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
 Route::middleware('api')->prefix('v1')->group(function () {
     Route::post('profile/invite-links', function (Request $request) {
-        $user = User::find($request->input('user_id'));
+        $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
         if ($user) {
             return [
@@ -44,7 +44,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
 Route::middleware('api')->prefix('v1')->group(function () {
     Route::post('profile/update-register-side', function (Request $request) {
-        $user = User::find($request->input('user_id'));
+        $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
         $available = [
             'left',
@@ -70,7 +70,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
 Route::middleware('api')->prefix('v1')->group(function () {
     Route::post('profile/current-register-side', function (Request $request) {
-        $user = User::find($request->input('user_id'));
+        $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
         if ($user) {
             $side = $user['partners_register_side'];

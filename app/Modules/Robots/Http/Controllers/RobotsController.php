@@ -57,7 +57,7 @@ class RobotsController extends Controller
                 ->where('account_number', $request->input('account_number'))
                 ->first();
 
-            if ($account && isset($account['expires_at']) && now()->parse($account['expires_at'])->timestamp > now()->timestamp) {
+            if ($account && isset($account['expires_at']) && $account['expires_at']->timestamp > now()->timestamp) {
                 $breadcrumbs = [
                     [
                         'title' => 'Подписки',

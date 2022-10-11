@@ -15,7 +15,7 @@ class BrokerAccounts extends Model
     public $table = 'broker_accounts';
 
     public $casts = [
-        'expires_at' => 'timestamp'
+        'expires_at' => 'datetime'
     ];
     
     protected static function newFactory()

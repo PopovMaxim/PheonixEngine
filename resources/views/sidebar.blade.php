@@ -45,7 +45,7 @@
                 </li>
 
                 @if (count(request()->user()->getSubscribes()))
-                <li class="nav-main-item @if(request()->is('education*')) open @endif" href="{{ route('education') }}">
+                <li class="nav-main-item @if(request()->is('education*')) open @endif" href="#">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                       <i class="nav-main-link-icon fa fa-graduation-cap"></i>
                       <span class="nav-main-link-name">Обучение</span>

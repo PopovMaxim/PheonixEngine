@@ -34,6 +34,44 @@
             </li>
 
             <li class="nav-main-item">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="nav-main-link-icon fa fa-boxes"></i>
+                  <span class="nav-main-link-name">Продукты</span>
+                </a>
+                <ul class="nav-main-submenu">
+                  <li class="nav-main-item">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                      <span class="nav-main-link-name">Тарифы</span>
+                    </a>
+                    <ul class="nav-main-submenu">
+                      <li class="nav-main-item">
+                        <a class="nav-main-link" href="javascript:void(0)">
+                          <span class="nav-main-link-name">Линейки</span>
+                        </a>
+                      </li>
+                      <li class="nav-main-item">
+                        <a class="nav-main-link" href="{{ route('admin.tariffs') }}">
+                          <span class="nav-main-link-name">Управление ценами</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-main-item">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                      <span class="nav-main-link-name">Дистрибутивы</span>
+                    </a>
+                    <ul class="nav-main-submenu">
+                      <li class="nav-main-item">
+                        <a class="nav-main-link" href="javascript:void(0)">
+                          <span class="nav-main-link-name">Версии</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+            </li>
+
+            <li class="nav-main-item">
                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.transactions') }}">
                     <i class="nav-main-link-icon fa fa-coins"></i>
                     <span class="nav-main-link-name">Операции</span>
@@ -67,13 +105,6 @@
                 <a class="nav-main-link" href="{{ route('admin.subscribes') }}">
                     <i class="nav-main-link-icon fa fa-star"></i>
                     <span class="nav-main-link-name">Подписки</span>
-                </a>
-            </li>
-
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="{{ route('admin.tariffs') }}">
-                    <i class="nav-main-link-icon fa fa-cubes"></i>
-                    <span class="nav-main-link-name">Тарифы</span>
                 </a>
             </li>
             

@@ -22,7 +22,7 @@ class TariffsController extends Controller
         }
 
         return view('tariffs::index')
-            ->with('line', $line['id']);
+            ->with('line', $line);
     }
 
     /**

@@ -2,6 +2,6 @@
 
 @section('content')
     @livewire('tariffs', [
-        'line' => $line
+        'line' => $line['id']
     ])
 @endsection

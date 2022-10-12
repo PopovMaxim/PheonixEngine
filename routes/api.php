@@ -139,7 +139,8 @@ Route::prefix('v1/expert')->group(function () {
                             'account_number' => $account['account_number'],
                             'status' => $account['status'],
                             'support_date_end' => $product['support_date_end'] ?? null,
-                            'expires_at' => $account['expires_at']->format('Y-m-d H:i:s')
+                            'expires_at' => $account['expires_at']->format('Y-m-d H:i:s'),
+                            'activated_at' => $account['created_at']->format('Y-m-d H:i:s'),
                         ]));
                     } else {
                         return base64_encode(json_encode([
@@ -169,7 +170,8 @@ Route::prefix('v1/expert')->group(function () {
                 'account_number' => $account['account_number'],
                 'status' => $account['status'],
                 'support_date_end' => $product['support_date_end'] ?? null,
-                'expires_at' => $account['expires_at']->format('Y-m-d H:i:s')
+                'expires_at' => $account['expires_at']->format('Y-m-d H:i:s'),
+                'activated_at' => $account['created_at']->format('Y-m-d H:i:s'),
             ]));
         }
     });

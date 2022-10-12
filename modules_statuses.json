@@ -16,5 +16,6 @@
     "Refill": true,
     "Withdraw": true,
     "Admin": true,
-    "PasswordReset": true
+    "PasswordReset": true,
+    "Education": true
 }

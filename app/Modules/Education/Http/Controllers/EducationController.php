@@ -124,6 +124,11 @@ class EducationController extends Controller
         }
 
         $video = $this->videos[$id][$number];
+
+        if ($video['closed']) {
+            return redirect()
+                ->route('education');
+        }
         
         $breadcrumbs = [
             [

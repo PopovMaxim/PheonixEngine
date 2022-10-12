@@ -44,7 +44,8 @@
                     </ul>
                 </li>
 
-                <li class="nav-main-item @if(request()->is('education*')) open @endif" href="{{ route('tariffs') }}">
+                @if (count(request()->user()->getSubscribes()))
+                <li class="nav-main-item @if(request()->is('education*')) open @endif" href="{{ route('education') }}">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                       <i class="nav-main-link-icon fa fa-graduation-cap"></i>
                       <span class="nav-main-link-name">Обучение</span>
@@ -59,6 +60,7 @@
                         @endforeach
                     </ul>
                 </li>
+                @endif
 
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('subscribes')) active @endif" href="{{ route('subscribes') }}">
@@ -67,12 +69,14 @@
                     </a>
                 </li>
 
-                <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('distribution*')) active @endif" href="{{ route('distribution') }}">
-                        <i class="nav-main-link-icon fa fa-file"></i>
-                        <span class="nav-main-link-name">Дистрибутивы</span>
-                    </a>
-                </li>
+                @if (count(request()->user()->getSubscribes()))
+                    <li class="nav-main-item">
+                        <a class="nav-main-link @if(request()->is('distribution*')) active @endif" href="{{ route('distribution') }}">
+                            <i class="nav-main-link-icon fa fa-file"></i>
+                            <span class="nav-main-link-name">Дистрибутивы</span>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="nav-main-heading">Финансы</li>
                 <li class="nav-main-item">

@@ -133,7 +133,7 @@ class EducationController extends Controller
         $breadcrumbs = [
             [
                 'title' => 'Обучение',
-                'url' => route('education')
+                'url' => route('education', ['id' => $line['id']])
             ],
             [
                 'title' => $line['title'],

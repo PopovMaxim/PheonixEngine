@@ -61,6 +61,7 @@ Route::prefix('v1/telegram')->group(function () {
                 'status' => 'success',
                 'message' => "Профиль Telegram успешно подключен.",
                 'user' => [
+                    'email' => $user['email'],
                     'nickname' => $user['nickname'],
                     'balance' => $user['formatted_balance'],
                     'lastname' => $user['lastname'],

@@ -30,6 +30,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
         if ($user) {
             return [
+                'email' => $user['email'],
                 'nickname' => $user['nickname'],
                 'balance' => $user['formatted_balance'],
                 'lastname' => $user['lastname'],
@@ -44,9 +45,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
         return [];
     });
-});
-
-Route::middleware('api')->prefix('v1')->group(function () {
+    
     Route::post('profile/invite-links', function (Request $request) {
         $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
@@ -60,9 +59,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
         return [];
     });
-});
-
-Route::middleware('api')->prefix('v1')->group(function () {
+    
     Route::post('profile/update-register-side', function (Request $request) {
         $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
@@ -86,9 +83,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
         return [];
     });
-});
-
-Route::middleware('api')->prefix('v1')->group(function () {
+    
     Route::post('profile/current-register-side', function (Request $request) {
         $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 

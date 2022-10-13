@@ -54,7 +54,7 @@
                         </div>
                         </div>
                         <div class="block-content">
-                            <p>{{ $this->tariff['description'] }}</p>
+                            <p>{!! $this->tariff['description'] !!}</p>
                         </div>
                         <div class="block-content block-content-full text-end bg-body">
                             <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-dismiss="modal">Закрыть</button>

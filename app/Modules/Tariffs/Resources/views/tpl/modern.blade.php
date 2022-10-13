@@ -2,7 +2,7 @@
     <div class="row d-flex justify-content-center">
         @foreach ($tariffs->sortBy('priority') as $tariff)
             <div class="col-md-6 col-xl-4">
-                <div class="block block-rounded block-themed block-fx-shadow" href="javascript:void(0)">
+                <div class="block block-rounded block-themed block-fx-shadow mb-2" href="javascript:void(0)">
                     <div class="block-header text-center @if ($tariff['color']) bg-{{ $tariff['color'] }} @else bg-dark @endif @if ($tariff['ribbon']) ribbon @endif @if (isset($tariff['ribbon']['form'])) ribbon-{{ $tariff['ribbon']['form'] }} @endif @if (isset($tariff['ribbon']['color'])) ribbon-{{ $tariff['ribbon']['color'] }} @endif">
                         <h3 class="block-title">
                             {{ $tariff['title'] }}
@@ -86,17 +86,20 @@
                     </div>
                     <div class="block-content block-content-full bg-body-light">
                         @if (isset($tariff['details']['sell_start_from']) && now()->parse($tariff['details']['sell_start_from'])->timestamp < now()->timestamp)
-                            <span class="btn btn-hero btn-primary px-4 w-100" wire:click="openTerms({{ $tariff['id'] }})">Оформить</span>
+                            <button class="btn btn-hero btn-primary px-4 w-100" wire:click="openTerms({{ $tariff['id'] }})">Оформить</button>
                         @else
-                            <span class="btn btn-hero btn-primary px-4 w-100 disabled">Старт через
+                            <span class="btn btn-hero btn-primary px-4 w-100 disabled">
+                                Старт через
                                 @if (now()->parse('2022-10-15 12:15:00')->timestamp > now()->timestamp)
-                                    {{ now()->diffInHours(now()->parse('2022-10-15 12:15:00')) }} часов</span>
+                                    {{ now()->diffInHours(now()->parse('2022-10-15 12:15:00')) }} час(ов)
                                 @else
-                                    {{ now()->diffInMinutes(now()->parse('2022-10-15 12:15:00')) }} мин.</span>
+                                    {{ now()->diffInMinutes(now()->parse('2022-10-15 12:15:00')) }} мин.
                                 @endif
+                            </span>
                         @endif
                     </div>
                 </div>
+                <button type="button" class="btn btn-link w-100" wire:click="openDescription({{ $tariff['id'] }})">Подробнее</button>
             </div>
         @endforeach
     </div>

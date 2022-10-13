@@ -12,8 +12,8 @@
     </div>
     
     <div class="content content-boxed">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-7">
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-6">
                 @forelse ($subscribes as $subscribe)
                     <div class="block block-rounded block-fx-pop">
                         @if (now()->parse($subscribe['details']['expired_at'])->timestamp <= now()->addMonth()->timestamp && now()->parse($subscribe['details']['expired_at'])->timestamp > now()->timestamp)
@@ -56,6 +56,53 @@
                         </div>
                     </div>
                 @endforelse
+            </div>
+            <div class="col-md-5">
+                <div>
+                    <h4>Часто задаваемые вопросы</h4>
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="block block-transparent mb-0">
+                            <div class="block-header ps-0 pt-0" role="tab" id="h1">
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q1" aria-expanded="true" aria-controls="q1">Как зарегистрироваться на Roboforex?</a>
+                            </div>
+                            <div id="q1" class="collapse" role="tabpanel" aria-labelledby="h1" data-bs-parent="#accordion" style="">
+                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
+                                    <a href="{{ asset('pdf/robo-register.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block block-transparent mb-0">
+                            <div class="block-header ps-0 pt-0" role="tab" id="h2">
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q2" aria-expanded="true" aria-controls="q2">Как создать новый аккаунт на Roboforex в партнёрской сети Pheonix?</a>
+                            </div>
+                            <div id="q2" class="collapse" role="tabpanel" aria-labelledby="h2" data-bs-parent="#accordion" style="">
+                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
+                                    <a href="{{ asset('pdf/robo-new-acc-register.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block block-transparent mb-0">
+                            <div class="block-header ps-0 pt-0" role="tab" id="h3">
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q3" aria-expanded="true" aria-controls="q3">Как создать счёт для Insider 1.61?</a>
+                            </div>
+                            <div id="q3" class="collapse" role="tabpanel" aria-labelledby="h3" data-bs-parent="#accordion" style="">
+                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
+                                    <a href="{{ asset('pdf/robo-insider-acc-register.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block block-transparent mb-0">
+                            <div class="block-header ps-0 pt-0" role="tab" id="h3">
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q4" aria-expanded="true" aria-controls="q4">Как открыть счёт Roboforex MT4 ProCent?</a>
+                            </div>
+                            <div id="q4" class="collapse" role="tabpanel" aria-labelledby="h4" data-bs-parent="#accordion" style="">
+                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
+                                    <a href="{{ asset('pdf/robo-procent-register.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

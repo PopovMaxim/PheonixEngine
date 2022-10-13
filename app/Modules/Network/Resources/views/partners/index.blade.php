@@ -85,7 +85,7 @@
                 </a>
             </div>
         </div>
-        --}}
+        
 
         @if (request()->user()->sponsor)
             <h2 class="content-heading">
@@ -104,7 +104,7 @@
                     </div>
                 </div>
             </a>
-        @endif
+        @endif--}}
 
         @livewire('partners-widget')
     </div>

@@ -116,6 +116,15 @@
                     </p>
                 </div>
                 <div class="col-lg-8 col-xl-8">
+                    @if (request()->user()->sponsor)
+                        <div class="mb-4">
+                            <label class="form-label @error('current_password') is-invalid @enderror" for="current_password">Ваш спонсор</label>
+                            <p class="fw-semibold mb-0 d-flex align-items-center">
+                                <img class="img-avatar img-avatar48 img-avatar-thumb me-3" src="{{ asset('assets/media/avatars/avatar15.jpg') }}" alt="">
+                                {{ request()->user()->sponsor->nickname }}
+                            </p>
+                        </div>
+                    @endif
                     <div class="mb-4">
                         <label class="form-label @error('current_password') is-invalid @enderror" for="current_password">Код для приглашения</label>
                         <div class="fw-bold">{{ request()->user()->hash }}</div>

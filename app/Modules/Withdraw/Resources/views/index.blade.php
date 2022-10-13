@@ -119,7 +119,7 @@
                         </div>
                         <div id="text_4" class="collapse" role="tabpanel" aria-labelledby="header_4" data-bs-parent="#accordion" style="">
                             <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Да, но комиссия за вывод взымается процессингом и составляет 0.25%. Мы не накладываем свою комиссию на выводы.</p>
+                                <p>Комиссия на вывод составляет 0.5%, она взымается процессингом на обслуживание проведения транзакции.</p>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div id="text_5" class="collapse" role="tabpanel" aria-labelledby="header_5" data-bs-parent="#accordion" style="">
                             <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Тут должен быть регламент, но он куда-то пропал...</p>
+                                <p>Заявки на вывод исполняются каждый понедельник в 20:00 по Московскому времени.</p>
                             </div>
                         </div>
                     </div>

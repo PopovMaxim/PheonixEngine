@@ -16,7 +16,7 @@
                                         {{ $video['number'] }}
                                     </a>
                                 @else
-                                    <a class="item item-circle bg-primary text-white fs-2 mx-auto" data-bs-toggle="tooltip" title="Чтобы посмотреть это видео, сначала посмотрите до конца все предыдущие.">
+                                    <a class="item item-circle bg-primary text-white fs-2 mx-auto" data-bs-toggle="tooltip" title="Вы должны посмотреть предыдущие уроки, перед тем как приступить к этому.">
                                         <i class="fa fa-lock"></i>
                                     </a>
                                 @endif
@@ -24,7 +24,7 @@
                             <td>
                                 <div class="py-4">
                                     <div class="fs-sm fw-bold text-uppercase mb-2">
-                                        <span class="text-muted me-3">Эпизод {{ $video['number'] }}</span>
+                                        <span class="text-muted me-3">Урок {{ $video['number'] }}</span>
                                         <span class="text-primary">
                                             <i class="fa fa-clock"></i> {{ $video['time'] }}
                                         </span>

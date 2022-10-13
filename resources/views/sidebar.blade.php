@@ -44,24 +44,6 @@
                     </ul>
                 </li>
 
-                @if (count(request()->user()->getSubscribes()))
-                <li class="nav-main-item @if(request()->is('education*')) open @endif" href="#">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                      <i class="nav-main-link-icon fa fa-graduation-cap"></i>
-                      <span class="nav-main-link-name">Обучение</span>
-                    </a>
-                    <ul class="nav-main-submenu">
-                        @foreach (\App\Modules\Tariffs\Entities\TariffLines::query()->orderBy('order', 'asc')->where('details->status', 1)->get() as $line)
-                            <li class="nav-main-item">
-                                <a class="nav-main-link @if(request()->is("education/{$line['id']}")) active @endif" href="{{ route('education', ['id' => $line['id']]) }}">
-                                    <span class="nav-main-link-name">{{ $line['title'] }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-                @endif
-
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('subscribes')) active @endif" href="{{ route('subscribes') }}">
                         <i class="nav-main-link-icon fa fa-star"></i>
@@ -123,6 +105,25 @@
                         <span class="nav-main-link-name">Лидерский пулл</span>
                     </a>
                 </li>
+                <li class="nav-main-heading">База знаний</li>
+                @if (count(request()->user()->getSubscribes()))
+                    <li class="nav-main-item @if(request()->is('education*')) open @endif" href="#">
+                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                        <i class="nav-main-link-icon fa fa-graduation-cap"></i>
+                        <span class="nav-main-link-name">Обучение</span>
+                        </a>
+                        <ul class="nav-main-submenu">
+                            @foreach (\App\Modules\Tariffs\Entities\TariffLines::query()->orderBy('order', 'asc')->where('details->status', 1)->get() as $line)
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link @if(request()->is("education/{$line['id']}")) active @endif" href="{{ route('education', ['id' => $line['id']]) }}">
+                                        <span class="nav-main-link-name">{{ $line['title'] }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @endif
+
                 <li class="nav-main-heading">Помощь</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('support*')) active @endif" href="{{ route('support') }}">
@@ -130,13 +131,15 @@
                         <span class="nav-main-link-name">Тех. Поддержка</span>
                     </a>
                 </li>
+                {{--
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('faq')) active @endif" {{--href="{{ url('faq') }}"--}}>
+                    <a class="nav-main-link @if(request()->is('faq')) active @endif" {{--href="{{ url('faq') }}"--}>
                         <i class="nav-main-link-icon fa fa-circle-question"></i>
                         <span class="nav-main-link-name">FAQ</span>
                         <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
+                --}}
             </ul>
         </div>
     </div>

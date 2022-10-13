@@ -38,6 +38,7 @@
             class="video-js vjs-theme-fantasy vjs-16-9"
             controls
             preload="auto"
+            poster='{{ asset("assets/media/covers/insider/{$number}.jpg") }}'
             data-setup="{}"
         >
             <source src="{{ route('education.video', ['id' => $id, 'number' => $number]) }}" type="video/mp4" />
@@ -47,8 +48,8 @@
         </video>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
-            @if ($disabled_prev) <a class="btn btn-secondary disabled">Предыдущее видео</a> @else <a href="{{ route('education.read', ['id' => $id, 'number' => $prev]) }}" class="btn btn-secondary">Предыдущее видео</a> @endif
-            @if ($disabled_next) <a class="btn btn-secondary disabled">Следующее видео</a> @else <a href="{{ route('education.read', ['id' => $id, 'number' => $next]) }}" class="btn btn-secondary">Следующее видео</a> @endif
+            @if ($disabled_prev) <a class="btn btn-secondary disabled">Предыдущий урок</a> @else <a href="{{ route('education.read', ['id' => $id, 'number' => $prev]) }}" class="btn btn-secondary">Предыдущий урок</a> @endif
+            @if ($disabled_next) <a class="btn btn-secondary disabled">Следующий урок</a> @else <a href="{{ route('education.read', ['id' => $id, 'number' => $next]) }}" class="btn btn-secondary">Следующий урок</a> @endif
         </div>
     </div>
 @endsection

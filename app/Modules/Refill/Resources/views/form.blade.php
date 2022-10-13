@@ -7,6 +7,15 @@
             $('#amount').maskMoney();
         })
     </script>
+    
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+@endpush
+
+@push('css')
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -51,39 +60,7 @@
                 </div>
             </div>
             <div class="col-md-5">
-                <h4>Часто задаваемые вопросы</h4>
-                <div id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="block block-transparent mb-0">
-                        <div class="block-header ps-0 pt-0" role="tab" id="header_1">
-                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#text_1" aria-expanded="true" aria-controls="text_1">Как пополнить мой баланс с помощью криптовалюты?</a>
-                        </div>
-                        <div id="text_1" class="collapse" role="tabpanel" aria-labelledby="header_1" data-bs-parent="#accordion" style="">
-                            <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Тут должна была быть инструкция, но её тут нет...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-transparent mb-0">
-                        <div class="block-header ps-0 pt-0" role="tab" id="header_2">
-                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#text_2" aria-expanded="true" aria-controls="text_2">Сколько времени занимает проверка платежа?</a>
-                        </div>
-                        <div id="text_2" class="collapse" role="tabpanel" aria-labelledby="header_2" data-bs-parent="#accordion" style="">
-                            <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Тут должна была быть инструкция, но её тут нет...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-transparent mb-0">
-                        <div class="block-header ps-0 pt-0" role="tab" id="header_3">
-                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#text_3" aria-expanded="true" aria-controls="text_3">Что такое подтверждениe?</a>
-                        </div>
-                        <div id="text_3" class="collapse" role="tabpanel" aria-labelledby="header_3" data-bs-parent="#accordion" style="">
-                            <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Тут должна была быть инструкция, но её тут нет...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('refill::components.faq')
             </div>
         </div>
     </div>

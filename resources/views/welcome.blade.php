@@ -377,7 +377,7 @@
                     </div>
                 </div>--}}
                 
-                <div class="bg-body-extra-light" id="tariffs">
+                <div class="bg-body-light" id="tariffs">
                     <div class="content content-full">
                         <div class="py-5 push">
                             <h2 class="mb-0 text-center">
@@ -426,7 +426,7 @@
                 </div>
         </main>
 
-        <footer id="page-footer" class="footer-static bg-body-light">
+        <footer id="page-footer" class="footer-static bg-body-extra-light">
             <div class="content py-4">
                 <div class="row items-push fs-sm border-bottom pt-4 justify-content-center">
                     <div class="col-md-4">

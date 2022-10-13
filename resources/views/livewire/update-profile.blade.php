@@ -118,7 +118,7 @@
                 <div class="col-lg-8 col-xl-8">
                     @if (request()->user()->sponsor)
                         <div class="mb-4">
-                            <label class="form-label @error('current_password') is-invalid @enderror" for="current_password">Ваш спонсор</label>
+                            <label class="form-label">Ваш спонсор</label>
                             <p class="fw-semibold mb-0 d-flex align-items-center">
                                 <img class="img-avatar img-avatar48 img-avatar-thumb me-3" src="{{ asset('assets/media/avatars/avatar15.jpg') }}" alt="">
                                 {{ request()->user()->sponsor->nickname }}
@@ -126,12 +126,12 @@
                         </div>
                     @endif
                     <div class="mb-4">
-                        <label class="form-label @error('current_password') is-invalid @enderror" for="current_password">Код для приглашения</label>
+                        <label class="form-label">Код для приглашения</label>
                         <div class="fw-bold">{{ request()->user()->hash }}</div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-12">
-                            <label class="form-label" for="new_password">Ссылка на приглашение</label>
+                            <label class="form-label">Ссылка на приглашение</label>
                             <div class="fw-bold">{{ request()->user()->referral_link }}</div>
                         </div>
                     </div>

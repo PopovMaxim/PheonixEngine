@@ -105,6 +105,7 @@
                         <span class="nav-main-link-name">Лидерский пулл</span>
                     </a>
                 </li>
+                
                 <li class="nav-main-heading">База знаний</li>
                 @if (count(request()->user()->getSubscribes()))
                     <li class="nav-main-item @if(request()->is('education*')) open @endif" href="#">
@@ -123,6 +124,13 @@
                         </ul>
                     </li>
                 @endif
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('faq')) active @endif" {{--href="{{ url('faq') }}"--}}>
+                        <i class="nav-main-link-icon fa fa-circle-question"></i>
+                        <span class="nav-main-link-name">FAQ</span>
+                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
+                    </a>
+                </li>
 
                 <li class="nav-main-heading">Помощь</li>
                 <li class="nav-main-item">
@@ -132,13 +140,6 @@
                     </a>
                 </li>
                 {{--
-                <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('faq')) active @endif" {{--href="{{ url('faq') }}"--}>
-                        <i class="nav-main-link-icon fa fa-circle-question"></i>
-                        <span class="nav-main-link-name">FAQ</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
-                    </a>
-                </li>
                 --}}
             </ul>
         </div>

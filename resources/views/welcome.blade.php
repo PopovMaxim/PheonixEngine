@@ -452,7 +452,6 @@
                         <h3 class="fw-semibold">Контакты</h3>
                         <div class="fs-sm push">
                             <div>IBC Company name: PHEONIX TECHNOLOGY LTD</div>
-                            <div>Registered agent: Belize Formation Services Limited </div>
                             <div>Registered office: Suite 101, 1626 Buttonwood Bay Blvd, Belize City, Belize </div>
                             <div>Registration number: 191,364</div>
                             <div>E-mail address: support@pheonix.tech</div>

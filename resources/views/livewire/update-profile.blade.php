@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <h2 class="content-heading pt-0">
                 <i class="fa fa-fw fa-asterisk text-muted me-1"></i> Изменение пароля
             </h2>
@@ -101,6 +101,29 @@
                             @error('new_password_confirmation')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="content-heading pt-0">
+                <i class="fa fa-fw fa-user-plus text-muted me-1"></i> Реферальная программа
+            </h2>
+            <div class="row push">
+                <div class="col-lg-4">
+                    <p class="text-muted">
+                        Для приглашения партнёра в свою сеть используйте эти данные
+                    </p>
+                </div>
+                <div class="col-lg-8 col-xl-8">
+                    <div class="mb-4">
+                        <label class="form-label @error('current_password') is-invalid @enderror" for="current_password">Код для приглашения</label>
+                        <div class="fw-bold">{{ request()->user()->hash }}</div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label class="form-label" for="new_password">Ссылка на приглашение</label>
+                            <div class="fw-bold">{{ request()->user()->referral_link }}</div>
                         </div>
                     </div>
                 </div>

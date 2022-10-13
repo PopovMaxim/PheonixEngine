@@ -74,7 +74,7 @@
                     </div>
                     <div class="p-2">
                         <a class="dropdown-item" href="{{ route('profile.settings') }}">
-                            <i class="fas fa-fw fa-cog me-1"></i> Настройки
+                            <i class="fas fa-fw fa-cog me-1"></i> Профиль и настройки
                         </a>
                         <a class="dropdown-item" href="{{ route('profile.activity-log') }}">
                             <i class="fas fa-fw fa-user-clock me-1"></i> История активности

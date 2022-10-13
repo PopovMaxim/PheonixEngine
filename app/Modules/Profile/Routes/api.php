@@ -24,6 +24,26 @@ Route::middleware('api')->prefix('v1')->group(function () {
 
         return [];
     });
+
+    Route::post('profile', function (Request $request) {
+        $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
+
+        if ($user) {
+            return [
+                'nickname' => $user['nickname'],
+                'balance' => $user['formatted_balance'],
+                'lastname' => $user['lastname'],
+                'firstname' => $user['firstname'],
+                'account_number' => $user['account_number'],
+                'last_active_at' => $user['last_active_at'],
+                'created_at' => $user['created_at'],
+                'country' => $user['country'],
+                'city' => $user['city'],
+            ];
+        }
+
+        return [];
+    });
 });
 
 Route::middleware('api')->prefix('v1')->group(function () {

@@ -63,7 +63,7 @@
                     <div class="mb-4">
                         <div class="form-check">
                             <input class="form-check-input @error('password_confirmation') is-invalid @enderror" type="checkbox" value="1" id="agreement" name="agreement">
-                            <label class="form-check-label" for="agreement">Я согласен/согласна с <a href="#">политикой конфиденциальности</a> и <a href="#">лицензионным соглашением</a>.</label>
+                            <label class="form-check-label" for="agreement">Я согласен/согласна с <a href="{{ route('privacy-policy') }}" target="_blank">политикой конфиденциальности</a> и <a href="{{ route('license-agreement') }}" target="_blank">лицензионным соглашением</a>.</label>
                         </div>
                     </div>
                     <div class="mb-4">

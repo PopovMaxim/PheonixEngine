@@ -433,12 +433,12 @@
                         <h3 class="fw-semibold">Правовые документы</h3>
                         <ul class="list list-simple-mini">
                             <li>
-                                <a class="fw-semibold" href="{{ asset('docs/license-agreements.docx') }}" target="_blank">
+                                <a class="fw-semibold" href="{{ route('license-agreement') }}" target="_blank">
                                     <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Лицензионное соглашение
                                 </a>
                             </li>
                             <li>
-                                <a class="fw-semibold" href="{{ asset('docs/pheonix-technology-privacy-policy.docx') }}" target="_blank">
+                                <a class="fw-semibold" href="{{ route('privacy-policy') }}" target="_blank">
                                     <i class="fa fa-fw fa-link text-primary-lighter me-1"></i> Политика
                                     конфиденциальности
                                 </a>
@@ -451,13 +451,17 @@
                     <div class="col-md-4">
                         <h3 class="fw-semibold">Контакты</h3>
                         <div class="fs-sm push">
+                            <div>IBC Company name: PHEONIX TECHNOLOGY LTD</div>
+                            <div>Registered agent: Belize Formation Services Limited </div>
+                            <div>Registered office: Suite 101, 1626 Buttonwood Bay Blvd, Belize City, Belize </div>
+                            <div>Registration number: 191,364</div>
+                            <div>E-mail address: support@pheonix.tech</div>
+
                             {{--<div>Наименование: ООО «ВОСХОЖДЕНИЕ»</div>
                             <div><abbr title="Юридический адрес компании">Адрес:</abbr> 350016, Краснодарский кр, город Краснодар, улица Российская, дом 267/3</div>
                             <div><abbr title="Индивидуальный налоговый идентификатор">ИНН:</abbr> 2311250039</div>
                             <div><abbr title="ОГРН">ОГРН:</abbr> 1172375101194</div>
                             {{--<div><abbr title="Telegram для связи">Telegram:</abbr> @pheonix_support</div>--}}
-                            <div><abbr title="What's App для связи">What's App:</abbr> +7 (987)-654-3210</div>
-                            <div><abbr title="Электронная почта для связи">E-Mail:</abbr> support@pheonix.tech</div>
                         </div>
                     </div>
                 </div>

@@ -45,7 +45,7 @@
                         <select class="form-select js-select2" id="country" wire:model.lazy="country" data-placeholder="Выберите город...">
                             <option></option>
                             @foreach ($countries as $key => $value)
-                                <option value="{{ $key }}">{{ $value['name'] }}</option>
+                                <option value="{{ $key }}">{{ $value['name_' . config('app.locale')] ?? $value['name_common'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -194,7 +194,7 @@
             }
 
             initSelector();
-            
+
             $('#country').on('change', function (e) {
                 livewire.emit('selectCountry', e.target.value)
             });

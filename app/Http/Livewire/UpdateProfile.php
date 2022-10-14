@@ -39,15 +39,7 @@ class UpdateProfile extends Component
 
     public function boot(Request $request)
     {
-        $countries = new Countries();
-
-        foreach ($countries->all() as $key => $country) {
-            if ($country->hydrate('cities')->cities->count()) {
-                $this->countries[$key] = [
-                    'name' => $country['name_' . config('app.locale')] ?? $country['name']['common']
-                ];
-            }
-        }
+        $this->countries = json_decode(Storage::get('countries/list.json'), true);
 
         $this->lastname = $request->user()->lastname;
         $this->firstname = $request->user()->firstname;

@@ -159,7 +159,7 @@
                             <div class="col-sm-12 col-md-4 col-xl-6 mt-1 d-md-flex align-items-md-center fs-sm">
                                 <form method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-alt-danger rounded-pill" wire:click="telegramDisable">
+                                    <button type="button" class="btn btn-sm btn-alt-danger rounded-pill" wire:click="telegramDisable">
                                         <i class="fa fa-fw fa-pencil-alt opacity-50 me-1"></i> Отсоединить
                                     </button>
                                 </form>

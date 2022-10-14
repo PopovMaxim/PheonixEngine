@@ -7,11 +7,12 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use PragmaRX\Countries\Package\Countries;
 
 class UpdateProfile extends Component
 {
-    public $city = 'Норильск';
-    public $country = 'russia';
+    public $country;
+    public $countries = [];
     public $lastname;
     public $firstname;
     public $patronymic;
@@ -19,21 +20,15 @@ class UpdateProfile extends Component
     public $new_password;
     public $new_password_confirmation;
 
-    private $cities;
-
     protected $listeners = [
-        'selectedCity',
+        'selectCountry',
     ];
 
-    public function hydrate()
+    public function selectCountry($item)
     {
-        $this->emit('select_city');
+        $this->country = $item;
     }
 
-    public function selectedCity($item)
-    {
-        $this->city = $item;
-    }
 
     public function telegramDisable(Request $request)
     {
@@ -44,25 +39,20 @@ class UpdateProfile extends Component
 
     public function boot(Request $request)
     {
+        $countries = new Countries();
+
+        foreach ($countries->all() as $key => $country) {
+            if ($country->hydrate('cities')->cities->count()) {
+                $this->countries[$key] = [
+                    'name' => $country['name_' . config('app.locale')] ?? $country['name']['common']
+                ];
+            }
+        }
+
         $this->lastname = $request->user()->lastname;
         $this->firstname = $request->user()->firstname;
         $this->patronymic = $request->user()->patronymic;
-        $this->city = $request->user()->city;
-        
-        if (!is_null($request->user()->country)) {
-            $this->country = $request->user()->country;
-        }
-
-        $this->cities = json_decode(Storage::get('countries/russia.json'), true);
-
-        $grouped_by_region = [];
-
-        foreach ($this->cities as $city)
-        {
-            $grouped_by_region[$city['region']][] = $city['city'];
-        }
-
-        $this->cities = $grouped_by_region;
+        $this->country = $request->user()->country;
     }
 
     public function submit(Request $request)
@@ -107,11 +97,6 @@ class UpdateProfile extends Component
             $params['password'] = Hash::make($this->new_password);
         }
 
-        if (!empty(trim($this->city)))
-        {
-            $params['city'] = $this->city;
-        }
-
         if (!empty(trim($this->country)))
         {
             $params['country'] = $this->country;
@@ -136,9 +121,6 @@ class UpdateProfile extends Component
 
     public function render()
     {
-        return view('livewire.update-profile')
-            ->with([
-                'cities' => $this->cities
-            ]);
+        return view('livewire.update-profile');
     }
 }

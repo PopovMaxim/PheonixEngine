@@ -42,20 +42,10 @@
                     </div>
                     <div class="mb-4">
                         <label class="form-label" for="country">Страна</label>
-                        <select class="form-select" id="country" wire:model="country">
-                            <option value="russia">Россия</option>
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label" for="city">Город</label>
-                        <select class="form-select js-select2" id="city" wire:model="city" data-placeholder="Выберите город...">
+                        <select class="form-select js-select2" id="country" wire:model.lazy="country" data-placeholder="Выберите город...">
                             <option></option>
-                            @foreach ($cities as $key => $value)
-                                <optgroup label="{{ $key }}">
-                                    @foreach ($value as $city)
-                                        <option value="{{ $city }}" >{{ $city }}</option>
-                                    @endforeach
-                                </optgroup>
+                            @foreach ($countries as $key => $value)
+                                <option value="{{ $key }}">{{ $value['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -197,20 +187,16 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            function initCitySelector() {
+            function initSelector() {
                 $('.js-select2').select2({
                     theme: 'bootstrap-5'
                 });
             }
 
-            initCitySelector();
-
-            $('#city').on('change', function (e) {
-                livewire.emit('selectedCity', e.target.value)
-            });
-
-            window.livewire.on('select_city', () => {
-                initCitySelector();
+            initSelector();
+            
+            $('#country').on('change', function (e) {
+                livewire.emit('selectCountry', e.target.value)
             });
 
         });

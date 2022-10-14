@@ -39,7 +39,7 @@ class UpdateProfile extends Component
 
     public function boot(Request $request)
     {
-        $this->countries = json_decode(Storage::get('countries/list.json'), true);
+        $this->countries = json_decode(Storage::disk('public')->get('countries.json'), true);
 
         $this->lastname = $request->user()->lastname;
         $this->firstname = $request->user()->firstname;

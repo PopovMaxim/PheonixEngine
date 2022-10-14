@@ -173,7 +173,7 @@
             <div class="row push">
                 <div class="col-lg-8 col-xl-5 offset-lg-4">
                     <div class="mb-4">
-                        <button type="submit" class="btn btn-alt-primary">
+                        <button type="submit" class="btn btn-alt-primary" wire:click="submit">
                             <i class="fa fa-check-circle opacity-50 me-1"></i> Обновить профиль
                         </button>
                     </div>

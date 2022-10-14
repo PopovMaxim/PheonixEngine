@@ -43,7 +43,7 @@ class RegisterController extends Controller
                         }
                     },
                 ],
-                'nickname' => ['required', 
+                'nickname' => ['required', 'alpha_dash',
                     function ($attribute, $value, $fail) {
                         $query = DB::table('users');
                         $column = $query->getGrammar()->wrap($attribute);
@@ -58,6 +58,7 @@ class RegisterController extends Controller
             ], [
                 'agreement.accepted' => 'Вы должны согласиться с политикой конфиденциальности и лицензионным соглашением.',
                 'nickname.required' => 'Вы не ввели никнейм.',
+                'nickname.alpha_dash' => 'Вы можете использовать только цифры, буквы, дефис и нижнее подчеркивание.',
                 'email.required' => 'Вы не ввели электронную почту.',
                 'email.email' => 'Неправильный формат электронной почты.',
                 'password.required' => 'Вы не ввели пароль.',

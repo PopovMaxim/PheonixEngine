@@ -16,3 +16,4 @@ yarn-error.log
 /.idea
 /.vscode
 !/storage/app/countries/*
+!/storage/app/countries/list.json

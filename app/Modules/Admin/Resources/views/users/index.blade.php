@@ -59,10 +59,17 @@
                                 <td class="text-muted fs-sm text-center">{{ $user['created_at']->format('d.m.Y') }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled"
-                                            data-bs-toggle="tooltip" title="" data-bs-original-title="Edit">
+                                        <button type="button" class="btn btn-sm btn-alt-secondary me-2"
+                                            data-bs-toggle="tooltip" title="" data-bs-original-title="Редактировать">
                                             <i class="fa fa-pencil-alt"></i>
                                         </button>
+                                        <form method="post" action="{{ route('admin.users.auth', ['id' => $user['id']]) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-alt-secondary"
+                                                data-bs-toggle="tooltip" title="" data-bs-original-title="Войти за пользователя">
+                                                <i class="fa fa-door-open"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

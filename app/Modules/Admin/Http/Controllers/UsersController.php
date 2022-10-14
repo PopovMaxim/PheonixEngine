@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -24,15 +25,29 @@ class UsersController extends Controller
             ]);
     }
 
+    public function auth(Request $request, $id)
+    {
+        $request->session()->put('previous_id', $request->user()->id);
+        Auth::loginUsingId($id);
+
+        return redirect(route('dashboard'));
+    }
+
+    public function logout(Request $request)
+    {
+        if ($request->session()->has('previous_id')) {
+            Auth::loginUsingId($request->session()->get('previous_id'));
+            $request->session()->forget('previous_id');
+        }
+
+        return redirect(route('admin.users'));
+    }
+
     public function create()
     {
         return view('admin::create');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
 
     public function show($id)
     {
@@ -42,11 +57,6 @@ class UsersController extends Controller
     public function edit($id)
     {
         return view('admin::edit');
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     public function destroy($id)

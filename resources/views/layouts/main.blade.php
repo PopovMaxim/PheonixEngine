@@ -30,9 +30,18 @@
         @include('header')
         
         <main id="main-container">
-            @role('super_admin')
+            @if(request()->user()->can('user.auth') || request()->user()->role('super_admin'))
                 @include('admin.navbar')
-            @endrole
+                @if (request()->session()->has('previous_id'))
+                    <div class="alert alert-warning mb-0 text-center">
+                        <div class="d-inline"><b>Внимание!</b> Сейчас Вы авторизованы в роли пользователя <b>{{ request()->user()->nickname }}</b>.</div>
+                        <form class="d-inline" method="post" action="{{ route('admin.users.logout', ['id' => request()->session()->has('previous_id')]) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-link p-0">Выйти</button>
+                        </form>
+                    </div>
+                @endif
+            @endif
             @yield('hero')
             @include('content')
         </main>

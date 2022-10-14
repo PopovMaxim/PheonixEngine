@@ -11,9 +11,13 @@
 |
 */
 
-Route::middleware('auth')->prefix('admin')->group(function() {
+Route::prefix('admin')->middleware(['role:super_admin|support'])->group(function() {
+
     Route::prefix('users')->group(function() {
-        Route::get('/', 'UsersController@index')->name('admin.users');
+        Route::get('/', 'UsersController@index')->middleware('role_or_permission:super_admin|user')->name('admin.users');
+        Route::match(['get', 'post'], 'edit/{id}', 'UsersController@edit')->middleware('role_or_permission:super_admin|user')->name('admin.users.edit');
+
+        Route::post('auth/{id}', 'UsersController@auth')->middleware('role_or_permission:super_admin|user.auth')->name('admin.users.auth');
     });
     
     Route::prefix('transactions')->group(function() {
@@ -31,6 +35,8 @@ Route::middleware('auth')->prefix('admin')->group(function() {
     });
 
     Route::prefix('support')->group(function() {
-        Route::get('/{id?}', 'SupportController@index')->where('id', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')->name('admin.support');
+        Route::get('/{uuid?}', 'SupportController@index')->name('admin.support');
     });
 });
+
+Route::post('admin/users/logout', 'UsersController@logout')->middleware('auth')->name('admin.users.logout');

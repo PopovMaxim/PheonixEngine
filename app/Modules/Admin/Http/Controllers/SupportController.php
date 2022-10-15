@@ -10,7 +10,7 @@ use Illuminate\Routing\Controller;
 
 class SupportController extends Controller
 {
-    public function index(Request $request, $id = null)
+    public function index(Request $request, $uuid = null)
     {
         $page_name = 'Техническая поддержка';
 

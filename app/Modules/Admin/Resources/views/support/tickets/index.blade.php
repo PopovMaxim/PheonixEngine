@@ -52,14 +52,14 @@
 
         <div class="col-lg-7 col-xl-9 h100-scroll">
             <div class="content">
-                @if (!request()->id)
+                @if (!request()->uuid)
                 <div class="block block-rounded">
                     <div class="block-content text-center">
                         <p>Выберите заявку, которую хотите обработать...</p>
                     </div>
                 </div>
                 @else
-                    @livewire('support-dialog', ['id' => request()->id])
+                    @livewire('support-dialog', ['id' => request()->uuid])
                 @endif
             </div>
         </div>

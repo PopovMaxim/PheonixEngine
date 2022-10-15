@@ -17,7 +17,7 @@ class OverviewController extends Controller
 
         $subscribes_count = Subscribe::query()->where('details->expired_at', '>=', now())->count();
         
-        $sells_sum = Subscribe::query()->where('status', 'completed')->sum('amount');
+        $sells_sum = Subscribe::query()->where('type', 'subscribe')->where('status', 'completed')->sum('amount');
 
         $tickets_count = SupportTickets::query()->where('status', '<>', 'closed')->count();
 

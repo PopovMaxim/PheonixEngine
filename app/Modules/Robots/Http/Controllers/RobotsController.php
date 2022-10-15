@@ -34,10 +34,10 @@ class RobotsController extends Controller
 
         if ($request->isMethod('post')) {
             $request->validate([
-                'account_number' => ['required', 'numeric', function ($attribute, $value, $fail) use ($request) {
+                'account_number' => ['required', function ($attribute, $value, $fail) use ($request) {
                     $response = Http::get("https://my.roboforex.com/api/partners/tree", [
-                        'account_id' => config('app.roboforex.account-id'),
-                        'api_key' => config('app.roboforex.api-key'),
+                        'account_id' => config('app.roboforex-account-id'),
+                        'api_key' => config('app.roboforex-api-key'),
                         'referral_account_id' => $request->input('account_number')
                     ]);
         

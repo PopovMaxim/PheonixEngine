@@ -21,8 +21,8 @@ return [
     'external-currency' => env('EXTERNAL_CURRENCY_ABBR', 'USDT'),
 
     
-    'roboforex.account-id' => env('ROBOFOREX_ACCOUNT_ID', '30211061'),
-    'roboforex.api-key' => env('ROBOFOREX_API_KEY', '125ca979b1ef27e6'),
+    'roboforex-account-id' => env('ROBOFOREX_ACCOUNT_ID', '30211061'),
+    'roboforex-api-key' => env('ROBOFOREX_API_KEY', '125ca979b1ef27e6'),
 
     'default-partner-id' => env('DEFAULT_PARTNER_ID', 19),
 

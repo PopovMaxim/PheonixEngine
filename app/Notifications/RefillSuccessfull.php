@@ -11,14 +11,16 @@ class RefillSuccessfull extends Notification
 {
     use Queueable;
 
+    public $sum;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($sum)
     {
-        //
+        $this->sum = $sum;
     }
 
     /**
@@ -29,7 +31,7 @@ class RefillSuccessfull extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -41,9 +43,8 @@ class RefillSuccessfull extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->greeting("Здравствуйте, {$notifiable['nickname']}!")
+            ->line("Баланс учётной записи успешно пополнен на {$this->sum}");
     }
 
     /**
@@ -56,7 +57,7 @@ class RefillSuccessfull extends Notification
     {
         return [
             'type' => 'refill.successfull',
-            'text' => 'Баланс учётной записи успешно пополнен на 100 руб.'
+            'text' => "Баланс учётной записи успешно пополнен на {$this->sum}."
         ];
     }
 }

@@ -95,19 +95,23 @@ class WithdrawController extends Controller
 
             if (is_null($code)) {
                 ConfirmCodes::query()->where('user_id', $request->user()->id)->where('details->type', 'withdrawal')->delete();
+                
+                $user = $request->user();
 
-                $random_code = rand(100000, 999999);
+                dispatch(function () use ($user) {
+                    $random_code = rand(100000, 999999);
 
-                ConfirmCodes::create([
-                    'details' => [
-                        'type' => 'withdrawal',
-                        'expired_at' => now()->addSeconds(90)->format('Y-m-d H:i:s')
-                    ],
-                    'code' => $random_code,
-                    'user_id' => $request->user()->id
-                ]);
+                    ConfirmCodes::create([
+                        'details' => [
+                            'type' => 'withdrawal',
+                            'expired_at' => now()->addSeconds(90)->format('Y-m-d H:i:s')
+                        ],
+                        'code' => $random_code,
+                        'user_id' => $user['id']
+                    ]);
 
-                $request->user()->notify(new ConfirmCode($random_code));
+                    $user->notify(new ConfirmCode($random_code));
+                })->onQueue('mail');
 
                 return back()
                     ->withInput()

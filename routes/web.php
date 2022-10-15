@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Refill\Entities\Refill;
 use Illuminate\Support\Facades\Route;
 
 /*

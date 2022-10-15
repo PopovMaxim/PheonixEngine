@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Modules\Refill\Entities\Refill;
 use App\Modules\Refill\Payments\WestWallet\Client;
 use App\Modules\Refill\Payments\WestWallet\CurrencyNotFoundException;
+use App\Notifications\RefillSuccessfull;
 
 class Gateway {
     public static $currencies = [
@@ -219,5 +220,16 @@ class Gateway {
             'status' => $data['status'],
             'details' => $details,
         ]);
+
+        if ($tx['status'] == 'completed') {
+            $user = $tx['user'];
+            if (!is_null($tx) && !is_null($user)) {
+                $sum = $tx['formatted_amount'];
+
+                dispatch(function () use ($user, $sum) {
+                    $user->notify(new RefillSuccessfull($sum));
+                })->onQueue('mail');
+            }
+        }
     }
 }

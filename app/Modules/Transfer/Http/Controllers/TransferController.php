@@ -70,18 +70,22 @@ class TransferController extends Controller
             if (is_null($code)) {
                 ConfirmCodes::query()->where('user_id', $request->user()->id)->where('details->type', 'transfer')->delete();
 
-                $random_code = rand(100000, 999999);
+                $user = $request->user();
 
-                ConfirmCodes::create([
-                    'details' => [
-                        'type' => 'transfer',
-                        'expired_at' => now()->addSeconds(90)->format('Y-m-d H:i:s')
-                    ],
-                    'code' => $random_code,
-                    'user_id' => $request->user()->id
-                ]);
+                dispatch(function () use ($user) {
+                    $random_code = rand(100000, 999999);
 
-                $request->user()->notify(new ConfirmCode($random_code));
+                    ConfirmCodes::create([
+                        'details' => [
+                            'type' => 'transfer',
+                            'expired_at' => now()->addSeconds(90)->format('Y-m-d H:i:s')
+                        ],
+                        'code' => $random_code,
+                        'user_id' => $user['id']
+                    ]);
+
+                    $user->notify(new ConfirmCode($random_code));
+                })->onQueue('mail');
 
                 return back()
                     ->withInput()

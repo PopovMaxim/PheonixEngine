@@ -53,7 +53,7 @@ class ConfirmCode extends Notification
             ->line("Ваш код подтверждения: <b>{$this->code}</b>")
             ->line('Вы получили это сообщение так как запросили код подтверждения для совершения операции в личном кабинете '.env('APP_NAME').'. Если Вы не запрашивали код подтверждения, то, обязательно обратитесь в техническую поддержку.');
 
-        if ($result) {
+        if ($result || $agentString != 'Missing') {
             $mail = $mail->line('Устройство: ' . $result->userAgent());
         }
 

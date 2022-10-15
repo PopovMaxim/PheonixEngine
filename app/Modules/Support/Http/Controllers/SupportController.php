@@ -87,7 +87,7 @@ class SupportController extends Controller
             ]);
 
             return redirect()
-                ->route('support.show', ['id' => $ticket['id']]);
+                ->route('support.show', ['uuid' => $ticket['id']]);
         }
 
         return view('support::create')

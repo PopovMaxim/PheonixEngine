@@ -89,7 +89,7 @@
                         </div>
                         <div class="block block-transparent mb-0">
                             <div class="block-header ps-0 pt-0" role="tab" id="h3">
-                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q3" aria-expanded="true" aria-controls="q3">Как создать счёт для Insider 1.61?</a>
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q3" aria-expanded="true" aria-controls="q3">Как открыть счёт для Insider 1.61?</a>
                             </div>
                             <div id="q3" class="collapse" role="tabpanel" aria-labelledby="h3" data-bs-parent="#accordion" style="">
                                 <div class="block-content ps-0 pt-0 fs-sm pb-3">
@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="block block-transparent mb-0">
+                        {{--<div class="block block-transparent mb-0">
                             <div class="block-header ps-0 pt-0" role="tab" id="h3">
                                 <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q4" aria-expanded="true" aria-controls="q4">Как открыть счёт Roboforex MT4 ProCent?</a>
                             </div>
@@ -106,7 +106,7 @@
                                     <a href="{{ asset('pdf/robo-procent-register.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
             </div>

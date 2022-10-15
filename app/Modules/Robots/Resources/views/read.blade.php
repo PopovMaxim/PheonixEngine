@@ -35,14 +35,14 @@
                                             <div class="mb-4">
                                                 <div class="form-check">
                                                     <input class="form-check-input @error('accept') is-invalid @enderror" type="checkbox" value="1" id="accept" name="accept">
-                                                    <label class="form-check-label" for="accept">Я уверен(а) что хочу активировать данный номер счёта.</label>
+                                                    <label class="form-check-label" for="accept">Я уверен(а) что хочу привязать данный номер счёта.</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="block-content block-content-full block-content-sm bg-body-light text-center">
                                         <button type="submit" class="btn btn-sm btn-alt-primary">
-                                            <i class="fa fa-check opacity-50 me-1"></i> Активировать номер счёта
+                                            <i class="fa fa-check opacity-50 me-1"></i> Привязать номер счёта
                                         </button>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="block block-transparent mb-0">
                                         <div class="block-header ps-0 pt-0" role="tab" id="h2">
-                                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q2" aria-expanded="true" aria-controls="q2">Как создать новый аккаунт на Roboforex в партнёрской сети Pheonix?</a>
+                                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q2" aria-expanded="true" aria-controls="q2">Как создать новый аккаунт на Roboforex в новой партнёрской сети Pheonix?</a>
                                         </div>
                                         <div id="q2" class="collapse" role="tabpanel" aria-labelledby="h2" data-bs-parent="#accordion" style="">
                                             <div class="block-content ps-0 pt-0 fs-sm pb-3">
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="block block-transparent mb-0">
                                         <div class="block-header ps-0 pt-0" role="tab" id="h3">
-                                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q3" aria-expanded="true" aria-controls="q3">Как создать счёт для Insider 1.61?</a>
+                                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q3" aria-expanded="true" aria-controls="q3">Как открыть счёт для Insider 1.61?</a>
                                         </div>
                                         <div id="q3" class="collapse" role="tabpanel" aria-labelledby="h3" data-bs-parent="#accordion" style="">
                                             <div class="block-content ps-0 pt-0 fs-sm pb-3">
@@ -82,7 +82,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="block block-transparent mb-0">
+                                    {{--<div class="block block-transparent mb-0">
                                         <div class="block-header ps-0 pt-0" role="tab" id="h3">
                                             <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q4" aria-expanded="true" aria-controls="q4">Как открыть счёт Roboforex MT4 ProCent?</a>
                                         </div>
@@ -91,7 +91,7 @@
                                                 <a href="{{ asset('pdf/robo-procent-register.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>--}}
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                                 poster="{{ asset('assets/media/covers/install-insider.jpg') }}"
                                 data-setup="{}"
                             >
-                                <source src="{{ asset('videos/refill.mp4') }}" type="video/mp4" />
+                                <source src="{{ asset('videos/insider-install.mp4') }}" type="video/mp4" />
                                 <p class="vjs-no-js">Для просмотра этого видео включите JavaScript и рассмотрите возможность обновления веб-браузера до
                                     <a href="https://videojs.com/html5-video-support/" target="_blank">поддерживающего HTML5 видео.</a>
                                 </p>

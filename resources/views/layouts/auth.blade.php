@@ -41,15 +41,16 @@
 
     @stack('js')
     @livewireScripts
-    @if (session()->has('toast_notify'))
+    @if (session()->has('status'))
         @php
-            $toast = session('toast_notify');
+            $status = session('status');
         @endphp
+
         <script>
             $.toast({
-                heading: 'Внимание!',
-                text: "{{ $toast['text'] }}",
-                icon: 'error',
+                heading: "{!! $status['title'] !!}",
+                text: "{!! $status['text'] !!}",
+                icon: "{{ $status['type'] }}",
                 loader: false,
                 hideAfter: 7000,
                 position: 'bottom-right'

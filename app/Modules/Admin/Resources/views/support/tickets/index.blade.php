@@ -30,7 +30,7 @@
                 <div id="side-content" class="d-none d-lg-block push">
                     <div class="list-group fs-sm">
                         @forelse ($tickets as $ticket)
-                            <a class="list-group-item list-group-item-action" href="{{ route('admin.support', ['id' => $ticket['id']]) }}">
+                            <a class="list-group-item list-group-item-action" href="{{ route('admin.support', ['uuid' => $ticket['id']]) }}">
                                 <span class="badge rounded-pill bg-primary float-end ms-2">0</span>
                                 <span class="float-end rounded-pill badge bg-{{ $ticket['status_attributes']['color'] }}">{{ $ticket['status_attributes']['text'] }}</span>
                                 <p class="fs-6 fw-bold mb-0">

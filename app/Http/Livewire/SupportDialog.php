@@ -24,7 +24,7 @@ class SupportDialog extends Component
 
     public function closeTicket()
     {
-        dd($this->id);
+        //dd($this->id);
     }
 
     public function submit(Request $request)
@@ -36,6 +36,8 @@ class SupportDialog extends Component
             'ticket_id' => $this->id,
             'message' => $this->message
         ]);
+
+        //SupportTickets
 
         $this->message = '';
     }

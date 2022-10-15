@@ -39,6 +39,7 @@ Route::prefix('admin')->middleware(['role:super_admin|support'])->group(function
 
     Route::prefix('support')->group(function() {
         Route::get('/{uuid?}', 'SupportController@index')->name('admin.support');
+        Route::post('{uuid}/close', 'SupportController@close')->name('admin.support.close');
     });
 });
 

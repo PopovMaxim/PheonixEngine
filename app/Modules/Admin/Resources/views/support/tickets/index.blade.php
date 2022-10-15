@@ -23,7 +23,59 @@
         @if (!request()->uuid)
             @livewire('support-tickets')
         @else
-            @livewire('support-dialog', ['ticket_id' => request()->uuid])
+            <div class="row">
+                <div class="col-md-8">
+                    @livewire('support-dialog', ['ticket_id' => request()->uuid])
+                </div>
+                <div class="col-md-4">
+                    <div class="block-content">
+                        <div>
+                            <strong>Номер заявки</strong>
+                            <p>{{ $ticket['id'] }}</p>
+                        </div>
+                        <div>
+                            <strong>Пользователь</strong>
+                            <div class="d-flex flex-row my-3">
+                                <div class="me-2">
+                                    <img class="img-avatar img-avatar48" src="{{ asset('assets/media/avatars/avatar10.jpg') }}" alt="">
+                                </div>
+                                <div>
+                                    {{ $ticket['user']['nickname'] }}
+                                    <div class="text-muted fs-sm">
+                                        ФИО: {{ $ticket['user']['full_name'] }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Категория</strong>
+                            <p>{{ $ticket['subject']['title'] }}</p>
+                        </div>
+                        <div>
+                            <strong>Дата создания</strong>
+                            <p>{{ $ticket['created_at']->format('d.m.Y в H:i:s') }}</p>
+                        </div>
+                        @if ($ticket['status'] == 'closed')
+                            <div>
+                                <strong>Дата закрытия</strong>
+                                <p>{{ $ticket['updated_at']->format('d.m.Y в H:i:s') }}</p>
+                            </div>
+                        @endif
+                        <div>
+                            <strong>Вопрос</strong>
+                            <p>{{ $ticket['text'] }}</p>
+                        </div>
+                        @if ($ticket['status'] != 'closed')
+                            <div>
+                                <form method="POST" action="{{ route('admin.support.close', ['uuid' => $ticket['id']]) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-danger">Закрыть тикет</button>
+                                </form>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         @endif
     </div>
 @endsection

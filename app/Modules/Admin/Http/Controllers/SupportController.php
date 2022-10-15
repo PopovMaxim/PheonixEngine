@@ -14,45 +14,33 @@ class SupportController extends Controller
     {
         $page_name = 'Техническая поддержка';
 
-        $tickets = SupportTickets::query()
-            ->orderBy('id', 'desc')
-            ->where('status', '<>', 'closed')
-            ->paginate(20);
+        if (!is_null($uuid)) {
+            $ticket = SupportTickets::find($uuid);
+        }
 
         return view('admin::support.tickets.index')
             ->with([
                 'page_name' => $page_name,
-                'tickets' => $tickets
+                'ticket' => $ticket ?? null
             ]);
     }
 
-    public function create()
+    public function close($id)
     {
-        return view('admin::create');
-    }
+        $ticket = SupportTickets::query()
+            ->where([
+                'id' => $id
+            ])
+            ->update([
+                'status' => 'closed'
+            ]);
 
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        return view('admin::show');
-    }
-
-    public function edit($id)
-    {
-        return view('admin::edit');
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+    
+        return back()
+            ->with('status', [
+                'title' => 'Техническая поддержка',
+                'type' => 'success',
+                'text' => 'Заявка в техническую поддержку успешно закрыта.'
+            ]);
     }
 }

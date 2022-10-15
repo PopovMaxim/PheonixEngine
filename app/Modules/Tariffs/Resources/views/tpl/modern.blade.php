@@ -85,18 +85,7 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full bg-body-light">
-                        @if (isset($tariff['details']['sell_start_from']) && now()->parse($tariff['details']['sell_start_from'])->timestamp < now()->timestamp)
-                            <button class="btn btn-hero btn-primary px-4 w-100" wire:click="openTerms({{ $tariff['id'] }})">Оформить</button>
-                        @else
-                            <span class="btn btn-hero btn-primary px-4 w-100 disabled">
-                                Старт через
-                                @if (now()->parse('2022-10-15 12:15:00')->timestamp > now()->timestamp)
-                                    {{ now()->diffInHours(now()->parse('2022-10-15 12:15:00')) }} час(ов)
-                                @else
-                                    {{ now()->diffInMinutes(now()->parse('2022-10-15 12:15:00')) }} мин.
-                                @endif
-                            </span>
-                        @endif
+                        <button class="btn btn-hero btn-primary px-4 w-100" wire:click="openTerms({{ $tariff['id'] }})">Оформить</button>
                     </div>
                 </div>
                 <button type="button" class="btn btn-link w-100" wire:click="openDescription({{ $tariff['id'] }})">Подробнее</button>

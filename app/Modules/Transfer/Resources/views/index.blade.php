@@ -91,6 +91,7 @@
                         <tr>
                             <th class="text-center" style="width: 20%;">Статус</th>
                             <th class="text-center" style="width: 20%;">Отправитель</th>
+                            <th class="text-center" style="width: 20%;">Получатель</th>
                             <th class="text-center" style="width: 20%;">Сумма</th>
                             <th class="text-center" style="width: 20%;">Дата</th>
                         </tr>
@@ -101,6 +102,13 @@
                                 <td class="text-center">{!! $transaction['html_status'] !!}</td>
                                 <td class="text-center">
                                     @if ($transaction['details']['sender'] == $transaction['user_id'])
+                                        Я
+                                    @else
+                                        <div>{{ $transaction['sender']['nickname'] }}</div>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if ($transaction['details']['sender'] != $transaction['user_id'])
                                         Я
                                     @else
                                         <div>{{ $transaction['sender']['nickname'] }}</div>

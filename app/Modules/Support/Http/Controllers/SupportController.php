@@ -48,7 +48,13 @@ class SupportController extends Controller
                 'status' => 'closed'
             ]);
 
-        return back();
+    
+        return back()
+            ->with('status', [
+                'title' => 'Техническая поддержка',
+                'type' => 'success',
+                'text' => 'Заявка в техническую поддержку успешно закрыта.'
+            ]);
     }
 
     public function create(Request $request)

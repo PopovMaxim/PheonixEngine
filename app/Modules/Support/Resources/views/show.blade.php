@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                @livewire('support-dialog', ['id' => $ticket['id']])
+                @livewire('support-dialog', ['ticket_id' => $ticket['id']])
             </div>
         </div>
     </div>

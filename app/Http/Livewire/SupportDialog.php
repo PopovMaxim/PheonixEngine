@@ -9,22 +9,19 @@ use Livewire\Component;
 
 class SupportDialog extends Component
 {
-    public $id;
-
     public $message = '';
+
+    public $ticket_id;
+
+    public $ticket;
 
     public $rules = [
         'message' => 'required|min:1|max:255',
     ];
 
-    public function __construct($id)
+    public function mount()
     {
-        $this->id = $id;
-    }
-
-    public function closeTicket()
-    {
-        //dd($this->id);
+        $this->ticket = SupportTickets::find($this->ticket_id);
     }
 
     public function submit(Request $request)
@@ -33,11 +30,21 @@ class SupportDialog extends Component
 
         SupportMessages::create([
             'user_id' => $request->user()->id,
-            'ticket_id' => $this->id,
+            'ticket_id' => $this->ticket['id'],
             'message' => $this->message
         ]);
 
         $this->message = '';
+
+        if ($this->ticket['user_id'] == $request->user()->id) {
+            $this->ticket->update([
+                'status' => 'wait_support'
+            ]);
+        } else {
+            $this->ticket->update([
+                'status' => 'wait_user'
+            ]);
+        }
     }
 
     public function clearForm()
@@ -47,12 +54,9 @@ class SupportDialog extends Component
 
     public function render()
     {
-        $ticket = SupportTickets::find($this->id);
-
         return view('livewire.support-dialog')
             ->with([
-                'id' => $this->id,
-                'ticket' => $ticket
+                'ticket' => $this->ticket
             ]);
     }
 }

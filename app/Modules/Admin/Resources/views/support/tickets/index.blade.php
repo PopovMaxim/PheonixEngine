@@ -23,7 +23,7 @@
         @if (!request()->uuid)
             @livewire('support-tickets')
         @else
-            @livewire('support-dialog', ['id' => request()->uuid])
+            @livewire('support-dialog', ['ticket_id' => request()->uuid])
         @endif
     </div>
 @endsection

@@ -14,9 +14,10 @@ class SupportTickets extends Model
 
     public $guarded = [];
 
-    public $statuses = [
+    public static $statuses = [
         'new' => 'Новый',
-        'in_work' => 'В работе',
+        'wait_support' => 'Ожидает ответа поддержки',
+        'wait_user' => 'Ожидает Вашего ответа',
         'closed' => 'Закрыт'
     ];
 
@@ -46,15 +47,19 @@ class SupportTickets extends Model
         {
             'new' => [
                 'color' => 'warning',
-                'text' => $this->statuses[$this->status]
+                'text' => self::$statuses[$this->status]
             ],
-            'in_work' => [
+            'wait_support' => [
                 'color' => 'warning',
-                'text' => $this->statuses[$this->status]
+                'text' => self::$statuses[$this->status]
+            ],
+            'wait_user' => [
+                'color' => 'warning',
+                'text' => self::$statuses[$this->status]
             ],
             'closed' => [
-                'color' => 'success',
-                'text' => $this->statuses[$this->status]
+                'color' => 'muted',
+                'text' => self::$statuses[$this->status]
             ],
         };
     }

@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use hisorange\BrowserDetect\Parser;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -42,10 +43,21 @@ class ConfirmCode extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        $detector = new Parser(null, null);
+        $agentString = $_GET['agent'] ?? $_SERVER['HTTP_USER_AGENT'] ?? 'Missing';
+        $result = $detector->parse($agentString);
+
+        $mail = (new MailMessage)
             ->subject('Код подтверждения')
-            ->greeting("Здравствуйте, {$notifiable['nickname']}")
-            ->line('Ваш код подтверждения: ' . $this->code);
+            ->greeting("Здравствуйте, {$notifiable['nickname']}!")
+            ->line("Ваш код подтверждения: <b>{$this->code}</b>")
+            ->line('Вы получили это сообщение так как запросили код подтверждения для совершения операции в личном кабинете '.env('APP_NAME').'. Если Вы не запрашивали код подтверждения, то, обязательно обратитесь в техническую поддержку.');
+
+        if ($result) {
+            $mail = $mail->line('Устройство: ' . $result->userAgent());
+        }
+
+        return $mail;
     }
 
     /**

@@ -25,7 +25,6 @@
                             <th class="text-center fs-sm text-muted">ID</th>
                             <th class="fs-sm text-muted">Пользователь</th>
                             <th style="width: 30%;" class="fs-sm text-muted">Электронная почта</th>
-                            <th style="width: 10%;" class="text-center fs-sm text-muted">Тариф</th>
                             <th style="width: 10%;" class="fs-sm text-muted">Баланс</th>
                             <th class="fs-sm text-muted">Роль</th>
                             <th style="width: 10%;" class="text-center fs-sm text-muted">Регистрация</th>
@@ -38,14 +37,13 @@
                                 <td class="text-center">
                                     <div class="text-muted fs-sm">{{ $user['id'] }}</div>
                                 </td>
-                                
                                 <td>
                                     <div class="d-flex flex-row align-items-center">
                                         <div class="me-2">
                                             <img class="img-avatar img-avatar48" src="{{ asset('assets/media/avatars/avatar10.jpg') }}" alt="">
                                         </div>
                                         <div>
-                                            <a href="#" class="fw-semibold">{{ $user['nickname'] }}</a>
+                                            <a href="{{ route('admin.users.read', ['id' => $user['id']]) }}" class="fw-semibold">{{ $user['nickname'] }}</a>
                                             <div class="text-muted fs-sm">
                                                 ФИО: {{ $user['full_name'] }}
                                             </div>
@@ -53,16 +51,15 @@
                                     </div>
                                 </td>
                                 <td class="text-muted fs-sm">{{ $user['email'] }}</td>
-                                <td class="text-center text-muted fs-sm">{{ $user['current_subscribe_title'] }}</td>
                                 <td class="fs-sm text-muted">{{ $user['formatted_balance'] }}</td>
                                 <td class="fs-sm text-muted">{{ $user->getRoleNames() }}</td>
                                 <td class="text-muted fs-sm text-center">{{ $user['created_at']->format('d.m.Y') }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-alt-secondary me-2"
+                                        <a href="{{ route('admin.users.edit', ['id' => $user['id']]) }}" class="btn btn-sm btn-alt-secondary me-2"
                                             data-bs-toggle="tooltip" title="" data-bs-original-title="Редактировать">
                                             <i class="fa fa-pencil-alt"></i>
-                                        </button>
+                                        </a>
                                         <form method="post" action="{{ route('admin.users.auth', ['id' => $user['id']]) }}">
                                             @csrf
                                             <button type="submit" class="btn btn-sm btn-alt-secondary"
@@ -74,13 +71,13 @@
                                 </td>
                             </tr>
                         @empty
-
+                            <tr class="text-center" colspan="8">Не создано ни одного пользователя.</tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
+            {{ $users->appends(request()->all())->links() }}
         </div>
-        {{ $users->appends(request()->all())->links() }}
     </div>
 </div>
 @endsection

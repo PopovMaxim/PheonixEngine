@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -43,24 +44,35 @@ class UsersController extends Controller
         return redirect(route('admin.users'));
     }
 
-    public function create()
+    public function edit($id)
     {
-        return view('admin::create');
-    }
+        $user = User::findOrFail($id);
 
+        $page_name = "{$user['nickname']}";
+
+        $countries = json_decode(Storage::disk('public')->get('countries.json'), true);
+
+        return view('admin::users.edit')
+            ->with([
+                'page_name' => $page_name,
+                'countries' => $countries,
+                'user' => $user
+            ]);
+    }
 
     public function show($id)
     {
-        return view('admin::show');
+        return view('admin::users.show');
     }
 
-    public function edit($id)
+    public function create()
     {
-        return view('admin::edit');
+        return view('admin::create');
     }
 
     public function destroy($id)
     {
         //
     }
+
 }

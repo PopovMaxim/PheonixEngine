@@ -1,7 +1,7 @@
 <tr>
-<td class="header" style="display:flex; justify-content: center;">
-<a href="{{ $url }}" style="display: inline-block; width: 200px !important;" >
-<img src="{{ asset('assets/media/logos/logo-short.png') }}" class="logo"alt="{{ config('app.name') }}">
-</a>
-</td>
+    <td class="header">
+        <a href="{{ $url }}">
+            <img src="{{ asset('assets/media/logos/logo-short.png') }}" alt="{{ config('app.name') }}" width="250" height="auto" />
+        </a>
+    </td>
 </tr>

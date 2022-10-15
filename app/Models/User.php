@@ -345,7 +345,8 @@ class User extends Authenticatable
     public function calcLineMarketing($tariff, $tx_id)
     {
         $percents = [
-            0 => 20,
+            0 => 30,
+            //0 => 20,
             1 => 10,
             2 => 5,
             3 => 4,

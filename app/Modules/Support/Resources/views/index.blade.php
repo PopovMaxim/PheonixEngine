@@ -26,7 +26,7 @@
     </div>
 
     @forelse ($tickets as $ticket)
-        <a class="block block-rounded block-link-shadow border-start border-{{ $ticket['status_attributes']['color'] }} border-3" href="{{ route('support.show', ['id' => $ticket['id']]) }}">
+        <a class="block block-rounded block-link-shadow border-start border-{{ $ticket['status_attributes']['color'] }} border-3" href="{{ route('support.show', ['uuid' => $ticket['id']]) }}">
             <div class="block-content block-content-full align-items-md-center justify-content-md-between d-md-flex">
                 <div>
                     <p class="text-muted mb-0">

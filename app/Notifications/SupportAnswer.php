@@ -7,20 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class RefillSuccessfull extends Notification
+class SupportAnswer extends Notification
 {
     use Queueable;
 
-    public $sum;
+    public $ticket_id;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($sum)
+    public function __construct($ticket_id)
     {
-        $this->sum = $sum;
+        $this->ticket_id = $ticket_id;
     }
 
     /**
@@ -43,9 +43,10 @@ class RefillSuccessfull extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Пополнение баланса')
+            ->subject('Ответ от тех. поддержки')
             ->greeting("Здравствуйте, {$notifiable['nickname']}!")
-            ->line("Баланс учётной записи успешно пополнен на {$this->sum}");
+            ->line("Вам поступил ответ от технической поддержки.")
+            ->action('Перейти к заявке', route('support.show', ['uuid' => $this->ticket_id]));
     }
 
     /**
@@ -57,8 +58,9 @@ class RefillSuccessfull extends Notification
     public function toArray($notifiable)
     {
         return [
-            'type' => 'refill.successfull',
-            'text' => "Баланс учётной записи успешно пополнен на {$this->sum}."
+            'type' => 'support.answer',
+            'text' => "Вам поступил ответ от технической поддержки.",
+            'url' => route('support.show', ['uuid' => $this->ticket_id])
         ];
     }
 }

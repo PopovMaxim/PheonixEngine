@@ -22,7 +22,7 @@
                             <a class="fw-semibold" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#accordion_q1" aria-expanded="true" aria-controls="accordion_q1">Детали</a>
                             <div class="block-options">
                                 @if ($ticket['status'] != 'closed')
-                                    <form method="POST" action="{{ route('support.close', ['id' => $ticket['id']]) }}">
+                                    <form method="POST" action="{{ route('support.close', ['uuid' => $ticket['id']]) }}">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-primary">Закрыть тикет</button>
                                     </form>

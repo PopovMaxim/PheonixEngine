@@ -37,12 +37,12 @@ class SupportController extends Controller
             ]);
     }
 
-    public function close(Request $request, $id)
+    public function close(Request $request, $uuid)
     {
         $ticket = SupportTickets::query()
             ->where([
                 'user_id' => $request->user()->id,
-                'id' => $id
+                'id' => $uuid
             ])
             ->update([
                 'status' => 'closed'
@@ -96,12 +96,12 @@ class SupportController extends Controller
             ]);
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $uuid)
     {
         $ticket = SupportTickets::query()
             ->where([
                 'user_id' => $request->user()->id,
-                'id' => $id
+                'id' => $uuid
             ])
             ->firstOrFail();
 

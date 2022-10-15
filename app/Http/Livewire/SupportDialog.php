@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\SupportMessages;
 use App\Models\SupportTickets;
+use App\Notifications\SupportAnswer;
 use Illuminate\Http\Request;
 use Livewire\Component;
 
@@ -44,6 +45,12 @@ class SupportDialog extends Component
             $this->ticket->update([
                 'status' => 'wait_user'
             ]);
+
+            $user = $this->ticket['user'];
+
+            dispatch(function () use ($user) {
+                $user->notify(new SupportAnswer($this->ticket_id));
+            })->onQueue('mail');
         }
     }
 

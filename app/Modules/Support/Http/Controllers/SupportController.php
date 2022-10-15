@@ -2,6 +2,7 @@
 
 namespace App\Modules\Support\Http\Controllers;
 
+use App\Models\SupportMessages;
 use App\Models\SupportSubjects;
 use App\Models\SupportTickets;
 use Illuminate\Contracts\Support\Renderable;
@@ -71,6 +72,12 @@ class SupportController extends Controller
                 'user_id' => $request->user()->id,
                 'subject_id' => $request->input('subject_id'),
                 'text' => $request->input('text'),
+            ]);
+            
+            SupportMessages::create([
+                'user_id' => $request->user()->id,
+                'ticket_id' => $ticket['id'],
+                'message' => $request->input('text')
             ]);
 
             return redirect()

@@ -37,8 +37,6 @@ class SupportDialog extends Component
             'message' => $this->message
         ]);
 
-        //SupportTickets
-
         $this->message = '';
     }
 

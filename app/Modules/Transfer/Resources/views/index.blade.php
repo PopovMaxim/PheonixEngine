@@ -111,7 +111,7 @@
                                     @if ($transaction['details']['sender'] != $transaction['user_id'])
                                         Я
                                     @else
-                                        <div>{{ $transaction['sender']['nickname'] }}</div>
+                                        <div>{{ $transaction['receiver']['nickname'] }}</div>
                                     @endif
                                 </td>
                                 <td class="text-center" style="width: 20%;">

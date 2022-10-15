@@ -32,6 +32,12 @@
                                     <div class="p-1 p-md-3">
                                         <h3 class="h4 fw-bold mb-1">Тариф: {{ $tariffs[$subscribe['details']['tariff']]['title'] }}</h3>
                                         <p class="fs-sm text-muted mb-0">
+                                            @php
+                                                $key = \App\Modules\Robots\Entities\ProductKeys::query()->where('subscribe_id', $subscribe['id'])->first();
+                                            @endphp
+                                            Номер счёта {{ $key['account_number'] ?? 'Не настроен' }}
+                                        </p>
+                                        <p class="fs-sm text-muted mb-0">
                                             Истекает {{ now()->parse($subscribe['details']['expired_at'])->format('d.m.Y в H:i:s') }}
                                         </p>
                                     </div>

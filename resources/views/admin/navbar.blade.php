@@ -108,13 +108,13 @@
             </li>
 
             <li class="nav-main-item">
-                <a class="nav-main-link" href="{{ route('admin.subscribes') }}">
+                <a class="nav-main-link @if(request()->is('admin/subscribes*')) active @endif" href="{{ route('admin.subscribes') }}">
                     <i class="nav-main-link-icon fa fa-star"></i>
                     <span class="nav-main-link-name">Подписки</span>
                 </a>
             </li>
             
-            <li class="nav-main-item">
+            {{--<li class="nav-main-item">
                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                     <i class="nav-main-link-icon fa fa-gift"></i>
                     <span class="nav-main-link-name">Бонусы</span>
@@ -136,30 +136,13 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>--}}
 
             <li class="nav-main-item">
-                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.support') }}">
+                <a class="nav-main-link @if(request()->is('admin/support*')) active @endif" href="{{ route('admin.support') }}">
                     <i class="nav-main-link-icon fa fa-headset"></i>
                     <span class="nav-main-link-name">Техническая поддержка</span>
                 </a>
-                <ul class="nav-main-submenu">
-                    <li class="nav-main-item">
-                        <a class="nav-main-link" href="{{ route('admin.support') }}">
-                            <span class="nav-main-link-name">Список заявок</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link" href="#">
-                            <span class="nav-main-link-name">Закрытые заявки</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link" href="#">
-                            <span class="nav-main-link-name">Создать заявку</span>
-                        </a>
-                    </li>
-                </ul>
             </li>
 
             @if(request()->user()->hasRole('super_admin') || request()->user()->can('show log-viewer'))

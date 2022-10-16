@@ -89,7 +89,7 @@
                         </a>
                     </li>
                     <li class="nav-main-item">
-                        <a class="nav-main-link" href="#">
+                        <a class="nav-main-link" href="{{ route('admin.transactions.refills') }}">
                             <span class="nav-main-link-name">Список пополнений</span>
                         </a>
                     </li>

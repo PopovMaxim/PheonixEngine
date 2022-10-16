@@ -26,7 +26,7 @@ class Refill extends Model
     public $table = 'transactions';
 
     protected $casts = [
-        'details' => 'json'
+        'details' => 'array'
     ];
 
     private $gateways = [];

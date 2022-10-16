@@ -25,6 +25,22 @@ Route::prefix('admin')->middleware(['role:super_admin|support'])->group(function
     
     Route::prefix('transactions')->group(function() {
         Route::get('/', 'TransactionsController@index')->name('admin.transactions');
+        
+        Route::prefix('refills')->group(function() {
+            Route::get('/', 'Transactions\RefillsController@index')->name('admin.transactions.refills');
+            Route::get('{uuid}', 'Transactions\RefillsController@read')->name('admin.transactions.refills.read');
+            Route::match(['get', 'post'], '{uuid}/edit', 'Transactions\RefillsController@edit')->name('admin.transactions.refills.edit');
+        });
+
+        Route::prefix('transfers')->group(function() {
+            Route::get('/', 'Transactions\TransfersController@index')->name('admin.transactions.transfers');
+            Route::get('{uuid}', 'Transactions\TransfersController@read')->name('admin.transactions.transfers.read');
+        });
+
+        Route::prefix('withdrawals')->group(function() {
+            Route::get('/', 'Transactions\WithdrawalsController@index')->name('admin.transactions.withdrawals');
+            Route::get('{uuid}', 'Transactions\WithdrawalsController@read')->name('admin.transactions.withdrawals.read');
+        });
     });
 
     Route::prefix('subscribes')->group(function() {

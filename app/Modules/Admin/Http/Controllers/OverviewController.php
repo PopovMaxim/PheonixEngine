@@ -13,13 +13,17 @@ class OverviewController extends Controller
 {
     public function index()
     {
-        $users_count = User::count();
+        $except_users = User::whereHas("roles", function($q) {
+            $q->whereIn("name", ['manager', 'super_admin', 'support']);
+        })->get()->pluck('id') ?? [];
 
-        $subscribes_count = Subscribe::query()->where('details->expired_at', '>=', now())->count();
-        
-        $sells_sum = Subscribe::query()->where('type', 'subscribe')->where('status', 'completed')->sum('amount');
+        $users_count = User::query()->whereNotIn('id', $except_users)->count();
 
-        $tickets_count = SupportTickets::query()->where('status', '<>', 'closed')->count();
+        $subscribes_count = Subscribe::query()->where('type', 'subscribe')->whereNotIn('user_id', $except_users)->where('status', 'completed')->count();
+
+        $sells_sum = Subscribe::query()->whereNotIn('user_id', $except_users)->where('type', 'subscribe')->where('status', 'completed')->sum('amount');
+
+        $tickets_count = SupportTickets::query()->whereNotIn('user_id', $except_users)->where('status', '<>', 'closed')->count();
 
         return view('admin::overview.index')
             ->with([

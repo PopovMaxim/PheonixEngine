@@ -30,17 +30,17 @@
         @include('header')
         
         <main id="main-container">
-            @if(request()->user()->can('user.auth') || request()->user()->role('super_admin'))
+            @if(request()->user()->hasRole('super_admin') || request()->user()->hasRole('support'))
                 @include('admin.navbar')
-                @if (request()->session()->has('previous_id'))
-                    <div class="alert alert-warning mb-0 text-center">
-                        <div class="d-inline"><b>Внимание!</b> Сейчас Вы авторизованы в роли пользователя <b>{{ request()->user()->nickname }}</b>.</div>
-                        <form class="d-inline" method="post" action="{{ route('admin.users.logout', ['id' => request()->session()->has('previous_id')]) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-link p-0">Выйти</button>
-                        </form>
-                    </div>
-                @endif
+            @endif
+            @if (request()->session()->has('previous_id'))
+                <div class="alert alert-warning mb-0 text-center">
+                    <div class="d-inline"><b>Внимание!</b> Сейчас Вы авторизованы в роли пользователя <b>{{ request()->user()->nickname }}</b>.</div>
+                    <form class="d-inline" method="post" action="{{ route('admin.users.logout', ['id' => request()->session()->has('previous_id')]) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link p-0">Выйти</button>
+                    </form>
+                </div>
             @endif
             @yield('hero')
             @include('content')

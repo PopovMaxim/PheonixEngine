@@ -119,7 +119,7 @@
                         </div>
                         <div id="text_4" class="collapse" role="tabpanel" aria-labelledby="header_4" data-bs-parent="#accordion" style="">
                             <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Комиссия на вывод составляет 0.5%, она взымается процессингом на обслуживание проведения транзакции.</p>
+                                <p>Комиссия на вывод составляет 0.25%, она взымается процессингом на обслуживание проведения транзакции.</p>
                             </div>
                         </div>
                     </div>

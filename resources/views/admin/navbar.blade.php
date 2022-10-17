@@ -140,7 +140,7 @@
                 </li>--}}
             @endif
 
-            @if(request()->user()->hasRole('support'))
+            @if(request()->user()->hasRole('super_admin') || request()->user()->hasRole('support') || request()->user()->can('support'))
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('admin/support*')) active @endif" href="{{ route('admin.support') }}">
                         <i class="nav-main-link-icon fa fa-headset"></i>

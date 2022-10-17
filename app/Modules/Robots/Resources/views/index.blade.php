@@ -79,7 +79,7 @@
                         </div>
                         <div class="block block-transparent mb-0">
                             <div class="block-header ps-0 pt-0" role="tab" id="h2">
-                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q2" aria-expanded="true" aria-controls="q2">Как создать новый аккаунт на Roboforex в партнёрской сети Pheonix?</a>
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q2" aria-expanded="true" aria-controls="q2">Как создать второй аккаунт на Roboforex в новой партнёрской сети Pheonix?</a>
                             </div>
                             <div id="q2" class="collapse" role="tabpanel" aria-labelledby="h2" data-bs-parent="#accordion" style="">
                                 <div class="block-content ps-0 pt-0 fs-sm pb-3">

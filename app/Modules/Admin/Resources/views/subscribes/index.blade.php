@@ -50,10 +50,10 @@
                                 <td class="text-muted fs-sm text-center">{{ $subscribe['created_at']->format('d.m.Y в H:i:s') }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled"
-                                            data-bs-toggle="tooltip" title="" data-bs-original-title="Edit">
-                                            <i class="fa fa-ellipsis"></i>
-                                        </button>
+                                        <a href="{{ route('admin.subscribes.edit', ['uuid' => $subscribe['id']]) }}" class="btn btn-sm btn-alt-secondary me-2"
+                                            data-bs-toggle="tooltip" title="" data-bs-original-title="Редактировать">
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

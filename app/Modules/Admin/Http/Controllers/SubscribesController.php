@@ -2,6 +2,7 @@
 
 namespace App\Modules\Admin\Http\Controllers;
 
+use App\Modules\Robots\Entities\Subscribe;
 use App\Modules\Tariffs\Entities\Tariff;
 use App\Modules\Transactions\Entities\Transaction;
 use Illuminate\Contracts\Support\Renderable;
@@ -29,33 +30,31 @@ class SubscribesController extends Controller
             ]);
     }
 
-    public function create()
+    public function edit(Request $request, $uuid)
     {
-        return view('admin::create');
-    }
+        $subscribe = Subscribe::findOrFail($uuid);
 
-    public function store(Request $request)
-    {
-        //
-    }
+        if ($request->isMethod('post')) {
+            $params = [];
 
-    public function show($id)
-    {
-        return view('admin::show');
-    }
+            if ($request->has('status')) {
+                $params['status'] = $request->input('status');
+            }
 
-    public function edit($id)
-    {
-        return view('admin::edit');
-    }
+            if ($request->has('amount')) {
+                $params['amount'] = intval(str_replace([',', '.'], '', $request->input('amount')));
+            }
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            if ($request->has('details.gateway.type')) {
+                $params['details']['gateway']['type'] = $request->input('details.gateway.type');
+            }
 
-    public function destroy($id)
-    {
-        //
+            $subscribe->update($params);
+        }
+
+        return view('admin::subscribes.edit')
+            ->with([
+                'subscribe' => $subscribe
+            ]);
     }
 }

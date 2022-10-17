@@ -24,6 +24,11 @@ class Subscribe extends Model
         return \App\Modules\Robots\Database\factories\SubscribeFactory::new();
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+    }
+
     public function productKey($uuid)
     {
         return ProductKeys::query()->where('subscribe_id', $uuid)->first() ?? null;

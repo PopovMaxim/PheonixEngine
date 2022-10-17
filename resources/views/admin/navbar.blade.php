@@ -95,9 +95,9 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link" href="#">
+                            <a class="nav-main-link" href="{{ route('admin.transactions.withdrawal') }}">
                                 <span class="nav-main-link-name">Заявки на выплату</span>
-                                <span class="nav-main-link-badge badge rounded-pill bg-primary">0</span>
+                                <span class="nav-main-link-badge badge rounded-pill bg-primary">{{ \App\Modules\Withdraw\Entities\Withdraw::query()->where('type', 'withdraw')->where('status', 'pending')->count() }}</span>
                             </a>
                         </li>
                         <li class="nav-main-item">

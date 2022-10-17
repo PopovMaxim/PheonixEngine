@@ -37,9 +37,9 @@ Route::prefix('admin')->middleware(['role:super_admin|support'])->group(function
             Route::get('{uuid}', 'Transactions\TransfersController@read')->name('admin.transactions.transfers.read');
         });
 
-        Route::prefix('withdrawals')->group(function() {
-            Route::get('/', 'Transactions\WithdrawalsController@index')->name('admin.transactions.withdrawals');
-            Route::get('{uuid}', 'Transactions\WithdrawalsController@read')->name('admin.transactions.withdrawals.read');
+        Route::prefix('withdrawal')->group(function() {
+            Route::get('/', 'Transactions\WithdrawalController@index')->name('admin.transactions.withdrawal');
+            Route::get('{uuid}', 'Transactions\WithdrawalController@send')->name('admin.transactions.withdrawal.send');
         });
     });
 

@@ -36,6 +36,7 @@ class Notification extends Model
             "withdrawal.successfull" => 'fas fa-coins text-info',
             "binary.add" => 'fas fa-users text-success',
             "support.answer" => 'fas fa-headset text-success',
+            "mailing" => 'fas fa-envelope text-info',
         };
     }
 }

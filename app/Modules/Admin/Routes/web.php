@@ -48,6 +48,10 @@ Route::prefix('admin')->middleware(['role:super_admin|support'])->group(function
         Route::match(['get', 'post'], '{uuid}/edit', 'SubscribesController@edit')->name('admin.subscribes.edit');
     });
 
+    Route::prefix('mailing')->group(function() {
+        Route::match(['get', 'post'], '/', 'MailingController@index')->name('admin.mailing');
+    });
+
     /*Route::prefix('tariffs')->group(function() {
         Route::get('/', 'TariffsController@index')->name('admin.tariffs');
         Route::match(['get', 'post'], 'create', 'TariffsController@create')->name('admin.tariffs.create');

@@ -97,6 +97,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="block block-transparent mb-0">
+                            <div class="block-header ps-0 pt-0" role="tab" id="h4">
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q4" aria-expanded="true" aria-controls="q4">Куда вставлять ключ для активации продукта?</a>
+                            </div>
+                            <div id="q4" class="collapse" role="tabpanel" aria-labelledby="h4" data-bs-parent="#accordion" style="">
+                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
+                                    <a href="{{ asset('assets/media/images/license-place.png') }}" target="_black"><img src="{{ asset('assets/media/images/license-place.png') }}" class="img-fluid rounded" /></a>
+                                </div>
+                            </div>
+                        </div>
                         {{--<div class="block block-transparent mb-0">
                             <div class="block-header ps-0 pt-0" role="tab" id="h3">
                                 <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q4" aria-expanded="true" aria-controls="q4">Как открыть счёт Roboforex MT4 ProCent?</a>

@@ -15,6 +15,10 @@
             <form method="post">
                 @csrf
                 <div class="mb-4">
+                    <label class="form-label" for="text">Группа пользователей</label>
+                    <input class="form-control form-control-alt" id="role" name="role" placeholder="Группа пользователей..." />
+                </div>
+                <div class="mb-4">
                     <label class="form-label" for="text">Заголовок</label>
                     <input class="form-control form-control-alt" id="subject" name="subject" placeholder="Заголовок рассылки..." />
                 </div>

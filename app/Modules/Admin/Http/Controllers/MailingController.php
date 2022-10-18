@@ -14,8 +14,8 @@ class MailingController extends Controller
     public function index(Request $request)
     {
         if ($request->isMethod('post')) {
-            $users = User::whereHas('roles', function ($q) {
-                $q->where('name', 'user');
+            $users = User::whereHas('roles', function ($q) use ($request) {
+                $q->where('name', $request->input('role'));
             })->get();
 
             $data = $request->all();

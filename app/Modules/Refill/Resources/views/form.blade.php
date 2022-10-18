@@ -50,7 +50,7 @@
                             @if ($tx)
                                 <a class="btn btn-primary w-100" href="{{ route('refill.pay', ['type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]) }}">Перейти к заявке</a>
                             @else
-                                <form method="post" class="w-100" action="{{ route('refill.pay', ['type' => $gateway->data['type'], 'currency' => $gateway->data['key']]) }}">
+                                <form onsubmit="return confirm('Обязательно ознакомьтесь с минимальной суммой пополнения для выбранного способа!');" method="post" class="w-100" action="{{ route('refill.pay', ['type' => $gateway->data['type'], 'currency' => $gateway->data['key']]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-primary w-100">Получить адрес</button>
                                 </form>

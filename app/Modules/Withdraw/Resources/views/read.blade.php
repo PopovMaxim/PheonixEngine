@@ -22,15 +22,20 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
                             <b>Статус</b> {!! $tx['html_status'] !!}
                         </div>
+
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
                             <b>Сумма</b> <div>{!! $tx['formatted_amount'] !!}</div>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between border-bottom py-3">
-                            <b>Подтверждения</b> {{ $tx['details']['gateway']['blockchain_confirmations'] ?? 0 }} / {{ $gateway->data['min_confirmations'] }}</span>
-                        </div>
+
+                        @if (isset($tx['details']['gateway']['blockchain_confirmations']))
+                            <div class="d-flex align-items-center justify-content-between border-bottom py-3">
+                                <b>Подтверждения</b> {{ $tx['details']['gateway']['blockchain_confirmations'] ?? 0 }} / {{ $gateway->data['min_confirmations'] }}</span>
+                            </div>
+                        @endif
 
                         <div class="border-bottom py-3">
                             <div>
@@ -54,7 +59,7 @@
 
                         @if (in_array($tx['status'], ['pending']))
                             <div class="border-top py-3">
-                                <form method="post" action="{{ route('withdraw.cancel') }}">
+                                <form onsubmit="return confirm('Вы уверены, что хотите отменить заявку на вывод?');" method="post" action="{{ route('withdraw.cancel') }}">
                                     @csrf
                                     <button type="submit" class="btn btn-outline-danger">Отменить заявку</button>
                                 </form>
@@ -102,7 +107,7 @@
                         </div>
                         <div id="text_4" class="collapse" role="tabpanel" aria-labelledby="header_4" data-bs-parent="#accordion" style="">
                             <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Да, но комиссия за вывод взымается процессингом и составляет 0.25%. Мы не накладываем свою комиссию на выводы.</p>
+                                <p>Комиссия на вывод составляет 0.25%, она взымается процессингом на обслуживание проведения транзакции.</p>
                             </div>
                         </div>
                     </div>
@@ -112,7 +117,7 @@
                         </div>
                         <div id="text_5" class="collapse" role="tabpanel" aria-labelledby="header_5" data-bs-parent="#accordion" style="">
                             <div class="block-content ps-0 pt-0 fs-sm">
-                                <p>Тут должен быть регламент, но он куда-то пропал...</p>
+                                <p>Заявки на вывод исполняются каждый понедельник в 20:00 по Московскому времени.</p>
                             </div>
                         </div>
                     </div>

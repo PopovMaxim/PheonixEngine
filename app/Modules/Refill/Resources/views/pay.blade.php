@@ -106,7 +106,7 @@
                         
                         @if (in_array($tx['status'], ['new']))
                             <div class="border-top py-3">
-                                <form method="post" action="{{ route('refill.cancel', ['type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]) }}">
+                                <form onsubmit="return confirm('Вы уверены, что хотите отменить заявку на пополнение?');" method="post" action="{{ route('refill.cancel', ['type' => $tx['details']['gateway']['type'], 'currency' => $tx['details']['gateway']['currency']]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-outline-danger">Отменить заявку</button>
                                 </form>

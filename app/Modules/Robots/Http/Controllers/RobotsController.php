@@ -45,6 +45,8 @@ class RobotsController extends Controller
                     
                     if (strstr($data, 'Not found account')) {
                         $fail('Указанный номер счёта не найден в партнёрской сети.');
+                    } else if (strstr($data, 'Error Api key')) {
+                        $fail('Ошибка проверки номера счёта. Обратитесь в техническую поддержку.');
                     }
                 }],
                 'accept' => 'accepted',

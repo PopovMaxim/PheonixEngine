@@ -83,7 +83,15 @@ class RobotsController extends Controller
                             'subscribe_id' => $uuid
                         ]);
             
-                        return back();
+                        return redirect()
+                            ->back()
+                            ->with([
+                                'status' => [
+                                    'title' => 'Привязка номера счёта',
+                                    'type' => 'success',
+                                    'text' => "Вы успешно привязали номер счёта к подписке."
+                                ]
+                            ]);
                     }
                 }
 

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Mailing extends Notification
+class Mailing extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -61,6 +61,14 @@ class Mailing extends Notification
         return [
             'type' => 'mailing',
             'text' => $this->text,
+        ];
+    }
+
+    public function viaQueues()
+    {
+        return [
+            'mail' => 'mail',
+            'database' => 'mail',
         ];
     }
 }

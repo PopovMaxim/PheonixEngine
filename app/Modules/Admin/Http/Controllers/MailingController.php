@@ -20,9 +20,9 @@ class MailingController extends Controller
 
             $data = $request->all();
 
-            dispatch(function () use ($users, $data) {
+            //dispatch(function () use ($users, $data) {
                 \Notification::send($users, new Mailing($data['subject'], $data['text']));
-            })->onQueue('mail');
+            //})->onQueue('mail');
         }
         return view('admin::mailing.index');
     }

@@ -1,5 +1,16 @@
 @extends('robots::layouts.master')
 
+@push('js')
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+@endpush
+
+@push('css')
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
+@endpush
+
 @section('content')
     <div class="bg-transparent">
         <div class="content content-full content-top">
@@ -98,6 +109,38 @@
                             </div>
                         </div>
                         <div class="block block-transparent mb-0">
+                            <div class="block-header ps-0 pt-0" role="tab" id="h5">
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q5" aria-expanded="true" aria-controls="q5">Как и где купить VPS?</a>
+                            </div>
+                            <div id="q5" class="collapse" role="tabpanel" aria-labelledby="h5" data-bs-parent="#accordion" style="">
+                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
+                                    <a href="{{ asset('pdf/buy-vps.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block block-transparent mb-0">
+                            <div class="block-header ps-0 pt-0" role="tab" id="h6">
+                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q6" aria-expanded="true" aria-controls="q6">Как установить Insider 1.61?</a>
+                            </div>
+                            <div id="q6" class="collapse" role="tabpanel" aria-labelledby="h6" data-bs-parent="#accordion" style="">
+                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
+                                    <video
+                                        id="my-video"
+                                        class="video-js vjs-theme-fantasy vjs-16-9"
+                                        controls
+                                        preload="auto"
+                                        poster="{{ asset('assets/media/covers/install-insider.jpg') }}"
+                                        data-setup="{}"
+                                    >
+                                        <source src="{{ asset('videos/insider-install.mp4') }}" type="video/mp4" />
+                                        <p class="vjs-no-js">Для просмотра этого видео включите JavaScript и рассмотрите возможность обновления веб-браузера до
+                                            <a href="https://videojs.com/html5-video-support/" target="_blank">поддерживающего HTML5 видео.</a>
+                                        </p>
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block block-transparent mb-0">
                             <div class="block-header ps-0 pt-0" role="tab" id="h4">
                                 <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q4" aria-expanded="true" aria-controls="q4">Куда вставлять ключ для активации продукта?</a>
                             </div>
@@ -107,16 +150,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{--<div class="block block-transparent mb-0">
-                            <div class="block-header ps-0 pt-0" role="tab" id="h3">
-                                <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#q4" aria-expanded="true" aria-controls="q4">Как открыть счёт Roboforex MT4 ProCent?</a>
-                            </div>
-                            <div id="q4" class="collapse" role="tabpanel" aria-labelledby="h4" data-bs-parent="#accordion" style="">
-                                <div class="block-content ps-0 pt-0 fs-sm pb-3">
-                                    <a href="{{ asset('pdf/robo-procent-register.pdf') }}" target="_black"><i class="fa fa-external-link"></i> Открыть инструкцию</a>
-                                </div>
-                            </div>
-                        </div>--}}
                     </div>
                 </div>
             </div>

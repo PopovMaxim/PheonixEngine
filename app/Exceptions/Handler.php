@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -51,6 +53,11 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
+        if ($e instanceof UnauthorizedException) {
+            return redirect()
+                ->route('login');
+        }
+
         if ($e instanceof \Illuminate\Http\Exceptions\ThrottleRequestsException) {
             return back()->with(['toast_notify' => [
                 'type' => 'danger',

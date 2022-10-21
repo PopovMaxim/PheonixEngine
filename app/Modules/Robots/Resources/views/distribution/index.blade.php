@@ -13,7 +13,7 @@
                             <h3 class="fs-4 fw-bold mb-1">
                                 <b>{{ $line['title'] }}</b>
                             </h3>
-                            <h4 class="fs-6 text-muted mb-0">Актуальная версия: 1.08</h4>
+                            <h4 class="fs-6 text-muted mb-0">Актуальная версия: {{ \App\Modules\Robots\Entities\Product::query()->where('details->release', true)->orderBy('created_at', 'desc')->first()?->version ?? 'Не известно' }}</h4>
                         </div>
                         <div class="block-content block-content-full">
                             <div class="row g-sm">
@@ -25,11 +25,11 @@
                                         </button>
                                     </form>
                                 </div>
-                                {{--<div class="col-6">
+                                <div class="col-6">
                                     <a class="btn w-100 btn-alt-secondary" href="{{ route('distribution.archive', ['id' => $line['id']]) }}">
                                         <i class="fa fa-archive me-1 opacity-50"></i> Архив
                                     </a>
-                                </div>--}}
+                                </div>
                             </div>
                         </div>
                     </div>

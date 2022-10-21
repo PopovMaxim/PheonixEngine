@@ -7,25 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Models\TradersQuotes;
+//use App\Models\TradersQuotes;
 use App\Models\User;
 use App\Modules\Profile\Entities\Activity;
+//use App\Notifications\Auth as NotificationsAuth;
 
 class LoginController extends Controller
 {
     public function index(Request $request)
     {
-        $random_quote = TradersQuotes::random();
-
-        return view('login::index')
-            ->with([
-                'quote' => $random_quote
-            ]);
+        return view('login::index');
     }
 
     public function authorize(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => ['required', 'email', new IExists('users', 'Предоставленные учетные данные не соответствуют нашим записям.')],
             'password' => ['required'],
         ], [
@@ -49,6 +45,8 @@ class LoginController extends Controller
             {
                 $request->session()->regenerate();
      
+                //$request->user()->notify(new NotificationsAuth);
+
                 return redirect()->route('dashboard');
             }
         }

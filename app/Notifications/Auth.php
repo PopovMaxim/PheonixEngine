@@ -3,11 +3,13 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use hisorange\BrowserDetect\Parser;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Auth extends Notification
+class Auth extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -52,11 +54,22 @@ class Auth extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray(Request $request, $notifiable)
     {
+        $detector = new Parser(null, null);
+        $agentString = $_GET['agent'] ?? $_SERVER['HTTP_USER_AGENT'] ?? 'Missing';
+        $result = $detector->parse($agentString);
+        
         return [
             'type' => 'auth',
-            'text' => 'Вы вошли в свою учётную запись из Windows 10 с помощью Firefox 96. IP: 123.123.123.123'
+            'text' => $agentString
+        ];
+    }
+
+    public function viaQueues()
+    {
+        return [
+            'database' => 'mail',
         ];
     }
 }

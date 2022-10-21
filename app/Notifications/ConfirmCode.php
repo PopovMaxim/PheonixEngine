@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ConfirmCode extends Notification
+class ConfirmCode extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -53,23 +53,17 @@ class ConfirmCode extends Notification
             ->line("Ваш код подтверждения: <b>{$this->code}</b>")
             ->line('Вы получили это сообщение так как запросили код подтверждения для совершения операции в личном кабинете '.env('APP_NAME').'. Если Вы не запрашивали код подтверждения, то, обязательно обратитесь в техническую поддержку.');
 
-        if ($result && $result->userAgent() != 'Missing') {
+        if ($result && $agentString != 'Missing') {
             $mail = $mail->line('Устройство: ' . $result->userAgent());
         }
 
         return $mail;
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
+    public function viaQueues()
     {
         return [
-            //
+            'mail' => 'mail',
         ];
     }
 }

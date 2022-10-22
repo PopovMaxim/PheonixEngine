@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('faq')->group(function() {
-    Route::get('/', 'FaqController@index');
+Route::prefix('faq')->middleware('auth')->group(function() {
+    Route::get('/', 'FaqController@index')->name('faq');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Faq\Http\Controllers;
 
+use App\Modules\Faq\Entities\Categories;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +15,12 @@ class FaqController extends Controller
      */
     public function index()
     {
-        return view('faq::index');
+        $categories = Categories::query()->orderBy('order', 'asc')->get();
+
+        return view('faq::index')
+            ->with([
+                'categories' => $categories
+            ]);
     }
 
     /**

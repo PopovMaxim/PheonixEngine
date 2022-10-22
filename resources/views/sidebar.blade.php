@@ -125,10 +125,9 @@
                     </li>
                 @endif
                 <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('faq')) active @endif" {{--href="{{ url('faq') }}"--}}>
+                    <a class="nav-main-link @if(request()->is('faq')) active @endif" href="{{ route('faq') }}">
                         <i class="nav-main-link-icon fa fa-circle-question"></i>
                         <span class="nav-main-link-name">FAQ</span>
-                        <span class="nav-main-link-badge badge bg-secondary">Скоро</span>
                     </a>
                 </li>
 
@@ -139,8 +138,6 @@
                         <span class="nav-main-link-name">Тех. Поддержка</span>
                     </a>
                 </li>
-                {{--
-                --}}
             </ul>
         </div>
     </div>

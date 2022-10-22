@@ -99,13 +99,14 @@
                         <span class="nav-main-link-name">Линейный маркетинг</span>
                     </a>
                 </li>
+                {{--
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('network/leader-pull')) active @endif" href="{{ route('network.leader-pull') }}">
                         <i class="nav-main-link-icon fa fa-crown"></i>
                         <span class="nav-main-link-name">Лидерский пулл</span>
                     </a>
                 </li>
-                
+                --}}
                 <li class="nav-main-heading">База знаний</li>
                 @if (count(request()->user()->getSubscribes()))
                     <li class="nav-main-item @if(request()->is('education*')) open @endif" href="#">

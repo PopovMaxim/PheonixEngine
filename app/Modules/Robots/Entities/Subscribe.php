@@ -6,10 +6,11 @@ use App\Modules\Tariffs\Entities\Tariff;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use \Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 class Subscribe extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory, Uuid, HasJsonRelationships;
 
     protected $guarded = [];
 
@@ -28,14 +29,14 @@ class Subscribe extends Model
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
-
-    public function productKey($uuid)
+    
+    public function tariff()
     {
-        return ProductKeys::query()->where('subscribe_id', $uuid)->first() ?? null;
+        return $this->belongsTo('App\Modules\Tariffs\Entities\Tariff', 'details->tariff');
     }
 
-    public function getTariffAttribute()
+    public function key()
     {
-        return Tariff::find($this->details['tariff']);
+        return $this->belongsTo('App\Modules\Robots\Entities\ProductKeys', 'id', 'subscribe_id');
     }
 }

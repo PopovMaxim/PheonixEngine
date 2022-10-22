@@ -75,4 +75,17 @@ class UsersController extends Controller
         //
     }
 
+    public function balance()
+    {
+        $total = 0;
+
+        $users = User::role('user')->get();
+
+        foreach ($users as $user) {
+            $total += $user['raw_balance'];
+        }
+
+        return number_format($total / 100, 2);
+    }
+
 }

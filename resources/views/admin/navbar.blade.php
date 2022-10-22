@@ -32,11 +32,6 @@
                                 <span class="nav-main-link-name">Заблокированные</span>
                             </a>
                         </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="#">
-                                <span class="nav-main-link-name">Создать пользователя</span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
 
@@ -97,12 +92,7 @@
                         <li class="nav-main-item">
                             <a class="nav-main-link" href="{{ route('admin.transactions.withdrawal') }}">
                                 <span class="nav-main-link-name">Заявки на выплату</span>
-                                <span class="nav-main-link-badge badge rounded-pill bg-primary">{{ \App\Modules\Withdraw\Entities\Withdraw::query()->where('type', 'withdraw')->where('status', 'pending')->count() }}</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="#">
-                                <span class="nav-main-link-name">Создать операцию</span>
+                                <span class="nav-main-link-badge badge rounded-pill bg-primary">{{ \App\Modules\Withdraw\Entities\Withdraw::query()->where('type', 'withdrawal')->where('status', 'pending')->count() }}</span>
                             </a>
                         </li>
                     </ul>
@@ -144,7 +134,11 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('admin/support*')) active @endif" href="{{ route('admin.support') }}">
                         <i class="nav-main-link-icon fa fa-headset"></i>
-                        <span class="nav-main-link-name">Техническая поддержка</span>
+                        <span class="nav-main-link-name">
+                            Техническая поддержка
+                            {{--<i class="fa fa-circle text-danger"></i>
+                            <i class="fa fa-circle text-warning"></i>--}}
+                        </span>
                     </a>
                 </li>
             @endif

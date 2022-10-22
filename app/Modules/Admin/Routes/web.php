@@ -21,6 +21,8 @@ Route::prefix('admin')->middleware(['role:super_admin|support'])->group(function
         Route::get('/', 'UsersController@index')->middleware('role_or_permission:super_admin|user')->name('admin.users');
         Route::get('{id}', 'UsersController@show')->middleware('role_or_permission:super_admin|user.read')->name('admin.users.read');
         Route::match(['get', 'post'], 'edit/{id}', 'UsersController@edit')->middleware('role_or_permission:super_admin|user.edit')->name('admin.users.edit');
+        
+        Route::post('balance', 'UsersController@balance')->name('admin.users.balance');
     });
     
     Route::prefix('transactions')->group(function() {

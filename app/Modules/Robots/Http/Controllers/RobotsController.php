@@ -120,7 +120,7 @@ class RobotsController extends Controller
 
         $account_number = null;
 
-        $product_key = $subscribe->productKey($uuid);
+        $product_key = $subscribe['key'];
 
         if ($product_key) {
             $account_number = BrokerAccounts::query()

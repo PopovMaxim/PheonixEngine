@@ -15,7 +15,7 @@ class SubscribesController extends Controller
     {
         $page_name = 'Подписки';
 
-        $subscribes = Transaction::query()
+        $subscribes = Subscribe::query()
             ->whereType('subscribe')
             ->orderBy('created_at', 'desc')
             ->paginate(20);

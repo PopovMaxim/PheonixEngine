@@ -23,9 +23,10 @@
                     <thead>
                         <tr>
                             <th class="fs-sm text-muted">Пользователь</th>
+                            <th style="width: 10%;" class="text-center fs-sm text-muted">Линейка</th>
                             <th style="width: 10%;" class="text-center fs-sm text-muted">Тариф</th>
-                            <th style="width: 10%;" class="text-center fs-sm text-muted">Истекает</th>
                             <th style="width: 10%;" class="text-center fs-sm text-muted">Дата подписки</th>
+                            <th style="width: 10%;" class="text-center fs-sm text-muted">Истекает</th>
                             <th class="text-center" style="width: 100px;"></th>
                         </tr>
                     </thead>
@@ -45,9 +46,10 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-muted fs-sm text-center">{{ $tariffs[$subscribe['details']['tariff']]['title'] }}</td>
-                                <td class="text-muted fs-sm text-center">{{ now()->parse($subscribe['details']['expired_at'])->format('d.m.Y в H:i:s') }}</td>
+                                <td class="text-muted fs-sm text-center">{{ $subscribe['tariff']['line']['title'] }}</td>
+                                <td class="text-muted fs-sm text-center">{{ $subscribe['tariff']['title'] }}</td>
                                 <td class="text-muted fs-sm text-center">{{ $subscribe['created_at']->format('d.m.Y в H:i:s') }}</td>
+                                <td class="text-muted fs-sm text-center">{{ now()->parse($subscribe['details']['expired_at'])->format('d.m.Y в H:i:s') }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <a href="{{ route('admin.subscribes.edit', ['uuid' => $subscribe['id']]) }}" class="btn btn-sm btn-alt-secondary me-2"

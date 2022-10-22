@@ -40,6 +40,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
                 'created_at' => $user['created_at'],
                 'country' => $user['country'],
                 'city' => $user['city'],
+                'partners' => $user['partners']
             ];
         }
 

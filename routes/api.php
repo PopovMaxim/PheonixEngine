@@ -5,6 +5,7 @@ use App\Modules\Profile\Entities\Activity;
 use App\Modules\Robots\Entities\BrokerAccounts;
 use App\Modules\Robots\Entities\Product;
 use App\Modules\Robots\Entities\ProductKeys;
+use App\Modules\Robots\Entities\Subscribe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -185,6 +186,29 @@ Route::prefix('v1/expert')->group(function () {
                 'expires_at' => $account['expires_at']->format('Y-m-d H:i:s'),
                 'activated_at' => $account['created_at']->format('Y-m-d H:i:s'),
             ]));
+        }
+    });
+});
+
+Route::prefix('v1/subscribes')->group(function () {
+    Route::get('users-by-tariff-{tariff}', function (Request $request, $tariff)
+    {
+        if (!is_null($tariff)) {
+            $subscribes = Subscribe::query()
+                ->with('user')
+                ->where('type', 'subscribe')
+                ->where('details->tariff', $tariff)
+                ->distinct('user_id')
+                ->get()
+                ->map(function ($s) {
+                    return [
+                        'nickname' => $s['user']['nickname'],
+                        'telegram_id' => $s['user']['telegram_id'],
+                        'expired_at' => $s['details']['expired_at'],
+                    ];
+                });
+
+            return $subscribes;
         }
     });
 });

@@ -191,24 +191,28 @@ Route::prefix('v1/expert')->group(function () {
 });
 
 Route::prefix('v1/subscribes')->group(function () {
-    Route::get('users-by-tariff-{tariff}', function (Request $request, $tariff)
-    {
-        if (!is_null($tariff)) {
-            $subscribes = Subscribe::query()
-                ->with('user')
-                ->where('type', 'subscribe')
-                ->where('details->tariff', $tariff)
-                ->distinct('user_id')
-                ->get()
-                ->map(function ($s) {
-                    return [
-                        'nickname' => $s['user']['nickname'],
-                        'telegram_id' => $s['user']['telegram_id'],
-                        'expired_at' => $s['details']['expired_at'],
-                    ];
-                });
+    Route::get('users', function (Request $request) {
+        $subscribes = Subscribe::query()
+            ->with('user')
+            ->where('type', 'subscribe')
+            ->distinct('user_id')
+            ->get()
+            ->map(function ($s) {
+                return [
+                    'nickname' => $s['user']['nickname'],
+                    'telegram_id' => $s['user']['telegram_id'],
+                    'expired_at' => $s['details']['expired_at'],
+                    'tariff' => [
+                        'id' => $s['tariff']['id'],
+                        'title' => $s['tariff']['title'],
+                    ],
+                    'line' => [
+                        'id' => $s['tariff']['line']['id'],
+                        'title' => $s['tariff']['line']['title']
+                    ]
+                ];
+            });
 
-            return $subscribes;
-        }
+        return $subscribes;
     });
 });

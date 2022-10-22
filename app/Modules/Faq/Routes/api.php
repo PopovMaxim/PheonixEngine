@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Faq\Entities\Categories;
 use Illuminate\Http\Request;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/faq', function (Request $request) {
-    return $request->user();
+Route::prefix('v1/faq')->group(function () {
+    Route::get('/', function (Request $request) {
+        return Categories::query()->with('items')->get();
+    });
 });

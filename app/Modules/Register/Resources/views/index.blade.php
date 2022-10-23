@@ -6,7 +6,7 @@
 @push('css')
     <style>
         body {
-            background-image: url('assets/media/welcome/hero2.jpg');
+            background-image: url('{{ asset("assets/media/welcome/hero2.jpg") }}');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: top;

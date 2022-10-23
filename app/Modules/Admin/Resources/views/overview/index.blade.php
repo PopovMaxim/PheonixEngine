@@ -48,7 +48,9 @@
                                 Пользователи
                             </p>
                             <p class="fs-3 mb-0">
-                                {{ $users_count ?? 0 }}
+                                <span class="text-success" data-bs-toggle="tooltip" data-bs-title="Активные">{{ $users_actived ?? 0 }}</span> / 
+                                <span class="text-danger" data-bs-toggle="tooltip" data-bs-title="Не активные">{{ $users_count - $users_actived ?? 0 }}</span> / 
+                                <span class="text-muted" data-bs-toggle="tooltip" data-bs-title="Всего">{{ $users_count ?? 0 }}</span>
                             </p>
                         </div>
                         <div></div>

@@ -21,6 +21,15 @@ class OverviewController extends Controller
 
         $users_count = User::role('user')->count();
 
+        $users_actived = User::query()
+            ->role('user')
+            ->whereHas('transactions', function ($q) {
+                return $q
+                    ->where('type', 'subscribe')
+                    ->where('details->expired_at', '>', now()->format('Y-m-d H:i:s'));
+            })
+            ->count();
+
         $withdrawal_sum = Withdraw::query()
             ->whereNotIn('user_id', $except_users)
             ->where([
@@ -104,6 +113,7 @@ class OverviewController extends Controller
         return view('admin::overview.index')
             ->with([
                 'users_count' => $users_count,
+                'users_actived' => $users_actived,
                 'withdrawal_sum' => number_format($withdrawal_sum, 2),
                 'bonus_sum' => number_format($bonus_sum, 2),
                 'transfer_sum' => number_format($transfer_sum, 2),

@@ -93,7 +93,7 @@
                     </div>
                     <div class="block block-transparent mb-0">
                         <div class="block-header ps-0 pt-0" role="tab" id="header_3">
-                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#text_3" aria-expanded="true" aria-controls="text_3">На какой кошелёк я могу получить выплату?</a>
+                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#text_3" aria-expanded="true" aria-controls="text_3">На какой кошелёк я могу осуществить вывод?</a>
                         </div>
                         <div id="text_3" class="collapse" role="tabpanel" aria-labelledby="header_3" data-bs-parent="#accordion" style="">
                             <div class="block-content ps-0 pt-0 fs-sm">
@@ -113,7 +113,7 @@
                     </div>
                     <div class="block block-transparent mb-0">
                         <div class="block-header ps-0 pt-0" role="tab" id="header_5">
-                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#text_5" aria-expanded="true" aria-controls="text_5">Какой регламент у выплат?</a>
+                            <a class="fw-semibold collapsed" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#text_5" aria-expanded="true" aria-controls="text_5">Какой регламент у заявок на вывод?</a>
                         </div>
                         <div id="text_5" class="collapse" role="tabpanel" aria-labelledby="header_5" data-bs-parent="#accordion" style="">
                             <div class="block-content ps-0 pt-0 fs-sm">

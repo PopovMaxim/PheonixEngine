@@ -11,28 +11,16 @@
         <ul class="nav-main nav-main-horizontal nav-main-hover nav-main-horizontal-center nav-main-dark">
             @if(request()->user()->hasRole('super_admin'))
                 <li class="nav-main-item">
-                    <a class="nav-main-link" href="{{ route('admin.overview') }}">
+                    <a class="nav-main-link @if(request()->is('admin/overview*')) active @endif" href="{{ route('admin.overview') }}">
                         <i class="nav-main-link-icon fa fa-dashboard"></i>
                         <span class="nav-main-link-name">Обзор</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.users') }}">
+                    <a class="nav-main-link @if(request()->is('admin/users*')) active @endif" href="{{ route('admin.users') }}">
                         <i class="nav-main-link-icon fa fa-users"></i>
                         <span class="nav-main-link-name">Пользователи</span>
                     </a>
-                    <ul class="nav-main-submenu">
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{ route('admin.users') }}">
-                                <span class="nav-main-link-name">Все пользователи</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="#">
-                                <span class="nav-main-link-name">Заблокированные</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 {{--<li class="nav-main-item">
@@ -130,7 +118,7 @@
                 </li>--}}
             @endif
 
-            @if(request()->user()->hasRole('super_admin') || request()->user()->hasRole('support') || request()->user()->can('support'))
+            @if(request()->user()->hasRole('support') || request()->user()->can('support'))
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('admin/support*')) active @endif" href="{{ route('admin.support') }}">
                         <i class="nav-main-link-icon fa fa-headset"></i>
@@ -143,7 +131,7 @@
                 </li>
             @endif
 
-            @if(request()->user()->hasRole('super_admin') || request()->user()->can('show log-viewer'))
+            @if(request()->user()->can('show log-viewer'))
                 <li class="nav-main-item">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.transactions') }}">
                         <i class="nav-main-link-icon fa fa-wrench"></i>
@@ -151,7 +139,7 @@
                     </a>
                     <ul class="nav-main-submenu">
                         <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{ url('/admin/log-viewer/logs') }}">
+                            <a class="nav-main-link" target="_blank" href="{{ url('/admin/log-viewer/logs') }}">
                                 <span class="nav-main-link-name">Логи</span>
                             </a>
                         </li>

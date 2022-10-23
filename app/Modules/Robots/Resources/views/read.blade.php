@@ -35,7 +35,7 @@
                                             <div class="mb-4">
                                                 <div class="form-check">
                                                     <input class="form-check-input @error('accept') is-invalid @enderror" type="checkbox" value="1" id="accept" name="accept">
-                                                    <label class="form-check-label" for="accept">Я уверен(а) что хочу привязать данный номер счёта.</label>
+                                                    <label class="form-check-label" for="accept">Я уверен(а), что хочу привязать данный номер счёта.</label>
                                                 </div>
                                             </div>
                                         </div>

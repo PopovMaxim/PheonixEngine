@@ -185,5 +185,52 @@
             </a>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="block block-rounded block-mode-loading-refresh h-100">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Топ 5 продажников</h3>
+                </div>
+                <div class="block-content d-flex justify-content-between flex-column">
+                    <table class="table table-bordered table-vcenter fs-sm">
+                        <thead class="">
+                            <tr>
+                                <th class="d-none d-sm-table-cell text-center" style="width: 60px;"></th>
+                                <th>Участник</th>
+                                <th class="d-none d-sm-table-cell text-center" style="width: 25%;">Активировано партнёров</th>
+                                <th class="d-none d-sm-table-cell text-center" style="width: 25%;">Заработано бонусов</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($top_5_sellers as $user)
+                                <tr style="min-height: 60px;">
+                                    <td class="d-none d-sm-table-cell text-center">
+                                        {{ $loop->first }}
+                                    </td>
+                                    <td class="fw-normal">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div class="me-2">
+                                                <img class="img-avatar img-avatar48" src="https://pheonix.local/assets/media/avatars/avatar10.jpg" alt="">
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('admin.users.read', ['id' => $user['id']]) }}" class="fw-semibold">{{ $user['nickname'] }}</a>
+                                                <div class="text-muted fs-sm">
+                                                    ФИО: {{ $user['full_name'] }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="d-none d-sm-table-cell text-center">{{ $user['bonus_count'] }} чел.</td>
+                                    <td class="d-none d-sm-table-cell text-center">{{ number_format($user['bonus_sum'] / 100, 2) }} PX</td>
+                                </tr>
+                            @empty
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

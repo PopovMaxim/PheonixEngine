@@ -82,6 +82,29 @@ class OverviewController extends Controller
             ->where('status', 'closed')
             ->count();
 
+        $top_5_sellers = User::query()
+            ->whereHas('transactions', function ($q) {
+                return $q
+                    ->where('type', 'line_bonus')
+                    ->where('details->level', 1);
+            })
+            /*->withCount([
+                'transactions as bonus_sum' => function ($q) {
+                    $q->where('type', 'line_bonus')->where('details->level', 1);
+                }
+            ])*/
+            ->withCount([
+                'transactions AS bonus_sum' => function ($q) {
+                    $q->select(\DB::raw("SUM(amount) as bonus_sum"))->where('type', 'line_bonus')->where('details->level', 1);
+                }
+            ])
+            ->withCount(['transactions as bonus_count' => function ($q) {
+                $q->where('type', 'line_bonus')->where('details->level', 1);
+            }])
+            ->orderBy('bonus_count', 'desc')
+            ->limit(5)
+            ->get();
+
         return view('admin::overview.index')
             ->with([
                 'users_count' => $users_count,
@@ -95,6 +118,7 @@ class OverviewController extends Controller
                 'wait_support_tickets' => $wait_support_tickets,
                 'wait_user_tickets' => $wait_user_tickets,
                 'closed_tickets' => $closed_tickets,
+                'top_5_sellers' => $top_5_sellers,
             ]);
     }
 

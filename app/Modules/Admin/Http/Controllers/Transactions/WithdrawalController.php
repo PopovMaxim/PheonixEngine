@@ -5,6 +5,7 @@ namespace App\Modules\Admin\Http\Controllers\Transactions;
 use App\Modules\Refill\Payments\WestWallet\Gateway;
 use WestWallet\WestWallet\InsufficientFundsException;
 use App\Modules\Withdraw\Entities\Withdraw;
+use App\Notifications\WithdrawalSuccessfull;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -47,6 +48,9 @@ class WithdrawalController extends Controller
                 $tx->update([
                     'status' => 'completed'
                 ]);
+
+                
+                $tx['user']->notify(new WithdrawalSuccessfull("{$amount} USDT"));
             }
 
             return back()

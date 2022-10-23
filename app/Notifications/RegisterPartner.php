@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Channels\TelegramChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -31,7 +32,7 @@ class RegisterPartner extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', TelegramChannel::class];
     }
 
     /**
@@ -58,7 +59,22 @@ class RegisterPartner extends Notification
     {
         return [
             'type' => 'register.partner',
-            'text' => "У вас новый партнёр - {$this->nickname}!"
+            'text' => "У Вас новый партнёр - {$this->nickname}!"
+        ];
+    }
+
+    public function toTelegram($notifiable)
+    {
+        return [
+            'message' => "У Вас новый партнёр - {$this->nickname}!"
+        ];
+    }
+    
+    public function viaQueues()
+    {
+        return [
+            'database' => 'mail',
+            TelegramChannel::class => 'mail',
         ];
     }
 }

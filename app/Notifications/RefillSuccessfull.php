@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Channels\TelegramChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -31,7 +32,7 @@ class RefillSuccessfull extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database', 'mail',  TelegramChannel::class];
     }
 
     /**
@@ -59,6 +60,22 @@ class RefillSuccessfull extends Notification
         return [
             'type' => 'refill.successfull',
             'text' => "Баланс учётной записи успешно пополнен на {$this->sum}."
+        ];
+    }
+
+    public function toTelegram($notifiable)
+    {
+        return [
+            'message' => "Баланс учётной записи успешно пополнен на {$this->sum}."
+        ];
+    }
+    
+    public function viaQueues()
+    {
+        return [
+            'mail' => 'mail',
+            'database' => 'mail',
+            TelegramChannel::class => 'mail',
         ];
     }
 }

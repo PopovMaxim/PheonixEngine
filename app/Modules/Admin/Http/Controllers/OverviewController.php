@@ -10,6 +10,8 @@ use App\Modules\Refill\Payments\WestWallet\Gateway as Crypto;
 use App\Modules\Robots\Entities\Subscribe;
 use App\Modules\Transactions\Entities\Transaction;
 use App\Modules\Withdraw\Entities\Withdraw;
+use App\Notifications\RegisterPartner;
+use App\Notifications\WithdrawalSuccessfull;
 
 class OverviewController extends Controller
 {

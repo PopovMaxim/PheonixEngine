@@ -2,23 +2,27 @@
 
 namespace App\Notifications;
 
+use App\Channels\TelegramChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WithdrawalSuccessfull extends Notification
+class WithdrawalSuccessfull extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $id;
+    public $sum;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($sum)
     {
-        //
+        $this->sum = $sum;
     }
 
     /**
@@ -29,7 +33,7 @@ class WithdrawalSuccessfull extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', TelegramChannel::class];
     }
 
     /**
@@ -56,7 +60,22 @@ class WithdrawalSuccessfull extends Notification
     {
         return [
             'type' => 'withdrawal.successfull',
-            'text' => 'Выплата #111 на сумму 100 руб. успешно исполнена.'
+            'text' => "Выплата на сумму {$this->sum} успешно исполнена."
+        ];
+    }
+
+    public function toTelegram($notifiable)
+    {
+        return [
+            'message' => "Выплата на сумму {$this->sum} успешно исполнена."
+        ];
+    }
+    
+    public function viaQueues()
+    {
+        return [
+            'database' => 'mail',
+            TelegramChannel::class => 'mail',
         ];
     }
 }

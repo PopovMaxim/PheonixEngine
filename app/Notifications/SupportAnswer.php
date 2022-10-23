@@ -2,12 +2,13 @@
 
 namespace App\Notifications;
 
+use App\Channels\TelegramChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SupportAnswer extends Notification
+class SupportAnswer extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -31,7 +32,7 @@ class SupportAnswer extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', TelegramChannel::class];
     }
 
     /**
@@ -61,6 +62,21 @@ class SupportAnswer extends Notification
             'type' => 'support.answer',
             'text' => "Вам поступил ответ от технической поддержки.",
             'url' => route('support.show', ['uuid' => $this->ticket_id])
+        ];
+    }
+    
+    public function toTelegram($notifiable)
+    {
+        return [
+            'message' => "Вам поступил ответ от технической поддержки."
+        ];
+    }
+    
+    public function viaQueues()
+    {
+        return [
+            'database' => 'mail',
+            TelegramChannel::class => 'mail',
         ];
     }
 }

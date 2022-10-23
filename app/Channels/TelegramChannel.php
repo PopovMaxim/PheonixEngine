@@ -27,7 +27,7 @@ class TelegramChannel
                     'message' => $data['message'],
                 ]);
             } catch (\Exception $e) {
-                \Log::info(json_encode($e));
+                \Log::info(json_encode($e->getMessage()));
             }
         }
     }

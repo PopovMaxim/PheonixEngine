@@ -30,7 +30,7 @@
         @include('header')
         
         <main id="main-container">
-            @if(request()->user()->hasRole('support'))
+            @if(request()->user()->hasRole('super_admin') || request()->user()->hasRole('support'))
                 @include('admin.navbar')
             @endif
             @if (request()->session()->has('previous_id'))

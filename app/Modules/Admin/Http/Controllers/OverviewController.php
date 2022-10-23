@@ -83,16 +83,12 @@ class OverviewController extends Controller
             ->count();
 
         $top_5_sellers = User::query()
+            ->whereNotIn('id', $except_users)
             ->whereHas('transactions', function ($q) {
                 return $q
                     ->where('type', 'line_bonus')
                     ->where('details->level', 1);
             })
-            /*->withCount([
-                'transactions as bonus_sum' => function ($q) {
-                    $q->where('type', 'line_bonus')->where('details->level', 1);
-                }
-            ])*/
             ->withCount([
                 'transactions AS bonus_sum' => function ($q) {
                     $q->select(\DB::raw("SUM(amount) as bonus_sum"))->where('type', 'line_bonus')->where('details->level', 1);

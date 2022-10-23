@@ -206,7 +206,7 @@
                             @forelse ($top_5_sellers as $user)
                                 <tr style="min-height: 60px;">
                                     <td class="d-none d-sm-table-cell text-center">
-                                        {{ $loop->first }}
+                                        {{ $loop->index + 1 }}
                                     </td>
                                     <td class="fw-normal">
                                         <div class="d-flex flex-row align-items-center">

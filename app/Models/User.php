@@ -199,7 +199,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(get_class($this), 'id', 'sponsor_id');
     }
-
+    
     public function getPartnersCountAttribute()
     {
         return $this->partners->count();

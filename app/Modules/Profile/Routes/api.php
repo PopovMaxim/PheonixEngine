@@ -28,6 +28,21 @@ Route::middleware('api')->prefix('v1')->group(function () {
     Route::post('profile', function (Request $request) {
         $user = User::query()->where('telegram_id', $request->input('telegram_id'))->first();
 
+        $partners = User::query()->where('sponsor_id', $user['id'])->get()?->map(function ($user) {
+            return [
+                'email' => $user['email'],
+                'nickname' => $user['nickname'],
+                //'balance' => $user['formatted_balance'],
+                'lastname' => $user['lastname'],
+                'firstname' => $user['firstname'],
+                //'account_number' => $user['account_number'],
+                'last_active_at' => $user['last_active_at'],
+                'created_at' => $user['created_at'],
+                'country' => $user['country'],
+                //'city' => $user['city'],
+            ];
+        });
+
         if ($user) {
             return [
                 'email' => $user['email'],
@@ -39,8 +54,8 @@ Route::middleware('api')->prefix('v1')->group(function () {
                 'last_active_at' => $user['last_active_at'],
                 'created_at' => $user['created_at'],
                 'country' => $user['country'],
-                'city' => $user['city'],
-                'partners' => $user['partners']
+                //'city' => $user['city'],
+                'partners' => $partners ?? []
             ];
         }
 

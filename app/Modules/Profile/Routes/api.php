@@ -39,6 +39,7 @@ Route::middleware('api')->prefix('v1')->group(function () {
                 'last_active_at' => $user['last_active_at'],
                 'created_at' => $user['created_at'],
                 'country' => $user['country'],
+                'subscribes' => $user->subscribes()
                 //'city' => $user['city'],
             ];
         });

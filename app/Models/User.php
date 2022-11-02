@@ -624,6 +624,40 @@ class User extends Authenticatable
         return $list;
     }
 
+    public function subscribes()
+    {
+        $subscribes = $this->transactions()->whereType('subscribe')->get();
+
+        if (!count($subscribes))
+        {
+            return [];
+        }
+
+        $tariffs = Tariff::query()->get()->keyBy('id')->toArray();
+
+        $list = [];
+
+        foreach ($subscribes as $subscribe)
+        {
+            $tariff = $tariffs[$subscribe['details']['tariff']];
+            $expired_at = now()->parse($subscribe['details']['expired_at']);
+
+            if ($expired_at->timestamp <= now()->timestamp)
+            {
+                continue;
+            }
+
+            $list[] = [
+                'tariff_key' => $tariff['key'],
+                'tariff_title' => $tariff['title'],
+                'created_at' => $subscribe['created_at'],
+                'expired_at' => $expired_at
+            ];
+        }
+
+        return $list;
+    }
+
     public function getCurrentSubscribeTitleAttribute()
     {
         $subscribe = $this->getCurrentSubscribe();

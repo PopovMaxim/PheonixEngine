@@ -36,6 +36,8 @@ Route::middleware('api')->prefix('v1')->group(function () {
             $limit = $request->input('limit');
         }
 
+        $notifications = [];
+
         if ($user) {
             $notifications = Notification::query()
                 ->select(['id', 'notifiable_id as user_id', 'data', 'read_at', 'created_at'])

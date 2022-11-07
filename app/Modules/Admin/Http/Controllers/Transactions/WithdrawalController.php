@@ -40,7 +40,7 @@ class WithdrawalController extends Controller
         }
 
         try {
-            $amount = ($tx['amount'] * 0.975) / 100;
+            $amount = ($tx['amount'] - ($tx['amount'] * 0.0025)) / 100;
 
             $send = $this->gateway->client->createWithdrawal($tx['details']['gateway']['currency'], $amount, $tx['details']['gateway']['address']);
             

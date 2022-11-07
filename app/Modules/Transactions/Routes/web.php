@@ -13,5 +13,5 @@
 
 Route::middleware('auth')->prefix('transactions')->group(function() {
     Route::get('/', 'TransactionsController@index')->name('transactions');
-    Route::get('read/{id}', 'TransactionsController@read')->name('transactions.read');
+    Route::get('{uuid}', 'TransactionsController@read')->name('transactions.read');
 });

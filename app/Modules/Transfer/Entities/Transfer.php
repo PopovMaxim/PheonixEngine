@@ -62,6 +62,11 @@ class Transfer extends Model
         return $this->statuses[$this->status];
     }
 
+    public function getTranslatedTypeAttribute()
+    {
+        return 'Перевод';
+    }
+
     public function getHtmlStatusAttribute()
     {
         return match($this->status) {

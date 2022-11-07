@@ -14,15 +14,6 @@
             })
         </script>
     @endif
-    
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-@endpush
-
-@push('css')
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-    <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -67,15 +58,20 @@
                                 <b>Комиссия сети</b> {{ $gateway->data['network_comission'] }} {{ $gateway->data['abbr'] }}</span>
                             </div>
                         @endif
+
                         <div class="d-flex align-items-center justify-content-between border-bottom py-3">
                             <b>Полученная сумма</b> <div>{!! $tx['details']['gateway']['amount'] ?? 0 !!} {{ $gateway->data['abbr'] }}</div></span>
                         </div>
 
                         @if (isset($tx['details']['gateway']['rate']))
                             <div class="d-flex align-items-center justify-content-between border-bottom py-3">
-                                <b>Текущая цена:</b> <div>{!! number_format($tx['details']['gateway']['rate'], 2) ?? 0 !!} {{ config('app.external-currency') }}</div></span>
+                                <b>Цена актива</b> <div>{!! number_format($tx['details']['gateway']['rate'], 2) ?? 0 !!} {{ config('app.external-currency') }}</div></span>
                             </div>
                         @endif
+                        
+                        <div class="d-flex align-items-center justify-content-between border-bottom py-3">
+                            <b>Сумма после конвертации</b> <div>{!! $tx['formatted_amount'] !!}</div>
+                        </div>
 
                         @if (in_array($tx['status'], ['new', 'pending']))
                             <div class="border-bottom py-3">

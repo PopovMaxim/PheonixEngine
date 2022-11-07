@@ -3,6 +3,7 @@
 namespace App\Modules\Transfer\Http\Controllers;
 
 use App\Models\ConfirmCodes;
+use App\Modules\Faq\Entities\Categories;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -33,6 +34,10 @@ class TransferController extends Controller
     {
         $breadcrumbs = [
             [
+                'title' => 'Финансы',
+                'url' => route('transactions')
+            ],
+            [
                 'title' => 'Переводы',
                 'url' => route('transfer')
             ],
@@ -56,9 +61,17 @@ class TransferController extends Controller
                 ])->first();
         }
 
-        return view('transfer::read', [
+        $title = '<a href="/transfer"><i class="fa fa-arrow-left text-muted me-2"></i></a> Детали операции';
+
+        $faq = Categories::query()
+            ->whereIn('key', ['transfers'])
+            ->get();
+
+        return view('transactions::read', [
+            'tx' => $tx,
+            'faq' => $faq ?? [],
+            'title' => $title,
             'breadcrumbs' => $breadcrumbs,
-            'tx' => $tx
         ]);
     }
 

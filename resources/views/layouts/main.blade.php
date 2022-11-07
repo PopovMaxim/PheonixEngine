@@ -18,6 +18,9 @@
     <link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/xsmooth.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" id="css-theme" href="{{ asset('assets/js/plugins/toast/jquery.toast.min.css') }}">
+    
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
 
     @stack('css')
     @livewireStyles
@@ -55,6 +58,9 @@
     <script src="{{ asset('assets/js/plugins/toast/jquery.toast.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/clipboardjs/clipboard.min.js') }}"></script>
 
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    
     <script>
         $.ajaxSetup({
             headers: {

@@ -94,9 +94,14 @@ class Withdraw extends Model
         return new $gateway($this->details['gateway']['currency']);
     }
 
-    public function getTypeAttribute()
+    public function getGatewayTypeAttribute()
     {
         return $this->details['gateway']['type'] ? $this->types[$this->details['gateway']['type']] : 'Неизвестно';
+    }
+
+    public function getTranslatedTypeAttribute()
+    {
+        return 'Вывод';
     }
 
     public function getCurrencyAttribute()

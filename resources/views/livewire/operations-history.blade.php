@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                     @forelse ($transactions as $transaction)
-                        <tr style="min-height: 60px;">
+                        <tr style="min-height: 60px; cursor: pointer;" onclick="return location.href='{{ route('transactions.read', ['uuid' => $transaction['id']]) }}'">
                             <td>{{ $transaction['translated_type'] }}</td>
                             <td class="text-center">{!! $transaction['html_status'] !!}</td>
                             <td class="text-center text-{{ $transaction['direction'] == 'inner' ? 'success' : 'danger' }} fw-bold" style="width: 20%;">{{ $transaction['formatted_amount'] }}</td>

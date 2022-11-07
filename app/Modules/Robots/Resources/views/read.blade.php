@@ -1,16 +1,5 @@
 @extends('robots::layouts.master')
 
-@push('js')
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-@endpush
-
-@push('css')
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-    <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
-@endpush
-
 @section('content')
     @include('hero', ['title' => '<a href="/subscribes"><i class="fa fa-arrow-left text-muted me-2"></i></a> Управление подпиской', 'breadcrumbs' => $breadcrumbs])
 

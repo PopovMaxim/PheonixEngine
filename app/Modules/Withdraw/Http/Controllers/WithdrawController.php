@@ -3,6 +3,7 @@
 namespace App\Modules\Withdraw\Http\Controllers;
 
 use App\Models\ConfirmCodes;
+use App\Modules\Faq\Entities\Categories;
 use App\Modules\Transactions\Entities\Transaction;
 use App\Modules\Refill\Payments\WestWallet\Gateway as Crypto;
 use App\Modules\Withdraw\Entities\Withdraw;
@@ -46,6 +47,10 @@ class WithdrawController extends Controller
     {
         $breadcrumbs = [
             [
+                'title' => 'Финансы',
+                'url' => route('transactions')
+            ],
+            [
                 'title' => 'Вывод',
                 'url' => route('withdraw')
             ],
@@ -71,10 +76,18 @@ class WithdrawController extends Controller
         
         $this->gateway = new Crypto($tx['details']['gateway']['currency']);
 
-        return view('withdraw::read', [
-            'breadcrumbs' => $breadcrumbs,
+        $title = '<a href="/withdraw"><i class="fa fa-arrow-left text-muted me-2"></i></a> Детали операции';
+
+        $faq = Categories::query()
+            ->whereIn('key', ['withdrawals'])
+            ->get();
+
+        return view('transactions::read', [
+            'tx' => $tx,
+            'faq' => $faq ?? [],
+            'title' => $title,
             'gateway' => $this->gateway,
-            'tx' => $tx
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 

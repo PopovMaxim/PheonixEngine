@@ -1,6 +1,9 @@
 <div class="block block-rounded">
     <div class="block-content">
         <form method="POST" wire:submit.prevent="submit" autocomplete="off">
+            <input type="text" hidden />
+            <input type="email" hidden />
+            <input type="password" hidden />
             <h2 class="content-heading pt-0">
                 <i class="fa fa-fw fa-user-circle text-muted me-1"></i> Ваш профиль
             </h2>
@@ -69,7 +72,6 @@
                     @endif
                     <div class="mb-4">
                         <label class="form-label @error('current_password') is-invalid @enderror" for="current_password">Текущий пароль</label>
-                        <input type="password" hidden />
                         <input type="password" class="form-control" id="current_password" name="current_password" wire:model="current_password" autocomplete="off" />
                         @error('current_password')
                             <span class="invalid-feedback">{{ $message }}</span>
@@ -174,7 +176,7 @@
                 <div class="col-lg-8 col-xl-5 offset-lg-4">
                     <div class="mb-4">
                         <button type="submit" class="btn btn-alt-primary" wire:click="submit">
-                            <i class="fa fa-check-circle opacity-50 me-1"></i> Обновить профиль
+                            <i class="fa fa-check-circle opacity-50 me-1"></i> Изменить профиль
                         </button>
                     </div>
                 </div>

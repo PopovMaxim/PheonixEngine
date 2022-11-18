@@ -34,24 +34,26 @@
 @endsection
 
 @section('content')
-@include('hero', ['title' => '<a href="/admin/subscribes"><i class="fa fa-arrow-left text-muted me-2"></i></a> Редактирование подписки', 'breadcrumbs' => []])
-    <div class="content content-boxed">
-        <form method="POST" autocomplete="off">
-            @csrf
+    @include('hero', ['title' => '<a href="/admin/subscribes"><i class="fa fa-arrow-left text-muted me-2"></i></a> Редактирование подписки', 'breadcrumbs' => []])
+    <form method="post">
+        @csrf
+        <div class="content content-boxed">
             <div class="block block-rounded">
-                <div class="block-content">
-                    <h2 class="content-heading pt-0">
-                        <i class="fa fa-fw fa-user-circle text-muted me-1"></i> Общая информация
-                    </h2>
-                    <div class="row push">
-                        <div class="col-lg-4">
-                            <p class="text-muted">
-                            </p>
-                        </div>
-                        <div class="col-lg-8 col-xl-5">
+                <ul class="nav nav-tabs nav-tabs-block">
+                    <li class="nav-item">
+                        <a class="nav-link @if(is_null($tab)) active @endif" href="{{ route('admin.subscribes.edit', ['uuid' => $subscribe['id']]) }}">Общая информация</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if($tab == 'key') active @endif" href="{{ route('admin.subscribes.edit', ['uuid' => $subscribe['id'], 'tab' => 'key']) }}">Ключ и номер счёта</a>
+                    </li>
+                </ul>
+
+                <div class="block-content p-0">
+                    @if (is_null($tab))
+                        <div class="p-3">
                             <div class="mb-4">
                                 <label class="form-label">Пользователь</label>
-                                <a href="{{ route('admin.users.read', ['id' => $subscribe['user']['id']]) }}">
+                                <a target="_blank" href="{{ route('admin.users.read', ['id' => $subscribe['user']['id']]) }}">
                                     <div class="d-flex flex-row my-3">
                                         <div class="me-2">
                                             <img class="img-avatar img-avatar48" src="{{ asset('assets/media/avatars/avatar10.jpg') }}" alt="">
@@ -104,79 +106,79 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
-                    <h2 class="content-heading pt-0">
-                        <i class="fa fa-fw fa-globe text-muted me-1"></i> Детали подписки
-                    </h2>
-                    <div class="row push">
-                        <div class="col-lg-4">
-                            <p class="text-muted">
-                            </p>
-                        </div>
-                        <div class="col-lg-8 col-xl-5">
-                            <div class="mb-4">
-                                <label class="form-label" for="details[tariff]">Тариф</label>
-                                <select class="form-select" id="details[tariff]" name="details[tariff]">
-                                    @foreach (\App\Modules\Tariffs\Entities\Tariff::all() as $tariff)
-                                        <option value="{{ $tariff['id'] }}" @if($tariff['id'] == $subscribe['details']['tariff']) selected="" @endif>[{{ $tariff['line']['title'] }}] {{ $tariff['title'] }}</option>
-                                    @endforeach
-                                </select>
-                                @error('details.tariff')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label class="form-label" for="details[expired_at]">Дата истечения</label>
-                                <input type="text" class="form-control @error('details.expired_at') is-invalid @enderror" id="details[expired_at]" name="details[expired_at]" placeholder="Дата истечения..." value="{{ $subscribe['details']['expired_at'] ?? null }}">
-                                @error('details.expired_at')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <h2 class="content-heading pt-0">
-                        <i class="fa fa-fw fa-key text-muted me-1"></i> Ключ
-                    </h2>
-                    <div class="row push">
-                        <div class="col-lg-4">
-                            <p class="text-muted">
-                            </p>
-                        </div>
-                        <div class="col-lg-8 col-xl-5">
-                            <div class="mb-4">
-                                <label class="form-label" for="details[tariff]">Тариф</label>
-                                <select class="form-select" id="details[tariff]" name="details[tariff]">
-                                    @foreach (\App\Modules\Tariffs\Entities\Tariff::all() as $tariff)
-                                        <option value="{{ $tariff['id'] }}" @if($tariff['id'] == $subscribe['details']['tariff']) selected="" @endif>[{{ $tariff['line']['title'] }}] {{ $tariff['title'] }}</option>
-                                    @endforeach
-                                </select>
-                                @error('details.tariff')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label class="form-label" for="details[expired_at]">Дата истечения</label>
-                                <input type="text" class="form-control @error('details.expired_at') is-invalid @enderror" id="details[expired_at]" name="details[expired_at]" placeholder="Дата истечения..." value="{{ $subscribe['details']['expired_at'] ?? null }}">
-                                @error('details.expired_at')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Submit -->
-                <div class="block-content block-content-full block-content-sm bg-body-light">
-                    <div class="row p-3">
-                        <div class="col-lg-8 col-xl-5 offset-lg-4">
+                        
+                        <div class="block-content block-content-full block-content-sm bg-body-light text-center">
                             <button type="submit" class="btn btn-alt-primary mb-0">
-                                <i class="fa fa-check-circle opacity-50 me-1"></i> Подтвердить
+                                <i class="fa fa-check-circle opacity-50 me-1"></i> Сохранить
                             </button>
                         </div>
-                    </div>
+                    @endif
+
+                    @if ($tab == 'key')
+                        @if ($subscribe['key'])
+                            <div class="p-3">
+                                <div class="mb-4">
+                                    <label class="form-label" for="already_activated">Статус</label>
+                                    <select class="form-select" id="already_activated" name="already_activated">
+                                        <option selected="" value="">Выберите статус...</option>
+                                        <option value="1" @if ($subscribe['key']['already_activated']) selected="" @endif>Активирован</option>
+                                        <option value="0" @if (!$subscribe['key']['already_activated']) selected="" @endif>Не активирован</option>
+                                    </select>
+                                    @error('already_activated')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Ключ активации</label>
+                                    <input type="text" class="form-control" value="{{ $subscribe['key']['activation_key'] }}" readonly>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Номер счёта</label>
+                                    <input type="text" class="form-control" id="account-number" name="account_number" value="{{ $subscribe['key']['account_number'] }}" placeholder="Введите номер счёта" />
+                                </div>
+
+                                @if ($subscribe['key']['account'])
+                                    {{--<div class="mb-4">
+                                        <label class="form-label">Брокер</label>
+                                        <input type="text" class="form-control" id="account-company" name="account_company" value="{{ $subscribe['key']['account']['account_company'] }}" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Имя аккаунта</label>
+                                        <input type="text" class="form-control" id="account-name" name="account_name" value="{{ $subscribe['key']['account']['account_name'] }}" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Продукт</label>
+                                        <input type="text" class="form-control" id="ea-name" name="ea_name" value="{{ $subscribe['key']['account']['ea_name'] }}" readonly />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Версия продукта</label>
+                                        <input type="text" class="form-control" id="ea-version" name="ea_version" value="{{ $subscribe['key']['account']['ea_version'] }}" readonly />
+                                    </div>--}}
+                                @endif
+                            </div>
+                                
+                            <div class="block-content block-content-full block-content-sm bg-body-light text-center">
+                                <button type="submit" class="btn btn-alt-primary mb-0">
+                                    <i class="fa fa-check-circle opacity-50 me-1"></i> Сохранить
+                                </button>
+                            </div>
+                        @else
+                            <div class="p-3">
+                                <div class="mb-4">
+                                    <label class="form-label">Номер счёта</label>
+                                    <input type="text" class="form-control" name="account_number" value="" placeholder="Введите номер счёта" />
+                                </div>
+                            </div>
+                                
+                            <div class="block-content block-content-full block-content-sm bg-body-light text-center">
+                                <button type="submit" class="btn btn-alt-primary mb-0">
+                                    <i class="fa fa-check-circle opacity-50 me-1"></i> Получить ключ продукта
+                                </button>
+                            </div>
+                        @endif
+                    @endif
                 </div>
-                <!-- END Submit -->
             </div>
-    
-        </form>
-    </div>
+        </div>
+    </form>
 @endsection

@@ -26,4 +26,9 @@ class ProductKeys extends Model
     {
         return $this->belongsTo('App\Modules\Robots\Entities\Subscribe', 'subscribe_id', 'id');
     }
+
+    public function account()
+    {
+        return $this->belongsTo('App\Modules\Robots\Entities\BrokerAccounts', 'account_number', 'account_number');
+    }
 }

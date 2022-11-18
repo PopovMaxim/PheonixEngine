@@ -47,18 +47,31 @@ Route::prefix('admin')->middleware(['role:super_admin|support'])->group(function
 
     Route::prefix('subscribes')->group(function() {
         Route::get('/', 'SubscribesController@index')->name('admin.subscribes');
-        Route::match(['get', 'post'], '{uuid}/edit', 'SubscribesController@edit')->name('admin.subscribes.edit');
+        Route::match(['get', 'post'], '{uuid}/edit/{tab?}', 'SubscribesController@edit')->name('admin.subscribes.edit');
     });
 
     Route::prefix('mailing')->group(function() {
         Route::match(['get', 'post'], '/', 'MailingController@index')->name('admin.mailing');
     });
+    
+    Route::prefix('products')->group(function() {
+        Route::prefix('tariffs')->group(function() {
+            Route::get('/', 'Products\TariffsController@index')->name('admin.products.tariffs');
+            Route::match(['get', 'post'], 'stats/{id?}', 'Products\TariffsController@stats')->name('admin.products.tariffs.stats');
+            Route::match(['get', 'post'], 'form/{id?}', 'Products\TariffsController@form')->name('admin.products.tariffs.form');
+            Route::match(['get', 'post'], 'delete/{id?}', 'Products\TariffsController@delete')->name('admin.products.tariffs.delete');
+        });
 
-    /*Route::prefix('tariffs')->group(function() {
-        Route::get('/', 'TariffsController@index')->name('admin.tariffs');
-        Route::match(['get', 'post'], 'create', 'TariffsController@create')->name('admin.tariffs.create');
-        Route::match(['get', 'post'], '{id}/edit', 'TariffsController@edit')->where('id')->name('admin.tariffs.edit');
-    });*/
+        Route::prefix('lines')->group(function() {
+            Route::match(['get', 'post'], 'form/{id?}', 'Products\LineController@form')->name('admin.products.line.form');
+            Route::match(['get', 'post'], 'delete/{id?}', 'Products\LineController@delete')->name('admin.products.line.delete');
+        });
+
+        Route::prefix('distribs')->group(function() {
+            //Route::get('/', 'Transactions\TransfersController@index')->name('admin.transactions.transfers');
+            //Route::get('{uuid}', 'Transactions\TransfersController@read')->name('admin.transactions.transfers.read');
+        });
+    });
 
     Route::prefix('support')->group(function() {
         Route::get('/{uuid?}', 'SupportController@index')->name('admin.support');

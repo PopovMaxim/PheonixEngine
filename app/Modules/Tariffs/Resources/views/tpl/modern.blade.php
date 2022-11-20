@@ -26,62 +26,16 @@
                     </div>
                     <div class="block-content p-0">
                         <div>
-                            <div class="border-bottom py-3 px-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="text-muted fs-sm">Срок подписки</div>
-                                    <div>
-                                        {{ $tariff['translated_period'] }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-bottom py-3 px-3 px-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="text-muted fs-sm">Количество лицензий</div>
-                                    <div>
-                                        <strong>{{ $tariff['details']['license_limit'] ?? 0 }}</strong> шт.
-                                    </div>
-                                </div>
-                            </div>
-                            @if (isset($tariff['details']['license_limit']))
-                                <div class="border-bottom py-3 px-3 px-3">
+                            @foreach ($tariff['details']['additional'] ?? [] as $additional)
+                                <div class="border-bottom py-3 px-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div class="text-muted fs-sm">Линейный маркетинг</div>
+                                        <div class="text-muted fs-sm">{!! $additional['title'] !!}</div>
                                         <div>
-                                            <strong>{{ $tariff['details']['license_limit'] ?? 0 }}</strong> ур.
+                                            {!! $additional['value'] !!}
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                            @if (isset($tariff['details']['leader_bonus']))
-                                <div class="border-bottom py-3 px-3 px-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="text-muted fs-sm">Лидерский бонус</div>
-                                        <div>
-                                            @if ($tariff['details']['leader_bonus']) <i class="fas fa-check text-success"></i> @else <i class="fas fa-times text-danger"></i> @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                            @if (isset($tariff['details']['quick_bonus']))
-                                <div class="border-bottom py-3 px-3 px-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="text-muted fs-sm">Быстрый бонус</div>
-                                        <div>
-                                            @if ($tariff['details']['quick_bonus']) <i class="fas fa-check text-success"></i> @else <i class="fas fa-times text-danger"></i> @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                            @if (isset($tariff['details']['support']))
-                                <div class="border-bottom py-3 px-3 px-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="text-muted fs-sm">Тех. Поддержка</div>
-                                        <div>
-                                            @if ($tariff['details']['support']) <i class="fas fa-check text-success"></i> @else <i class="fas fa-times text-danger"></i> @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                            @endforeach
                         </div>
                     </div>
                     <div class="block-content block-content-full bg-body-light">

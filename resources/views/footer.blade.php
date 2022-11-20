@@ -2,7 +2,7 @@
     <div class="content py-0">
         <div class="row fs-sm">
             <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-end">
-                PremiumDev Engine (ver. 0.2.5b)
+                PremiumDev Engine (ver. 0.3.2b)
             </div>
             <div class="col-sm-6 order-sm-1 text-center text-sm-start">
                 <a class="fw-semibold" href="/" target="_blank">{{ env('APP_NAME') }}</a> &copy; <span data-toggle="year-copy"></span>

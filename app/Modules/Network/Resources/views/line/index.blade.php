@@ -12,38 +12,36 @@
 </div>
 <div class="content content-full">
     <div class="block block-rounded">
-        <ul class="nav nav-tabs nav-tabs-alt d-flex justify-content-center" role="tablist">
-            <li class="nav-item" @if ($lines < 1)data-bs-toggle="tooltip" data-bs-title="Уровень 1 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines >= 1)href="{{ route('network.line') }}"@endif class="nav-link @if ($level == 1) active @endif @if ($lines < 1) disabled @endif">@if ($lines < 1)<i class="fa fa-lock"></i>@endif Уровень 1</a>
-            </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 2 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 2]) }}"@endif class="nav-link @if ($level == 2) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 2</a>
-            </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 3 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 3]) }}"@endif class="nav-link @if ($level == 3) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 3</a>
-            </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 4 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 4]) }}"@endif class="nav-link @if ($level == 4) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 4</a>
-            </li>
-            <li class="nav-item" @if ($lines < 5)data-bs-toggle="tooltip" data-bs-title="Уровень 5 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines >= 5)href="{{ route('network.line', ['level_depth' => 5]) }}"@endif class="nav-link @if ($level == 5) active @endif @if ($lines < 5) disabled @endif">@if ($lines < 5)<i class="fa fa-lock"></i>@endif Уровень 5</a>
-            </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 6 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 6]) }}"@endif class="nav-link @if ($level == 6) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 6</a>
-            </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 7 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 7]) }}"@endif class="nav-link @if ($level == 7) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 7</a>
-            </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 8 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 8]) }}"@endif class="nav-link @if ($level == 8) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 8</a>
-            </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 9 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 9]) }}"@endif class="nav-link @if ($level == 9) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 9</a>
-            </li>
-            <li class="nav-item" @if ($lines < 10)data-bs-toggle="tooltip" data-bs-title="Уровень 10 закрыт. Подробности в описании тарифа."@endif>
-                <a @if ($lines == 10)href="{{ route('network.line', ['level_depth' => 10]) }}"@endif class="nav-link @if ($level == 10) active @endif @if ($lines < 10) disabled @endif">@if ($lines < 10)<i class="fa fa-lock"></i>@endif Уровень 10</a>
-            </li>
-        </ul>
+        <div class="block-header block-header-default">
+            <h3 class="block-title">
+                <a href="#" data-bs-toggle="tooltip" data-bs-title="На графике отображаются только активные партнёры"><i class="fa fa-question-circle"></i></a> График роста команды
+            </h3>
+            <div class="block-options">
+                <div class="block-options-item">
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" id="dropdown-default-outline-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ $current_tariff_line['title'] }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-default-outline-primary">
+                            @foreach ($tariff_lines as $line)
+                                <a class="dropdown-item @if ($current_tariff_line['id'] == $line['id']) disabled @endif" href="{{ route('network.line', ['level_depth' => $level ?? 1, 'tariff_line' => $line['id']]) }}">{{ $line['title'] }}</a>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" id="dropdown-default-outline-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Уровень {{ $level }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-default-outline-primary">
+                            @for($i = 1; $i <= 10; $i++)
+                                <a class="dropdown-item @if ($lines < $i) disabled @endif @if ($level == $i) fw-bold @endif" href="{{ route('network.line', ['level_depth' => $i ?? 1, 'tariff_line' => $current_tariff_line['id']]) }}">Уровень {{ $i }}</a>
+                            @endfor
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="block-content block-content-full border-bottom">
             <div class="row text-center">
                 <div class="col-lg-4 py-3">
@@ -110,7 +108,7 @@
                     @endforelse
                 </tbody>
             </table>
-            {{ $partners->links() }}
+            {!! $partners->links() !!}
         </div>
     </div>
 </div>

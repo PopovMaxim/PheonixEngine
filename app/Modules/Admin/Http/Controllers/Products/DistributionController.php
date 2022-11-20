@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Admin\Http\Controllers\Tariffs;
+namespace App\Modules\Admin\Http\Controllers\Products;
 
 use App\Modules\Tariffs\Entities\Tariff;
 use App\Modules\Tariffs\Entities\TariffLines;

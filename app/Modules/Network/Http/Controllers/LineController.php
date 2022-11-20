@@ -6,12 +6,30 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\User;
+use App\Modules\Tariffs\Entities\TariffLines;
 
 class LineController extends Controller
 {
-    public function index(Request $request, $level_depth = 1)
+    public function index(Request $request, $level_depth = 1, $tariff_line = null)
     {
-        $subscribe = $request->user()->getCurrentSubscribe();
+        $subscribes = $request->user()->getSubscribes();
+
+        $tariff_lines = TariffLines::query()
+            ->whereIn('id', array_keys($subscribes))
+            ->get()
+            ->keyBy('id');
+
+        if (is_null($tariff_line)) {
+            $tariff_line = array_key_first($subscribes);
+        }
+
+        $current_tariff_line = $tariff_lines->get($tariff_line);
+
+        usort($subscribes[$tariff_line], function ($a, $b) {
+            return $b['priority'] - $a['priority'];
+        });
+
+        $subscribe = $subscribes[$tariff_line][0];
 
         $lines = $subscribe['details']['marketing_limit'] ?? 0;
 
@@ -19,446 +37,56 @@ class LineController extends Controller
             $level_depth = 1;
         }
 
-        if ($level_depth > 10)
-        {
+        if ($level_depth > 10) {
             $level_depth = 10;
         }
 
-        $partners = $request
-            ->user()
-            ->partners;
+        $recur = function ($sponsor_ids, $current_level = 1) use (&$recur, $level_depth, $current_tariff_line) {
+            $partners = User::query()
+                ->whereIn('sponsor_id', $sponsor_ids)
+                ->whereHas('transactions', function ($query) use ($current_tariff_line) {
+                    return $query->whereIn('details->tariff', $current_tariff_line['tariffs']->pluck('id'));
+                })->get();
 
-        $total_partners = $request
-            ->user()
-            ->partners
-            ->count();
+            $partners_with_paginate = User::query()
+                ->whereIn('sponsor_id', $sponsor_ids)
+                ->whereHas('transactions', function ($query) use ($current_tariff_line) {
+                    return $query->whereIn('details->tariff', $current_tariff_line['tariffs']->pluck('id'));
+                })->paginate(10);
 
-        $total_activated_partners = $request
-            ->user()
-            ->partners
-            ->whereNotNull('activated_at')
-            ->count();
+            if ($level_depth > $current_level) {
+                $current_level++;
+                return $recur($partners->pluck('id'), $current_level);
+            }
 
-        $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-
-        switch ($level_depth)
-        {
-            case 2;
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $total_partners = $partners->count();
-
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-
-            case 3:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-
-                $total_partners = $partners->count();
-
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-
-            case 4:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-                
-                $level_3_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_3_partners_ids);
-
-                $total_partners = $partners->count();
-                
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
+            $total = User::query()->whereIn('sponsor_id', $sponsor_ids)->count();
+            $activated = $partners->count();
+            $activated_percent = $this->getPartnersActivationPercentage($total, $activated);
             
-            case 5:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
+            return [
+                'partners' => $partners,
+                'partners_with_paginate' => $partners_with_paginate,
+                'total' => $total,
+                'activated' => $activated,
+                'activated_percent' => $activated_percent
+            ];
+        };
 
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-                
-                $level_3_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_3_partners_ids);
-
-                $level_4_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_4_partners_ids);
-
-                $total_partners = $partners->count();
-                
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-            
-            case 6:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-                
-                $level_3_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_3_partners_ids);
-
-                $level_4_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_4_partners_ids);
-
-                $level_5_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_5_partners_ids);
-
-                $total_partners = $partners->count();
-                
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-            
-            case 7:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-                
-                $level_3_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_3_partners_ids);
-
-                $level_4_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_4_partners_ids);
-
-                $level_5_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_5_partners_ids);
-                
-                $level_6_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_6_partners_ids);
-
-                $total_partners = $partners->count();
-                
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-            
-            case 8:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-                
-                $level_3_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_3_partners_ids);
-
-                $level_4_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_4_partners_ids);
-
-                $level_5_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_5_partners_ids);
-                
-                $level_6_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_6_partners_ids);
-                
-                $level_7_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_7_partners_ids);
-
-                $total_partners = $partners->count();
-                
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-            
-            case 9:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-                
-                $level_3_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_3_partners_ids);
-
-                $level_4_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_4_partners_ids);
-
-                $level_5_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_5_partners_ids);
-                
-                $level_6_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_6_partners_ids);
-                
-                $level_7_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_7_partners_ids);
-                
-                $level_8_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_8_partners_ids);
-
-                $total_partners = $partners->count();
-                
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-            
-            case 10:
-                $level_1_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_1_partners_ids);
-
-                $level_2_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_2_partners_ids);
-                
-                $level_3_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_3_partners_ids);
-
-                $level_4_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_4_partners_ids);
-
-                $level_5_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_5_partners_ids);
-                
-                $level_6_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_6_partners_ids);
-                
-                $level_7_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_7_partners_ids);
-                
-                $level_8_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_8_partners_ids);
-                
-                $level_9_partners_ids = clone $partners
-                    ->get()
-                    ->pluck('id');
-
-                $partners = User::query()
-                    ->whereIn('sponsor_id', $level_9_partners_ids);
-
-                $total_partners = $partners->count();
-
-                $total_activated_partners = $partners
-                    ->whereNotNull('activated_at')
-                    ->count();
-                    
-                $partners_activation_percentage = $this->getPartnersActivationPercentage($total_partners, clone $partners);
-            break;
-        }
+        $data = $recur([$request->user()->id]);
 
         return view('network::line.index')
             ->with([
-                'partners' => $partners->paginate(10),
-                'total_partners' => $total_partners,
-                'total_activated_partners' => $total_activated_partners,
-                'partners_activation_percentage' => $partners_activation_percentage,
+                'chart' => $this->getChartData($data['partners']),
+                'lines' => $lines,
                 'level' => $level_depth,
                 'subscribe' => $subscribe,
-                'lines' => $lines,
-                'chart' => $this->getChartData($partners->get())
+                'partners' => $data['partners_with_paginate'],
+                'total_partners' => $data['total'] ?? 0,
+                'total_activated_partners' => $data['activated'] ?? 0,
+                'partners_activation_percentage' => $data['activated_percent'] ?? 0.00,
+                'tariff_line' => $tariff_line,
+                'tariff_lines' => $tariff_lines,
+                'current_tariff_line' => $current_tariff_line
             ]);
     }
 
@@ -522,15 +150,11 @@ class LineController extends Controller
         ]);
     }
 
-    private function getPartnersActivationPercentage($total_partners, $partners)
+    private function getPartnersActivationPercentage($total_partners, $activated_partners)
     {
         if (!$total_partners) {
             return sprintf("%.2f", 0);
         }
-
-        $activated_partners = $partners
-            ->whereNotNull('activated_at')
-            ->count();
 
         $diff = $activated_partners / $total_partners;
 

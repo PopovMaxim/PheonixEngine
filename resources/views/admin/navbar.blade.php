@@ -23,43 +23,24 @@
                     </a>
                 </li>
 
-                {{--<li class="nav-main-item">
+                <li class="nav-main-item">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                    <i class="nav-main-link-icon fa fa-boxes"></i>
-                    <span class="nav-main-link-name">Продукты</span>
+                        <i class="nav-main-link-icon fa fa-boxes"></i>
+                        <span class="nav-main-link-name">Продукты</span>
                     </a>
                     <ul class="nav-main-submenu">
-                    <li class="nav-main-item">
-                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                        <span class="nav-main-link-name">Тарифы</span>
-                        </a>
-                        <ul class="nav-main-submenu">
                         <li class="nav-main-item">
-                            <a class="nav-main-link" href="javascript:void(0)">
-                            <span class="nav-main-link-name">Линейки</span>
+                            <a class="nav-main-link" href="{{ route('admin.products.tariffs') }}">
+                                <span class="nav-main-link-name">Тарифы</span>
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{ route('admin.tariffs') }}">
-                            <span class="nav-main-link-name">Управление ценами</span>
+                            <a class="nav-main-link" href="#">
+                                <span class="nav-main-link-name">Дистрибутивы</span>
                             </a>
                         </li>
-                        </ul>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                        <span class="nav-main-link-name">Дистрибутивы</span>
-                        </a>
-                        <ul class="nav-main-submenu">
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="javascript:void(0)">
-                            <span class="nav-main-link-name">Версии</span>
-                            </a>
-                        </li>
-                        </ul>
-                    </li>
                     </ul>
-                </li>--}}
+                </li>
 
                 <li class="nav-main-item">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="{{ route('admin.transactions') }}">
@@ -84,13 +65,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <li class="nav-main-item">
-                    <a class="nav-main-link @if(request()->is('admin/subscribes*')) active @endif" href="{{ route('admin.subscribes') }}">
-                        <i class="nav-main-link-icon fa fa-star"></i>
-                        <span class="nav-main-link-name">Подписки</span>
-                    </a>
                 </li>
                 
                 {{--<li class="nav-main-item">
@@ -119,6 +93,13 @@
             @endif
 
             @if(request()->user()->hasRole('support') || request()->user()->can('support'))
+                <li class="nav-main-item">
+                    <a class="nav-main-link @if(request()->is('admin/subscribes*')) active @endif" href="{{ route('admin.subscribes') }}">
+                        <i class="nav-main-link-icon fa fa-star"></i>
+                        <span class="nav-main-link-name">Подписки</span>
+                    </a>
+                </li>
+                
                 <li class="nav-main-item">
                     <a class="nav-main-link @if(request()->is('admin/support*')) active @endif" href="{{ route('admin.support') }}">
                         <i class="nav-main-link-icon fa fa-headset"></i>

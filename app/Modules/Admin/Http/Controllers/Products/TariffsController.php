@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Modules\Admin\Http\Controllers;
+namespace App\Modules\Admin\Http\Controllers\Products;
 
-use App\Modules\Tariffs\Entities\Tariff;
-use App\Modules\Tariffs\Entities\TariffLines;
-use App\Modules\Transactions\Entities\Transaction;
-use Illuminate\Contracts\Support\Renderable;
+use App\Modules\Robots\Entities\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Modules\Tariffs\Entities\Tariff;
+use App\Modules\Tariffs\Entities\TariffLines;
 
 class TariffsController extends Controller
 {
@@ -18,7 +17,7 @@ class TariffsController extends Controller
         $tariffs = Tariff::query()->orderBy('priority', 'desc')->get();
         $tariff_lines = TariffLines::query()->orderBy('order', 'asc')->get();
 
-        return view('admin::tariffs.index')
+        return view('admin::products.tariffs.index')
             ->with([
                 'page_name' => $page_name,
                 'tariff_lines' => $tariff_lines,
@@ -26,9 +25,15 @@ class TariffsController extends Controller
             ]);
     }
 
-    public function create(Request $request)
+    public function form(Request $request, $id = null)
     {
         $page_name = 'Новый тариф';
+
+        if (!is_null($id)) {
+            $tariff = Tariff::findOrFail($id);
+
+            $page_name = 'Редактирование тарифа ' . $tariff['title'];
+        }
 
         if ($request->isMethod('post')) {
             $request->validate([
@@ -40,7 +45,7 @@ class TariffsController extends Controller
                 'sale.sum' => 'required_with:sale.variant',
                 'title' => 'required',
                 'priority' => 'required|numeric',
-                'color' => 'required',
+                //'color' => 'required',
             ], [
                 'status.required' => 'Выберите статус тарифа',
                 'key.required' => 'Введите ключ тарифа',
@@ -50,14 +55,13 @@ class TariffsController extends Controller
                 'title.required' => 'Введите название тарифа',
                 'priority.required' => 'Установите приоритет тарифа',
                 'priority.numeric' => 'Значение приоритета может быть только целым числом',
-                'color.required' => 'Выберите цвет тарифа',
+                //'color.required' => 'Выберите цвет тарифа',
                 'sale.sum.required_with' => 'Укажите величину скидки',
             ]);
 
             $payload = [];
 
             $payload['key'] = $request->input('key');
-            $payload['color'] = $request->input('color');
             $payload['tariff_line'] = $request->input('tariff_line');
             $payload['price'] = $request->input('price');
             $payload['period'] = $request->input('period');
@@ -69,52 +73,56 @@ class TariffsController extends Controller
                 $payload['description'] = $request->input('description');
             }
 
-            if (!is_null($request->input('sale.variant'))) {
+            if (!is_null($request->input('sale'))) {
                 $payload['sale'] = $request->input('sale');
             }
 
-            if (!is_null($request->input('ribbon.text'))) {
+            if (!is_null($request->input('ribbon'))) {
                 $payload['ribbon'] = $request->input('ribbon');
             }
 
-            /*if (!is_null($request->input('color'))) {
+            if (!is_null($request->input('color'))) {
                 $payload['color'] = $request->input('color');
-            }*/
+            }
 
-            $tariff = Tariff::create($payload);
+            if (!is_null($request->input('details'))) {
+                $payload['details'] = $request->input('details');
+            }
+
+            if (!is_null($request->input('additional'))) {
+                $payload['details']['additional'] = $request->input('additional');
+            }
+
+            if (!is_null($request->input('details.products'))) {
+                $payload['details']['products'] = $request->input('details.products');
+            }
+
+            if (isset($tariff)) {
+                $tariff->update($payload);
+            } else {
+                Tariff::create($payload);
+            }
         }
 
         $tariff_lines = TariffLines::get();
 
-        return view('admin::tariffs.create')
+        $products = Product::query()->distinct('key')->get();
+
+        return view('admin::products.tariffs.form')
             ->with([
                 'page_name' => $page_name,
+                'tariff' => $tariff ?? null,
+                'products' => $products,
                 'tariff_lines' => $tariff_lines,
             ]);
     }
 
-    public function store(Request $request)
+    public function delete(Request $request, $id)
     {
-        //
-    }
+        $tariff = Tariff::findOrFail($id);
 
-    public function show($id)
-    {
-        return view('admin::show');
-    }
+        $tariff->delete();
 
-    public function edit($id)
-    {
-        return view('admin::edit');
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        return back();
     }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Modules\Profile\Entities\Activity;
-use App\Modules\Tariffs\Entities\Tariff;
-use App\Modules\Tariffs\Entities\TariffLines;
 use Livewire\Component;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
+use App\Modules\Tariffs\Entities\Tariff;
+use App\Modules\Tariffs\Entities\TariffLines;
 
 class Tariffs extends Component
 {
@@ -22,7 +20,7 @@ class Tariffs extends Component
     public function mount($line)
     {
         $this->line = $line;
-        $this->tariffs = Tariff::query()->where('tariff_line', $this->line)->get()->keyBy('id');
+        $this->tariffs = Tariff::query()->where('tariff_line', $this->line)->whereStatus(1)->get()->keyBy('id');
         $this->tariff_line = TariffLines::find($this->line);
     }
 
@@ -109,6 +107,7 @@ class Tariffs extends Component
             'user_id' => $request->user()->id,
             'details' => [
                 'tariff' => $tariff['id'],
+                'line' => $tariff['tariff_line'],
                 'expired_at' => now()->parse($period)
             ],
             'direction' => 'outer',
@@ -124,7 +123,7 @@ class Tariffs extends Component
         $this->emitTo('topbar-balance', '$refresh');
 
         // Accural line marketing bonuses
-        $request->user()->calcLineMarketing($tariff, $tx['id']);
+        $request->user()->calcLineMarketing($tariff, $tx);
 
         return redirect()
             ->route('subscribes.read', ['uuid' => $tx['id']])

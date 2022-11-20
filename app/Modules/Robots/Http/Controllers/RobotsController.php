@@ -18,7 +18,7 @@ class RobotsController extends Controller
 {
     public function index(Request $request)
     {
-        $tariffs = Tariff::query()->get()->keyBy('id');
+        $tariffs = Tariff::query()->withTrashed()->get()->keyBy('id');
         $subscribes = $request->user()->transactions()->whereType('subscribe')->orderBy('created_at', 'desc')->paginate(5);
 
         return view('robots::index')

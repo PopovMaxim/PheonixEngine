@@ -22,8 +22,14 @@ class DistributionController extends Controller
             ],
         ];
 
+        $lines = TariffLines::query()->orderBy('order', 'asc')->where('details->status', 1)->get();
+
+        $products = Product::query();
+
         return view('robots::distribution.index')
             ->with([
+                'lines' => $lines,
+                'products' => $products,
                 'breadcrumbs' => $breadcrumbs
             ]);
     }
@@ -51,14 +57,12 @@ class DistributionController extends Controller
             ]);
     }
 
-    public function download(Request $request, $id)
+    public function download($id)
     {
-        $line = TariffLines::query()->where('id', $id)->where('details->status', 1)->orderBy('order', 'asc')->firstOrFail();
+        $product = Product::query()->where('id', $id)->where('details->release', true)->firstOrFail();
 
-        $product = Product::query()->where('tariff_line', $line['id'])->where('details->release', true)->firstOrFail();
+        $path = public_path("downloads/products/{$product['id']}/release/{$product['version']}.zip");
 
-        $path = public_path("downloads/products/{$id}/release/{$product['version']}/distrib.zip");
-
-        return response()->download($path, "[Pheonix] {$line['title']} ver {$product['version']}.zip");
+        return response()->download($path, "Pheonix {$product['line']['title']} ver {$product['version']}.zip");
     }
 }

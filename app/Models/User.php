@@ -342,11 +342,10 @@ class User extends Authenticatable
         }
     }
 
-    public function calcLineMarketing($tariff, $tx_id)
+    public function calcLineMarketing($tariff, $tx)
     {
         $percents = [
-            0 => 30,
-            //0 => 20,
+            0 => 20,
             1 => 10,
             2 => 5,
             3 => 4,
@@ -391,10 +390,9 @@ class User extends Authenticatable
 
         $i = 1;
 
-        foreach ($levels as $key => $value)
+        foreach ($levels as $level => $user_id)
         {
-            $user = User::find($value);
-            //$subscribe = $user->getCurrentSubscribe();
+            $user = User::find($user_id);
             $subscribes = $user->getSubscribes();
             $tariff_line_subscribes = $subscribes[$tariff['tariff_line']] ?? [];
 
@@ -405,17 +403,16 @@ class User extends Authenticatable
 
                 $priority = $tariff_line_subscribes[0];
 
-                if (isset($priority) && !is_null($priority) && isset($priority['details']['marketing_limit']) && $priority['details']['marketing_limit'] > $key)
-                {
+                if (isset($priority) && !is_null($priority) && isset($priority['details']['marketing_limit']) && $priority['details']['marketing_limit'] > $level) {
                     Transaction::create([
                         'type' => 'line_bonus',
                         'status' => 'completed',
-                        'amount' => $tariff['price'] * $percents[$key],
-                        'user_id' => $value,
+                        'amount' => ($tx['amount'] * $percents[$level]) / 100,
+                        'user_id' => $user_id,
                         'direction' => 'inner',
                         'details' => [
                             'level' => $i,
-                            'tx_id' => $tx_id,
+                            'tx_id' => $tx['id'],
                             'price' => $tariff['price'],
                             'tariff' => $tariff['id'],
                             'user_id' => request()->user()->id
@@ -565,7 +562,7 @@ class User extends Authenticatable
             return [];
         }
 
-        $tariffs = Tariff::query()->get()->keyBy('id')->toArray();
+        $tariffs = Tariff::query()->withTrashed()->get()->keyBy('id')->toArray();
 
         $list = [];
         $priority = [];
@@ -604,13 +601,18 @@ class User extends Authenticatable
             return [];
         }
 
-        $tariffs = Tariff::query()->get()->keyBy('id')->toArray();
+        $tariffs = Tariff::query()->withTrashed()->get()->keyBy('id')->toArray();
 
         $list = [];
 
         foreach ($subscribes as $subscribe)
         {
-            $tariff = $tariffs[$subscribe['details']['tariff']];
+            $tariff = $tariffs[$subscribe['details']['tariff']] ?? null;
+
+            if (is_null($tariff)) {
+                continue;
+            }
+
             $expired_at = now()->parse($subscribe['details']['expired_at']);
 
             if ($expired_at->timestamp <= now()->timestamp)
@@ -618,7 +620,7 @@ class User extends Authenticatable
                 continue;
             }
 
-            $list[$tariff['tariff_line']][$tariff['id']] = $tariff;
+            $list[$tariff['tariff_line']][] = $tariff;
         }
 
         return $list;

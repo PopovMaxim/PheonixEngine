@@ -181,6 +181,18 @@ Route::prefix('v1/expert')->group(function () {
                 ]));
             }
 
+            $key = ProductKeys::query()
+                ->whereAccountNumber($data['account_number'])
+                ->whereAlreadyActivated(1)
+                ->first();
+
+            if (!in_array($data['ea_name'], $key['subscribe']['tariff']['details']['products'])) {
+                return base64_encode(json_encode([
+                    'status' => 0,
+                    'message' => "Ваша лицензия не поддерживает продукт {$data['ea_name']}."
+                ]));
+            }
+
             $product = Product::query()
                 ->where('key', $data['ea_name'])
                 ->where('version', $data['ea_version'])

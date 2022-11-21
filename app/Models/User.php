@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\BinaryTree;
+use App\Modules\Network\Entities\LeaderPull;
 use App\Modules\Profile\Entities\Activity;
 use App\Modules\Transactions\Entities\Transaction;
 use Illuminate\Notifications\Action;
@@ -427,10 +428,14 @@ class User extends Authenticatable
 
     public function getCurrentLeaderPullSum()
     {
-        $now = now();
+        $leader_pull = LeaderPull::query()
+            ->where('current_activity', true)
+            ->orderBy('id', 'desc')
+            ->first();
 
-        $month_start = $now->startOfMonth()->format('Y-m-d H:i:s');
-        $month_end = $now->endOfMonth()->format('Y-m-d H:i:s');
+        if (is_null($leader_pull)) {
+            return 0;
+        }
 
         $my_partners = $this->partners->get();
 
@@ -443,7 +448,7 @@ class User extends Authenticatable
                     'type' => 'subscribe',
                     'status' => 'completed'
                 ])
-                ->whereBetween('created_at', [$month_start, $month_end])
+                ->where('created_at', '>=', $leader_pull['started_at'])
                 ->sum('amount');
         }
 

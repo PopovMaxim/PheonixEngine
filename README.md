@@ -2,9 +2,9 @@
 
 ## About This Repo
 
-(Important note! This script is distributed «as is» and will not be maintained. If you need completed 100% worked script (example: https://demo.eazy.codes), let me mail on: pmapkm@gmail.com)
+(Important note! This script is distributed «as is» and will be not maintained. If you need completed and 100% worked script (example: https://demo.eazy.codes), let me mail on: pmapkm@gmail.com)
 
-This repository contains a script that allows you to run the MLM platform enchanted for sell Forex Experts and provides next features:
+This repository contains a script that allows you run the MLM platform enchanted for sell Forex Experts and provides next features:
 
 - User Registration (simple register or register by partner link)
 - License server for Forex Experts (key generator and checker)
